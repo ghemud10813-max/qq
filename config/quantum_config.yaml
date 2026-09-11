@@ -1,0 +1,46 @@
+# =============================================================================
+# Quantum-Inspired Cyber Threat Detection — Central Configuration
+# SIH26141 | Blockchain & Cybersecurity
+# =============================================================================
+
+# Reproducibility
+random_seed: 42
+
+# Quantum Simulator
+simulator:
+  backend: "aer_simulator"
+  shots: 1024
+  max_parallel_threads: 4
+
+# Measurement Bases for Quantum Digital Signatures
+measurement_bases:
+  X: "x"   # Pauli-X basis (Hadamard basis)
+  Y: "y"   # Pauli-Y basis
+  Z: "z"   # Pauli-Z basis (computational basis)
+
+# Logging
+logging:
+  level: "INFO"           # DEBUG | INFO | WARNING | ERROR | CRITICAL
+  format: "%(asctime)s [%(levelname)s] %(name)s: %(message)s"
+  date_format: "%Y-%m-%dT%H:%M:%S"
+  log_to_file: false
+  log_file: "logs/qtd.log"
+
+# Quantum Circuit Defaults
+circuit:
+  num_qubits: 2
+  barrier: true
+
+# Phase flags — only Phase 0 active
+phases:
+  phase0_foundation: true
+  phase1_bell_states: true
+  phase2_teleportation: true
+  phase2_5_noise: true
+  phase3_qds: true
+  phase4_detection: true
+  phase5_attacks: false
+  phase6_security: false
+  phase7_performance: false
+  phase8_dashboard: false
+  phase9_integration: false

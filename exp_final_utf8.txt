@@ -1,0 +1,236 @@
+﻿==============================================================================
+  PHASE 5 -- QDS Attack Simulation & Threat Validation
+  SIH26141 | Quantum-Inspired Cyber Threat Detection
+==============================================================================
+  Seed           : 42
+  NumPy          : 2.5.3
+  Baseline size  : 12 sessions
+  Signature len  : 32 elements
+  Intensities    : [0.0, 0.1, 0.25, 0.5, 0.75, 1.0]
+  Timestamp      : 2026-09-11T19:54:40
+==============================================================================
+
+  [1] Building attack runner (12 baseline sessions)...
+2026-09-11T19:54:40 [INFO] qds.signature: Generated QDS signature: id=ca0102b0... msg='baseline_0' len=32 seed=42
+2026-09-11T19:54:40 [INFO] qds.verification: Verification ACCEPTED: score=1.0000 threshold=0.7000 matches=32/32
+2026-09-11T19:54:40 [INFO] qds.signature: Generated QDS signature: id=d68ac258... msg='baseline_1' len=32 seed=43
+2026-09-11T19:54:40 [INFO] qds.verification: Verification ACCEPTED: score=1.0000 threshold=0.7000 matches=32/32
+2026-09-11T19:54:40 [INFO] qds.signature: Generated QDS signature: id=832b4707... msg='baseline_2' len=32 seed=44
+2026-09-11T19:54:40 [INFO] qds.verification: Verification ACCEPTED: score=1.0000 threshold=0.7000 matches=32/32
+2026-09-11T19:54:40 [INFO] qds.signature: Generated QDS signature: id=978578fd... msg='baseline_3' len=32 seed=45
+2026-09-11T19:54:40 [INFO] qds.verification: Verification ACCEPTED: score=1.0000 threshold=0.7000 matches=32/32
+2026-09-11T19:54:40 [INFO] qds.signature: Generated QDS signature: id=20ad79ae... msg='baseline_4' len=32 seed=46
+2026-09-11T19:54:40 [INFO] qds.verification: Verification ACCEPTED: score=1.0000 threshold=0.7000 matches=32/32
+2026-09-11T19:54:40 [INFO] qds.signature: Generated QDS signature: id=63ef81f6... msg='baseline_5' len=32 seed=47
+2026-09-11T19:54:40 [INFO] qds.verification: Verification ACCEPTED: score=1.0000 threshold=0.7000 matches=32/32
+2026-09-11T19:54:40 [INFO] qds.signature: Generated QDS signature: id=1f7d1184... msg='baseline_6' len=32 seed=48
+2026-09-11T19:54:40 [INFO] qds.verification: Verification ACCEPTED: score=1.0000 threshold=0.7000 matches=32/32
+2026-09-11T19:54:40 [INFO] qds.signature: Generated QDS signature: id=199d804c... msg='baseline_7' len=32 seed=49
+2026-09-11T19:54:40 [INFO] qds.verification: Verification ACCEPTED: score=1.0000 threshold=0.7000 matches=32/32
+2026-09-11T19:54:40 [INFO] qds.signature: Generated QDS signature: id=a755d2c5... msg='baseline_8' len=32 seed=50
+2026-09-11T19:54:40 [INFO] qds.verification: Verification ACCEPTED: score=1.0000 threshold=0.7000 matches=32/32
+2026-09-11T19:54:40 [INFO] qds.signature: Generated QDS signature: id=722ee5ac... msg='baseline_9' len=32 seed=51
+2026-09-11T19:54:40 [INFO] qds.verification: Verification ACCEPTED: score=1.0000 threshold=0.7000 matches=32/32
+2026-09-11T19:54:40 [INFO] qds.signature: Generated QDS signature: id=c94b7314... msg='baseline_10' len=32 seed=52
+2026-09-11T19:54:40 [INFO] qds.verification: Verification ACCEPTED: score=1.0000 threshold=0.7000 matches=32/32
+2026-09-11T19:54:40 [INFO] qds.signature: Generated QDS signature: id=74d72544... msg='baseline_11' len=32 seed=53
+2026-09-11T19:54:40 [INFO] qds.verification: Verification ACCEPTED: score=1.0000 threshold=0.7000 matches=32/32
+2026-09-11T19:54:40 [INFO] security.thresholds: percentile_calibrate: n=12 warn=0.0500 crit=0.1000 (p75/p95)
+2026-09-11T19:54:40 [INFO] security.detector: Calibrated: n=12 warn=0.0500 crit=0.1000 method=percentile
+  Detector calibrated: warn=0.050000 crit=0.100000
+
+  [2] Running attack scenarios...
+  Running legitimate baseline...
+2026-09-11T19:54:40 [INFO] qds.signature: Generated QDS signature: id=b0e2a338... msg='test_msg' len=32 seed=542
+2026-09-11T19:54:40 [INFO] qds.verification: Verification ACCEPTED: score=1.0000 threshold=0.7000 matches=32/32
+2026-09-11T19:54:40 [INFO] security.detector: detect legitimate_0: NORMAL  score=0.0305
+  Running forgery attacks...
+2026-09-11T19:54:40 [INFO] qds.signature: Generated QDS signature: id=43804733... msg='msg_forgery' len=32 seed=743
+2026-09-11T19:54:40 [INFO] attacks.base: Attack ForgeryAttack executed: intensity=0.10 evidence=4 indicators=4
+2026-09-11T19:54:40 [INFO] qds.verification: Verification ACCEPTED: score=0.9688 threshold=0.7000 matches=31/32
+2026-09-11T19:54:40 [INFO] security.detector: detect FORGERY_0.10: SUSPICIOUS  score=0.0585
+2026-09-11T19:54:40 [INFO] qds.signature: Generated QDS signature: id=69729a34... msg='msg_forgery' len=32 seed=744
+2026-09-11T19:54:40 [INFO] attacks.base: Attack ForgeryAttack executed: intensity=0.25 evidence=9 indicators=4
+2026-09-11T19:54:40 [INFO] qds.verification: Verification ACCEPTED: score=0.9375 threshold=0.7000 matches=30/32
+2026-09-11T19:54:40 [INFO] security.detector: detect FORGERY_0.25: SUSPICIOUS  score=0.0523
+2026-09-11T19:54:40 [INFO] qds.signature: Generated QDS signature: id=be068f49... msg='msg_forgery' len=32 seed=745
+2026-09-11T19:54:40 [INFO] attacks.base: Attack ForgeryAttack executed: intensity=0.50 evidence=17 indicators=4
+2026-09-11T19:54:40 [INFO] qds.verification: Verification ACCEPTED: score=0.7500 threshold=0.7000 matches=24/32
+2026-09-11T19:54:40 [INFO] security.detector: detect FORGERY_0.50: THREAT  score=0.1957
+2026-09-11T19:54:40 [INFO] qds.signature: Generated QDS signature: id=feb1a56f... msg='msg_forgery' len=32 seed=746
+2026-09-11T19:54:40 [INFO] attacks.base: Attack ForgeryAttack executed: intensity=0.75 evidence=25 indicators=4
+2026-09-11T19:54:40 [INFO] qds.verification: Verification REJECTED: score=0.5312 threshold=0.7000 matches=17/32
+2026-09-11T19:54:40 [INFO] security.detector: detect FORGERY_0.75: THREAT  score=0.3259
+2026-09-11T19:54:40 [INFO] qds.signature: Generated QDS signature: id=1e4243c2... msg='msg_forgery' len=32 seed=747
+2026-09-11T19:54:40 [INFO] attacks.base: Attack ForgeryAttack executed: intensity=1.00 evidence=33 indicators=4
+2026-09-11T19:54:40 [INFO] qds.verification: Verification REJECTED: score=0.5000 threshold=0.7000 matches=16/32
+2026-09-11T19:54:40 [INFO] security.detector: detect FORGERY_1.00: THREAT  score=0.3709
+  Running impersonation attacks...
+2026-09-11T19:54:40 [INFO] qds.signature: Generated QDS signature: id=44c1c10a... msg='msg_impersonation' len=32 seed=843
+2026-09-11T19:54:40 [INFO] attacks.base: Attack ImpersonationAttack executed: intensity=0.10 evidence=5 indicators=6
+2026-09-11T19:54:40 [INFO] qds.verification: Verification ACCEPTED: score=0.9375 threshold=0.7000 matches=30/32
+2026-09-11T19:54:40 [INFO] security.detector: detect IMPERSONATIO: SUSPICIOUS  score=0.0822
+2026-09-11T19:54:40 [INFO] qds.signature: Generated QDS signature: id=f94ddb73... msg='msg_impersonation' len=32 seed=844
+2026-09-11T19:54:40 [INFO] attacks.base: Attack ImpersonationAttack executed: intensity=0.25 evidence=10 indicators=6
+2026-09-11T19:54:40 [INFO] qds.verification: Verification ACCEPTED: score=0.9375 threshold=0.7000 matches=30/32
+2026-09-11T19:54:40 [INFO] security.detector: detect IMPERSONATIO: SUSPICIOUS  score=0.0562
+2026-09-11T19:54:40 [INFO] qds.signature: Generated QDS signature: id=0d7a6025... msg='msg_impersonation' len=32 seed=845
+2026-09-11T19:54:40 [INFO] attacks.base: Attack ImpersonationAttack executed: intensity=0.50 evidence=18 indicators=6
+2026-09-11T19:54:40 [INFO] qds.verification: Verification ACCEPTED: score=0.7188 threshold=0.7000 matches=23/32
+2026-09-11T19:54:40 [INFO] security.detector: detect IMPERSONATIO: THREAT  score=0.1811
+2026-09-11T19:54:40 [INFO] qds.signature: Generated QDS signature: id=21e6b309... msg='msg_impersonation' len=32 seed=846
+2026-09-11T19:54:40 [INFO] attacks.base: Attack ImpersonationAttack executed: intensity=0.75 evidence=26 indicators=6
+2026-09-11T19:54:40 [INFO] qds.verification: Verification ACCEPTED: score=0.7188 threshold=0.7000 matches=23/32
+2026-09-11T19:54:40 [INFO] security.detector: detect IMPERSONATIO: THREAT  score=0.2169
+2026-09-11T19:54:40 [INFO] qds.signature: Generated QDS signature: id=5602a4cd... msg='msg_impersonation' len=32 seed=847
+2026-09-11T19:54:40 [INFO] attacks.base: Attack ImpersonationAttack executed: intensity=1.00 evidence=34 indicators=6
+2026-09-11T19:54:40 [INFO] qds.verification: Verification REJECTED: score=0.4688 threshold=0.7000 matches=15/32
+2026-09-11T19:54:40 [INFO] security.detector: detect IMPERSONATIO: THREAT  score=0.3621
+  Running replay attacks...
+2026-09-11T19:54:40 [INFO] qds.signature: Generated QDS signature: id=1efaa1c2... msg='msg_replay' len=32 seed=943
+2026-09-11T19:54:40 [INFO] attacks.base: Attack ReplayAttack executed: intensity=0.10 evidence=3 indicators=5
+2026-09-11T19:54:40 [INFO] qds.signature: Generated QDS signature: id=a80eceb7... msg='msg_replay' len=32 seed=943
+2026-09-11T19:54:40 [INFO] qds.verification: Verification ACCEPTED: score=1.0000 threshold=0.7000 matches=32/32
+2026-09-11T19:54:40 [INFO] security.detector: detect REPLAY_0.10_: NORMAL  score=0.0258
+2026-09-11T19:54:40 [INFO] qds.signature: Generated QDS signature: id=71a3891e... msg='msg_replay' len=32 seed=944
+2026-09-11T19:54:40 [INFO] attacks.base: Attack ReplayAttack executed: intensity=0.25 evidence=3 indicators=5
+2026-09-11T19:54:40 [INFO] qds.signature: Generated QDS signature: id=7a584550... msg='msg_replay' len=32 seed=944
+2026-09-11T19:54:40 [INFO] qds.verification: Verification ACCEPTED: score=1.0000 threshold=0.7000 matches=32/32
+2026-09-11T19:54:40 [INFO] security.detector: detect REPLAY_0.25_: NORMAL  score=0.0023
+2026-09-11T19:54:40 [INFO] qds.signature: Generated QDS signature: id=50c8349e... msg='msg_replay' len=32 seed=945
+2026-09-11T19:54:40 [INFO] attacks.base: Attack ReplayAttack executed: intensity=0.50 evidence=4 indicators=5
+2026-09-11T19:54:40 [INFO] qds.signature: Generated QDS signature: id=7bfd338d... msg='msg_replay' len=32 seed=945
+2026-09-11T19:54:40 [INFO] qds.verification: Verification ACCEPTED: score=1.0000 threshold=0.7000 matches=32/32
+2026-09-11T19:54:40 [INFO] security.detector: detect REPLAY_0.50_: NORMAL  score=0.0023
+2026-09-11T19:54:40 [INFO] qds.signature: Generated QDS signature: id=97dbc481... msg='msg_replay' len=32 seed=946
+2026-09-11T19:54:40 [INFO] attacks.base: Attack ReplayAttack executed: intensity=0.75 evidence=4 indicators=5
+2026-09-11T19:54:40 [INFO] qds.signature: Generated QDS signature: id=3a3edf04... msg='msg_replay' len=32 seed=946
+2026-09-11T19:54:40 [INFO] qds.verification: Verification ACCEPTED: score=1.0000 threshold=0.7000 matches=32/32
+2026-09-11T19:54:40 [INFO] security.detector: detect REPLAY_0.75_: NORMAL  score=0.0164
+2026-09-11T19:54:40 [INFO] qds.signature: Generated QDS signature: id=e4275fb7... msg='msg_replay' len=32 seed=947
+2026-09-11T19:54:40 [INFO] attacks.base: Attack ReplayAttack executed: intensity=1.00 evidence=4 indicators=5
+2026-09-11T19:54:40 [INFO] qds.signature: Generated QDS signature: id=2b662fee... msg='msg_replay' len=32 seed=947
+2026-09-11T19:54:40 [INFO] qds.verification: Verification ACCEPTED: score=1.0000 threshold=0.7000 matches=32/32
+2026-09-11T19:54:40 [INFO] security.detector: detect REPLAY_1.00_: NORMAL  score=0.0305
+  Running unauthorized verification attacks...
+2026-09-11T19:54:40 [INFO] qds.signature: Generated QDS signature: id=84f6e0de... msg='msg_unauthorized_verification' len=32 seed=1043
+2026-09-11T19:54:40 [INFO] attacks.base: Attack UnauthorizedVerificationAttack executed: intensity=0.10 evidence=2 indicators=4
+2026-09-11T19:54:40 [INFO] qds.signature: Generated QDS signature: id=daee92a7... msg='msg_unauthorized_verification' len=32 seed=1044
+2026-09-11T19:54:40 [INFO] attacks.base: Attack UnauthorizedVerificationAttack executed: intensity=0.25 evidence=2 indicators=4
+2026-09-11T19:54:40 [INFO] qds.signature: Generated QDS signature: id=9e1efce7... msg='msg_unauthorized_verification' len=32 seed=1045
+2026-09-11T19:54:40 [INFO] attacks.base: Attack UnauthorizedVerificationAttack executed: intensity=0.50 evidence=2 indicators=4
+2026-09-11T19:54:40 [INFO] qds.signature: Generated QDS signature: id=196969e3... msg='msg_unauthorized_verification' len=32 seed=1046
+2026-09-11T19:54:40 [INFO] attacks.base: Attack UnauthorizedVerificationAttack executed: intensity=0.75 evidence=2 indicators=4
+2026-09-11T19:54:40 [INFO] qds.signature: Generated QDS signature: id=8a0c5c20... msg='msg_unauthorized_verification' len=32 seed=1047
+2026-09-11T19:54:40 [INFO] attacks.base: Attack UnauthorizedVerificationAttack executed: intensity=1.00 evidence=2 indicators=4
+  Running channel manipulation attacks...
+2026-09-11T19:54:40 [INFO] qds.signature: Generated QDS signature: id=23c4204d... msg='msg_channel_manipulation' len=32 seed=1143
+2026-09-11T19:54:40 [INFO] attacks.base: Attack ChannelManipulationAttack executed: intensity=0.10 evidence=33 indicators=5
+2026-09-11T19:54:40 [INFO] qds.verification: Verification ACCEPTED: score=0.9688 threshold=0.7000 matches=31/32
+2026-09-11T19:54:40 [INFO] security.detector: detect CHANNEL_MANI: NORMAL  score=0.0372
+2026-09-11T19:54:40 [INFO] qds.signature: Generated QDS signature: id=d7803f6a... msg='msg_channel_manipulation' len=32 seed=1144
+2026-09-11T19:54:40 [INFO] attacks.base: Attack ChannelManipulationAttack executed: intensity=0.25 evidence=33 indicators=5
+2026-09-11T19:54:40 [INFO] qds.verification: Verification ACCEPTED: score=0.8438 threshold=0.7000 matches=27/32
+2026-09-11T19:54:40 [INFO] security.detector: detect CHANNEL_MANI: THREAT  score=0.1040
+2026-09-11T19:54:40 [INFO] qds.signature: Generated QDS signature: id=8f5a6bfa... msg='msg_channel_manipulation' len=32 seed=1145
+2026-09-11T19:54:40 [INFO] attacks.base: Attack ChannelManipulationAttack executed: intensity=0.50 evidence=33 indicators=5
+2026-09-11T19:54:40 [INFO] qds.verification: Verification ACCEPTED: score=0.7188 threshold=0.7000 matches=23/32
+2026-09-11T19:54:40 [INFO] security.detector: detect CHANNEL_MANI: THREAT  score=0.1934
+2026-09-11T19:54:40 [INFO] qds.signature: Generated QDS signature: id=60c4b9fe... msg='msg_channel_manipulation' len=32 seed=1146
+2026-09-11T19:54:40 [INFO] attacks.base: Attack ChannelManipulationAttack executed: intensity=0.75 evidence=33 indicators=5
+2026-09-11T19:54:40 [INFO] qds.verification: Verification REJECTED: score=0.5625 threshold=0.7000 matches=18/32
+2026-09-11T19:54:40 [INFO] security.detector: detect CHANNEL_MANI: THREAT  score=0.2916
+2026-09-11T19:54:40 [INFO] qds.signature: Generated QDS signature: id=4cbc5405... msg='msg_channel_manipulation' len=32 seed=1147
+2026-09-11T19:54:40 [INFO] attacks.base: Attack ChannelManipulationAttack executed: intensity=1.00 evidence=33 indicators=5
+2026-09-11T19:54:40 [INFO] qds.verification: Verification REJECTED: score=0.5625 threshold=0.7000 matches=18/32
+2026-09-11T19:54:40 [INFO] security.detector: detect CHANNEL_MANI: THREAT  score=0.2769
+  Total scenarios evaluated: 26
+
+==============================================================================
+  ATTACK SIMULATION RESULTS
+==============================================================================
+              attack_type  intensity  sample_count  mismatch_rate  anomaly_score classification detection_status                                                                                   reason
+               LEGITIMATE       0.00            32         0.0000       0.030469         NORMAL   NOT_APPLICABLE                                          legitimate baseline session ù no attack applied
+                  FORGERY       0.10            32         0.0312       0.058452     SUSPICIOUS         DETECTED       measurement_distribution_deviation: classification=SUSPICIOUS anomaly_score=0.0585
+                  FORGERY       0.25            32         0.0625       0.052344     SUSPICIOUS         DETECTED       measurement_distribution_deviation: classification=SUSPICIOUS anomaly_score=0.0523
+                  FORGERY       0.50            32         0.2500       0.195728         THREAT         DETECTED           measurement_distribution_deviation: classification=THREAT anomaly_score=0.1957
+                  FORGERY       0.75            32         0.4688       0.325885         THREAT         DETECTED           measurement_distribution_deviation: classification=THREAT anomaly_score=0.3259
+                  FORGERY       1.00            32         0.5000       0.370873         THREAT         DETECTED           measurement_distribution_deviation: classification=THREAT anomaly_score=0.3709
+            IMPERSONATION       0.10            32         0.0625       0.082205     SUSPICIOUS         DETECTED       measurement_distribution_deviation: classification=SUSPICIOUS anomaly_score=0.0822
+            IMPERSONATION       0.25            32         0.0625       0.056190     SUSPICIOUS         DETECTED       measurement_distribution_deviation: classification=SUSPICIOUS anomaly_score=0.0562
+            IMPERSONATION       0.50            32         0.2812       0.181094         THREAT         DETECTED           measurement_distribution_deviation: classification=THREAT anomaly_score=0.1811
+            IMPERSONATION       0.75            32         0.2812       0.216860         THREAT         DETECTED           measurement_distribution_deviation: classification=THREAT anomaly_score=0.2169
+            IMPERSONATION       1.00            32         0.5312       0.362071         THREAT         DETECTED           measurement_distribution_deviation: classification=THREAT anomaly_score=0.3621
+                   REPLAY       0.10            32         0.0000       0.025781         NORMAL         DETECTED                                 replay_session_mismatch: replay consistency check failed
+                   REPLAY       0.25            32         0.0000       0.002344         NORMAL         DETECTED                                 replay_session_mismatch: replay consistency check failed
+                   REPLAY       0.50            32         0.0000       0.002344         NORMAL         DETECTED                                 replay_session_mismatch: replay consistency check failed
+                   REPLAY       0.75            32         0.0000       0.016406         NORMAL         DETECTED                                 replay_session_mismatch: replay consistency check failed
+                   REPLAY       1.00            32         0.0000       0.030469         NORMAL         DETECTED                                 replay_session_mismatch: replay consistency check failed
+UNAUTHORIZED_VERIFICATION       0.10            32         0.0000       0.000000       REJECTED         DETECTED authorization_failure: authorization_failure: session metadata marks authorization=False
+UNAUTHORIZED_VERIFICATION       0.25            32         0.0000       0.000000       REJECTED         DETECTED authorization_failure: authorization_failure: session metadata marks authorization=False
+UNAUTHORIZED_VERIFICATION       0.50            32         0.0000       0.000000       REJECTED         DETECTED authorization_failure: authorization_failure: session metadata marks authorization=False
+UNAUTHORIZED_VERIFICATION       0.75            32         0.0000       0.000000       REJECTED         DETECTED authorization_failure: authorization_failure: session metadata marks authorization=False
+UNAUTHORIZED_VERIFICATION       1.00            32         0.0000       0.000000       REJECTED         DETECTED authorization_failure: authorization_failure: session metadata marks authorization=False
+     CHANNEL_MANIPULATION       0.10            32         0.0312       0.037193         NORMAL           MISSED                          attack not detected: classification=NORMAL anomaly_score=0.0372
+     CHANNEL_MANIPULATION       0.25            32         0.1562       0.103951         THREAT         DETECTED           measurement_distribution_deviation: classification=THREAT anomaly_score=0.1040
+     CHANNEL_MANIPULATION       0.50            32         0.2812       0.193377         THREAT         DETECTED           measurement_distribution_deviation: classification=THREAT anomaly_score=0.1934
+     CHANNEL_MANIPULATION       0.75            32         0.4375       0.291553         THREAT         DETECTED           measurement_distribution_deviation: classification=THREAT anomaly_score=0.2916
+     CHANNEL_MANIPULATION       1.00            32         0.4375       0.276910         THREAT         DETECTED           measurement_distribution_deviation: classification=THREAT anomaly_score=0.2769
+------------------------------------------------------------------------------
+
+==============================================================================
+  DETECTION RATE BY ATTACK TYPE
+==============================================================================
+              attack_type  total  detected  missed  detection_rate
+     CHANNEL_MANIPULATION      5         4       1             0.8
+                  FORGERY      5         5       0             1.0
+            IMPERSONATION      5         5       0             1.0
+                   REPLAY      5         5       0             1.0
+UNAUTHORIZED_VERIFICATION      5         5       0             1.0
+------------------------------------------------------------------------------
+
+==============================================================================
+  MISSED DETECTIONS
+==============================================================================
+         attack_type  intensity  anomaly_score classification                                                          reason
+CHANNEL_MANIPULATION        0.1       0.037193         NORMAL attack not detected: classification=NORMAL anomaly_score=0.0372
+------------------------------------------------------------------------------
+
+==============================================================================
+  ANOMALY SCORE vs ATTACK INTENSITY
+==============================================================================
+
+  FORGERY:
+    intensity=0.10  score=0.058452  mismatch=0.0312  SUSPICIOUS    ##
+    intensity=0.25  score=0.052344  mismatch=0.0625  SUSPICIOUS    ##
+    intensity=0.50  score=0.195728  mismatch=0.2500  THREAT        #######
+    intensity=0.75  score=0.325885  mismatch=0.4688  THREAT        #############
+    intensity=1.00  score=0.370873  mismatch=0.5000  THREAT        ##############
+
+  IMPERSONATION:
+    intensity=0.10  score=0.082205  mismatch=0.0625  SUSPICIOUS    ###
+    intensity=0.25  score=0.056190  mismatch=0.0625  SUSPICIOUS    ##
+    intensity=0.50  score=0.181094  mismatch=0.2812  THREAT        #######
+    intensity=0.75  score=0.216860  mismatch=0.2812  THREAT        ########
+    intensity=1.00  score=0.362071  mismatch=0.5312  THREAT        ##############
+
+  CHANNEL_MANIPULATION:
+    intensity=0.10  score=0.037193  mismatch=0.0312  NORMAL        #
+    intensity=0.25  score=0.103951  mismatch=0.1562  THREAT        ####
+    intensity=0.50  score=0.193377  mismatch=0.2812  THREAT        #######
+    intensity=0.75  score=0.291553  mismatch=0.4375  THREAT        ###########
+    intensity=1.00  score=0.276910  mismatch=0.4375  THREAT        ###########
+
+==============================================================================
+  SUMMARY
+==============================================================================
+  Total scenarios:     26
+  Legitimate:          1
+  Attacks evaluated:   25
+  Detected:            24
+  Missed:              1
+  Overall detection:   24/25 (96.0%)
+  Elapsed:             0.10s
+==============================================================================
+
+  Legitimate sessions not classified as THREAT: True

@@ -1,0 +1,68 @@
+﻿.venv\Scripts\python.exe 
+: Traceback (most recent 
+call last):
+At line:1 char:1
++ 
+.venv\Scripts\python.exe e
+xperiments\final_end_to_en
+d.py 2> err.txt ; ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~
+    + CategoryInfo        
+      : NotSpecified: (T  
+  raceback (most recent   
+  call last)::String)     
+[], RemoteException
+    + FullyQualifiedError 
+   Id : NativeCommandErr  
+  or
+ 
+  File "C:\Users\ak232\Doc
+uments\SIH_26141\quantum-t
+hreat-detection\experiment
+s\final_end_to_end.py", 
+line 17, in <module>
+    from pipeline import 
+EndToEndPipeline
+  File "C:\Users\ak232\Doc
+uments\SIH_26141\quantum-t
+hreat-detection\src\pipeli
+ne.py", line 11, in 
+<module>
+    from qds.signature 
+import generate_signature
+  File "C:\Users\ak232\Doc
+uments\SIH_26141\quantum-t
+hreat-detection\src\qds\__
+init__.py", line 18, in 
+<module>
+    from qds.pauli_states 
+import (
+    ...<21 lines>...
+    )
+  File "C:\Users\ak232\Doc
+uments\SIH_26141\quantum-t
+hreat-detection\src\qds\pa
+uli_states.py", line 34, 
+in <module>
+    from utils.logger 
+import get_logger
+  File "C:\Users\ak232\Doc
+uments\SIH_26141\quantum-t
+hreat-detection\src\utils\
+__init__.py", line 13, in 
+<module>
+    from utils.logger 
+import get_logger
+  File "C:\Users\ak232\Doc
+uments\SIH_26141\quantum-t
+hreat-detection\src\utils\
+logger.py", line 21, in 
+<module>
+    from config.settings 
+import (
+    ...<6 lines>...
+    )
+ModuleNotFoundError: No 
+module named 'config'

@@ -1,0 +1,77 @@
+﻿============================= test session starts =============================
+platform win32 -- Python 3.14.2, pytest-9.1.1, pluggy-1.6.0
+rootdir: C:\Users\ak232\Documents\SIH_26141\quantum-threat-detection
+configfile: pyproject.toml
+plugins: anyio-4.15.1, cov-7.1.0
+collected 6 items
+
+tests\test_pipeline.py .F....                                            [100%]
+
+================================== FAILURES ===================================
+____________________________ test_pipeline_forgery ____________________________
+tests\test_pipeline.py:34: in test_pipeline_forgery
+    res = pipeline.run_scenario("forgery_test", attack=atk, intensity=0.5)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src\pipeline.py:116: in run_scenario
+    v_res.element_results[i].match = False
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<string>:22: in __setattr__
+    ???
+E   dataclasses.FrozenInstanceError: cannot assign to field 'match'
+---------------------------- Captured stdout setup ----------------------------
+2026-09-11T22:00:31 [INFO] qds.signature: Generated QDS signature: id=be54a7fb... msg='calib_0' len=16 seed=42
+2026-09-11T22:00:31 [INFO] qds.verification: Verification ACCEPTED: score=1.0000 threshold=0.7000 matches=16/16
+2026-09-11T22:00:31 [INFO] qds.signature: Generated QDS signature: id=10800cee... msg='calib_1' len=16 seed=42
+2026-09-11T22:00:31 [INFO] qds.verification: Verification ACCEPTED: score=1.0000 threshold=0.7000 matches=16/16
+2026-09-11T22:00:31 [INFO] qds.signature: Generated QDS signature: id=c5d9f2af... msg='calib_2' len=16 seed=42
+2026-09-11T22:00:31 [INFO] qds.verification: Verification ACCEPTED: score=1.0000 threshold=0.7000 matches=16/16
+2026-09-11T22:00:31 [INFO] qds.signature: Generated QDS signature: id=a1bf0d6f... msg='calib_3' len=16 seed=42
+2026-09-11T22:00:31 [INFO] qds.verification: Verification ACCEPTED: score=1.0000 threshold=0.7000 matches=16/16
+2026-09-11T22:00:31 [INFO] qds.signature: Generated QDS signature: id=7c55f601... msg='calib_4' len=16 seed=42
+2026-09-11T22:00:31 [INFO] qds.verification: Verification ACCEPTED: score=1.0000 threshold=0.7000 matches=16/16
+2026-09-11T22:00:31 [INFO] qds.signature: Generated QDS signature: id=ec0adc4a... msg='calib_5' len=16 seed=42
+2026-09-11T22:00:31 [INFO] qds.verification: Verification ACCEPTED: score=1.0000 threshold=0.7000 matches=16/16
+2026-09-11T22:00:31 [INFO] qds.signature: Generated QDS signature: id=577e1686... msg='calib_6' len=16 seed=42
+2026-09-11T22:00:31 [INFO] qds.verification: Verification ACCEPTED: score=1.0000 threshold=0.7000 matches=16/16
+2026-09-11T22:00:31 [INFO] qds.signature: Generated QDS signature: id=8e6698ed... msg='calib_7' len=16 seed=42
+2026-09-11T22:00:31 [INFO] qds.verification: Verification ACCEPTED: score=1.0000 threshold=0.7000 matches=16/16
+2026-09-11T22:00:31 [INFO] qds.signature: Generated QDS signature: id=d5b0bed4... msg='calib_8' len=16 seed=42
+2026-09-11T22:00:31 [INFO] qds.verification: Verification ACCEPTED: score=1.0000 threshold=0.7000 matches=16/16
+2026-09-11T22:00:31 [INFO] qds.signature: Generated QDS signature: id=8a6f4eab... msg='calib_9' len=16 seed=42
+2026-09-11T22:00:31 [INFO] qds.verification: Verification ACCEPTED: score=1.0000 threshold=0.7000 matches=16/16
+2026-09-11T22:00:31 [INFO] security.thresholds: percentile_calibrate: n=10 warn=0.0500 crit=0.1000 (p75/p95)
+2026-09-11T22:00:31 [INFO] security.detector: Calibrated: n=10 warn=0.0500 crit=0.1000 method=percentile
+----------------------------- Captured log setup ------------------------------
+INFO     qds.signature:signature.py:269 Generated QDS signature: id=be54a7fb... msg='calib_0' len=16 seed=42
+INFO     qds.verification:verification.py:267 Verification ACCEPTED: score=1.0000 threshold=0.7000 matches=16/16
+INFO     qds.signature:signature.py:269 Generated QDS signature: id=10800cee... msg='calib_1' len=16 seed=42
+INFO     qds.verification:verification.py:267 Verification ACCEPTED: score=1.0000 threshold=0.7000 matches=16/16
+INFO     qds.signature:signature.py:269 Generated QDS signature: id=c5d9f2af... msg='calib_2' len=16 seed=42
+INFO     qds.verification:verification.py:267 Verification ACCEPTED: score=1.0000 threshold=0.7000 matches=16/16
+INFO     qds.signature:signature.py:269 Generated QDS signature: id=a1bf0d6f... msg='calib_3' len=16 seed=42
+INFO     qds.verification:verification.py:267 Verification ACCEPTED: score=1.0000 threshold=0.7000 matches=16/16
+INFO     qds.signature:signature.py:269 Generated QDS signature: id=7c55f601... msg='calib_4' len=16 seed=42
+INFO     qds.verification:verification.py:267 Verification ACCEPTED: score=1.0000 threshold=0.7000 matches=16/16
+INFO     qds.signature:signature.py:269 Generated QDS signature: id=ec0adc4a... msg='calib_5' len=16 seed=42
+INFO     qds.verification:verification.py:267 Verification ACCEPTED: score=1.0000 threshold=0.7000 matches=16/16
+INFO     qds.signature:signature.py:269 Generated QDS signature: id=577e1686... msg='calib_6' len=16 seed=42
+INFO     qds.verification:verification.py:267 Verification ACCEPTED: score=1.0000 threshold=0.7000 matches=16/16
+INFO     qds.signature:signature.py:269 Generated QDS signature: id=8e6698ed... msg='calib_7' len=16 seed=42
+INFO     qds.verification:verification.py:267 Verification ACCEPTED: score=1.0000 threshold=0.7000 matches=16/16
+INFO     qds.signature:signature.py:269 Generated QDS signature: id=d5b0bed4... msg='calib_8' len=16 seed=42
+INFO     qds.verification:verification.py:267 Verification ACCEPTED: score=1.0000 threshold=0.7000 matches=16/16
+INFO     qds.signature:signature.py:269 Generated QDS signature: id=8a6f4eab... msg='calib_9' len=16 seed=42
+INFO     qds.verification:verification.py:267 Verification ACCEPTED: score=1.0000 threshold=0.7000 matches=16/16
+INFO     security.thresholds:thresholds.py:192 percentile_calibrate: n=10 warn=0.0500 crit=0.1000 (p75/p95)
+INFO     security.detector:detector.py:276 Calibrated: n=10 warn=0.0500 crit=0.1000 method=percentile
+---------------------------- Captured stdout call -----------------------------
+2026-09-11T22:00:31 [INFO] qds.signature: Generated QDS signature: id=be02aad3... msg='forgery_test' len=16 seed=42
+2026-09-11T22:00:31 [INFO] attacks.base: Attack ForgeryAttack executed: intensity=0.50 evidence=9 indicators=4
+2026-09-11T22:00:31 [INFO] qds.verification: Verification ACCEPTED: score=1.0000 threshold=0.7000 matches=16/16
+------------------------------ Captured log call ------------------------------
+INFO     qds.signature:signature.py:269 Generated QDS signature: id=be02aad3... msg='forgery_test' len=16 seed=42
+INFO     attacks.base:base.py:229 Attack ForgeryAttack executed: intensity=0.50 evidence=9 indicators=4
+INFO     qds.verification:verification.py:267 Verification ACCEPTED: score=1.0000 threshold=0.7000 matches=16/16
+=========================== short test summary info ===========================
+FAILED tests/test_pipeline.py::test_pipeline_forgery - dataclasses.FrozenInst...
+========================= 1 failed, 5 passed in 4.14s =========================

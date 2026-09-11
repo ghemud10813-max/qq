@@ -1,0 +1,1719 @@
+﻿============================= test session starts =============================
+platform win32 -- Python 3.14.2, pytest-9.1.1, pluggy-1.6.0
+rootdir: C:\Users\ak232\Documents\SIH_26141\quantum-threat-detection
+configfile: pyproject.toml
+plugins: anyio-4.15.1, cov-7.1.0
+collected 6 items
+
+tests\test_pipeline.py FFFFFF                                            [100%]
+
+================================== FAILURES ===================================
+__________________________ test_pipeline_legitimate ___________________________
+tests\test_pipeline.py:27: in test_pipeline_legitimate
+    res = pipeline.run_scenario("legit_test")
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src\pipeline.py:145: in run_scenario
+    verification_score=v_res.score,
+                       ^^^^^^^^^^^
+E   AttributeError: 'VerificationResult' object has no attribute 'score'
+---------------------------- Captured stdout setup ----------------------------
+2026-09-11T21:58:09 [INFO] qds.signature: Generated QDS signature: id=3df9b045... msg='calib_0' len=16 seed=42
+2026-09-11T21:58:09 [INFO] qds.verification: Verification ACCEPTED: score=1.0000 threshold=0.7000 matches=16/16
+2026-09-11T21:58:09 [INFO] qds.signature: Generated QDS signature: id=82400ff7... msg='calib_1' len=16 seed=42
+2026-09-11T21:58:09 [INFO] qds.verification: Verification ACCEPTED: score=1.0000 threshold=0.7000 matches=16/16
+2026-09-11T21:58:09 [INFO] qds.signature: Generated QDS signature: id=0ede2cb5... msg='calib_2' len=16 seed=42
+2026-09-11T21:58:09 [INFO] qds.verification: Verification ACCEPTED: score=1.0000 threshold=0.7000 matches=16/16
+2026-09-11T21:58:09 [INFO] qds.signature: Generated QDS signature: id=778239cb... msg='calib_3' len=16 seed=42
+2026-09-11T21:58:09 [INFO] qds.verification: Verification ACCEPTED: score=1.0000 threshold=0.7000 matches=16/16
+2026-09-11T21:58:09 [INFO] qds.signature: Generated QDS signature: id=4efb28f9... msg='calib_4' len=16 seed=42
+2026-09-11T21:58:09 [INFO] qds.verification: Verification ACCEPTED: score=1.0000 threshold=0.7000 matches=16/16
+2026-09-11T21:58:09 [INFO] qds.signature: Generated QDS signature: id=3464ff2f... msg='calib_5' len=16 seed=42
+2026-09-11T21:58:09 [INFO] qds.verification: Verification ACCEPTED: score=1.0000 threshold=0.7000 matches=16/16
+2026-09-11T21:58:09 [INFO] qds.signature: Generated QDS signature: id=eff7e813... msg='calib_6' len=16 seed=42
+2026-09-11T21:58:09 [INFO] qds.verification: Verification ACCEPTED: score=1.0000 threshold=0.7000 matches=16/16
+2026-09-11T21:58:09 [INFO] qds.signature: Generated QDS signature: id=71213a5e... msg='calib_7' len=16 seed=42
+2026-09-11T21:58:09 [INFO] qds.verification: Verification ACCEPTED: score=1.0000 threshold=0.7000 matches=16/16
+2026-09-11T21:58:09 [INFO] qds.signature: Generated QDS signature: id=b108721e... msg='calib_8' len=16 seed=42
+2026-09-11T21:58:09 [INFO] qds.verification: Verification ACCEPTED: score=1.0000 threshold=0.7000 matches=16/16
+2026-09-11T21:58:09 [INFO] qds.signature: Generated QDS signature: id=1170a74e... msg='calib_9' len=16 seed=42
+2026-09-11T21:58:09 [INFO] qds.verification: Verification ACCEPTED: score=1.0000 threshold=0.7000 matches=16/16
+2026-09-11T21:58:09 [INFO] security.thresholds: percentile_calibrate: n=10 warn=0.0500 crit=0.1000 (p75/p95)
+2026-09-11T21:58:09 [INFO] security.detector: Calibrated: n=10 warn=0.0500 crit=0.1000 method=percentile
+----------------------------- Captured log setup ------------------------------
+INFO     qds.signature:signature.py:269 Generated QDS signature: id=3df9b045... msg='calib_0' len=16 seed=42
+INFO     qds.verification:verification.py:267 Verification ACCEPTED: score=1.0000 threshold=0.7000 matches=16/16
+INFO     qds.signature:signature.py:269 Generated QDS signature: id=82400ff7... msg='calib_1' len=16 seed=42
+INFO     qds.verification:verification.py:267 Verification ACCEPTED: score=1.0000 threshold=0.7000 matches=16/16
+INFO     qds.signature:signature.py:269 Generated QDS signature: id=0ede2cb5... msg='calib_2' len=16 seed=42
+INFO     qds.verification:verification.py:267 Verification ACCEPTED: score=1.0000 threshold=0.7000 matches=16/16
+INFO     qds.signature:signature.py:269 Generated QDS signature: id=778239cb... msg='calib_3' len=16 seed=42
+INFO     qds.verification:verification.py:267 Verification ACCEPTED: score=1.0000 threshold=0.7000 matches=16/16
+INFO     qds.signature:signature.py:269 Generated QDS signature: id=4efb28f9... msg='calib_4' len=16 seed=42
+INFO     qds.verification:verification.py:267 Verification ACCEPTED: score=1.0000 threshold=0.7000 matches=16/16
+INFO     qds.signature:signature.py:269 Generated QDS signature: id=3464ff2f... msg='calib_5' len=16 seed=42
+INFO     qds.verification:verification.py:267 Verification ACCEPTED: score=1.0000 threshold=0.7000 matches=16/16
+INFO     qds.signature:signature.py:269 Generated QDS signature: id=eff7e813... msg='calib_6' len=16 seed=42
+INFO     qds.verification:verification.py:267 Verification ACCEPTED: score=1.0000 threshold=0.7000 matches=16/16
+INFO     qds.signature:signature.py:269 Generated QDS signature: id=71213a5e... msg='calib_7' len=16 seed=42
+INFO     qds.verification:verification.py:267 Verification ACCEPTED: score=1.0000 threshold=0.7000 matches=16/16
+INFO     qds.signature:signature.py:269 Generated QDS signature: id=b108721e... msg='calib_8' len=16 seed=42
+INFO     qds.verification:verification.py:267 Verification ACCEPTED: score=1.0000 threshold=0.7000 matches=16/16
+INFO     qds.signature:signature.py:269 Generated QDS signature: id=1170a74e... msg='calib_9' len=16 seed=42
+INFO     qds.verification:verification.py:267 Verification ACCEPTED: score=1.0000 threshold=0.7000 matches=16/16
+INFO     security.thresholds:thresholds.py:192 percentile_calibrate: n=10 warn=0.0500 crit=0.1000 (p75/p95)
+INFO     security.detector:detector.py:276 Calibrated: n=10 warn=0.0500 crit=0.1000 method=percentile
+---------------------------- Captured stdout call -----------------------------
+2026-09-11T21:58:09 [INFO] qds.signature: Generated QDS signature: id=450c90ce... msg='legit_test' len=16 seed=42
+2026-09-11T21:58:09 [INFO] qds.verification: Verification ACCEPTED: score=1.0000 threshold=0.7000 matches=16/16
+2026-09-11T21:58:09 [INFO] security.detector: detect 450c90ce-b58: NORMAL  score=0.0000
+------------------------------ Captured log call ------------------------------
+INFO     qds.signature:signature.py:269 Generated QDS signature: id=450c90ce... msg='legit_test' len=16 seed=42
+INFO     qds.verification:verification.py:267 Verification ACCEPTED: score=1.0000 threshold=0.7000 matches=16/16
+INFO     security.detector:detector.py:366 detect 450c90ce-b58: NORMAL  score=0.0000
+____________________________ test_pipeline_forgery ____________________________
+tests\test_pipeline.py:35: in test_pipeline_forgery
+    assert res.classification in ["SUSPICIOUS", "THREAT", "REJECTED"]
+E   AssertionError: assert 'NORMAL' in ['SUSPICIOUS', 'THREAT', 'REJECTED']
+E    +  where 'NORMAL' = PipelineResult(session_id='f7ba6a32-80bf-48f7-8c2e-6b07a3afd129', signature_length=16, quantum_state_basis='Mixed Paul... forged with random eigenstate |1>', 'forgery_summary: 8/16 elements replaced (50.0%)'], latency=0.0034379999997327104).classification
+---------------------------- Captured stdout setup ----------------------------
+2026-09-11T21:58:09 [INFO] qds.signature: Generated QDS signature: id=5faa958d... msg='calib_0' len=16 seed=42
+2026-09-11T21:58:09 [INFO] qds.verification: Verification ACCEPTED: score=1.0000 threshold=0.7000 matches=16/16
+2026-09-11T21:58:09 [INFO] qds.signature: Generated QDS signature: id=31a6dbdf... msg='calib_1' len=16 seed=42
+2026-09-11T21:58:09 [INFO] qds.verification: Verification ACCEPTED: score=1.0000 threshold=0.7000 matches=16/16
+2026-09-11T21:58:09 [INFO] qds.signature: Generated QDS signature: id=e64314a2... msg='calib_2' len=16 seed=42
+2026-09-11T21:58:09 [INFO] qds.verification: Verification ACCEPTED: score=1.0000 threshold=0.7000 matches=16/16
+2026-09-11T21:58:09 [INFO] qds.signature: Generated QDS signature: id=35a95574... msg='calib_3' len=16 seed=42
+2026-09-11T21:58:09 [INFO] qds.verification: Verification ACCEPTED: score=1.0000 threshold=0.7000 matches=16/16
+2026-09-11T21:58:09 [INFO] qds.signature: Generated QDS signature: id=18be55c5... msg='calib_4' len=16 seed=42
+2026-09-11T21:58:09 [INFO] qds.verification: Verification ACCEPTED: score=1.0000 threshold=0.7000 matches=16/16
+2026-09-11T21:58:09 [INFO] qds.signature: Generated QDS signature: id=17250a72... msg='calib_5' len=16 seed=42
+2026-09-11T21:58:09 [INFO] qds.verification: Verification ACCEPTED: score=1.0000 threshold=0.7000 matches=16/16
+2026-09-11T21:58:09 [INFO] qds.signature: Generated QDS signature: id=369d73bd... msg='calib_6' len=16 seed=42
+2026-09-11T21:58:09 [INFO] qds.verification: Verification ACCEPTED: score=1.0000 threshold=0.7000 matches=16/16
+2026-09-11T21:58:09 [INFO] qds.signature: Generated QDS signature: id=7b7a9c3a... msg='calib_7' len=16 seed=42
+2026-09-11T21:58:09 [INFO] qds.verification: Verification ACCEPTED: score=1.0000 threshold=0.7000 matches=16/16
+2026-09-11T21:58:09 [INFO] qds.signature: Generated QDS signature: id=d365e367... msg='calib_8' len=16 seed=42
+2026-09-11T21:58:09 [INFO] qds.verification: Verification ACCEPTED: score=1.0000 threshold=0.7000 matches=16/16
+2026-09-11T21:58:09 [INFO] qds.signature: Generated QDS signature: id=4d2f8c89... msg='calib_9' len=16 seed=42
+2026-09-11T21:58:09 [INFO] qds.verification: Verification ACCEPTED: score=1.0000 threshold=0.7000 matches=16/16
+2026-09-11T21:58:09 [INFO] security.thresholds: percentile_calibrate: n=10 warn=0.0500 crit=0.1000 (p75/p95)
+2026-09-11T21:58:09 [INFO] security.detector: Calibrated: n=10 warn=0.0500 crit=0.1000 method=percentile
+----------------------------- Captured log setup ------------------------------
+INFO     qds.signature:signature.py:269 Generated QDS signature: id=5faa958d... msg='calib_0' len=16 seed=42
+INFO     qds.verification:verification.py:267 Verification ACCEPTED: score=1.0000 threshold=0.7000 matches=16/16
+INFO     qds.signature:signature.py:269 Generated QDS signature: id=31a6dbdf... msg='calib_1' len=16 seed=42
+INFO     qds.verification:verification.py:267 Verification ACCEPTED: score=1.0000 threshold=0.7000 matches=16/16
+INFO     qds.signature:signature.py:269 Generated QDS signature: id=e64314a2... msg='calib_2' len=16 seed=42
+INFO     qds.verification:verification.py:267 Verification ACCEPTED: score=1.0000 threshold=0.7000 matches=16/16
+INFO     qds.signature:signature.py:269 Generated QDS signature: id=35a95574... msg='calib_3' len=16 seed=42
+INFO     qds.verification:verification.py:267 Verification ACCEPTED: score=1.0000 threshold=0.7000 matches=16/16
+INFO     qds.signature:signature.py:269 Generated QDS signature: id=18be55c5... msg='calib_4' len=16 seed=42
+INFO     qds.verification:verification.py:267 Verification ACCEPTED: score=1.0000 threshold=0.7000 matches=16/16
+INFO     qds.signature:signature.py:269 Generated QDS signature: id=17250a72... msg='calib_5' len=16 seed=42
+INFO     qds.verification:verification.py:267 Verification ACCEPTED: score=1.0000 threshold=0.7000 matches=16/16
+INFO     qds.signature:signature.py:269 Generated QDS signature: id=369d73bd... msg='calib_6' len=16 seed=42
+INFO     qds.verification:verification.py:267 Verification ACCEPTED: score=1.0000 threshold=0.7000 matches=16/16
+INFO     qds.signature:signature.py:269 Generated QDS signature: id=7b7a9c3a... msg='calib_7' len=16 seed=42
+INFO     qds.verification:verification.py:267 Verification ACCEPTED: score=1.0000 threshold=0.7000 matches=16/16
+INFO     qds.signature:signature.py:269 Generated QDS signature: id=d365e367... msg='calib_8' len=16 seed=42
+INFO     qds.verification:verification.py:267 Verification ACCEPTED: score=1.0000 threshold=0.7000 matches=16/16
+INFO     qds.signature:signature.py:269 Generated QDS signature: id=4d2f8c89... msg='calib_9' len=16 seed=42
+INFO     qds.verification:verification.py:267 Verification ACCEPTED: score=1.0000 threshold=0.7000 matches=16/16
+INFO     security.thresholds:thresholds.py:192 percentile_calibrate: n=10 warn=0.0500 crit=0.1000 (p75/p95)
+INFO     security.detector:detector.py:276 Calibrated: n=10 warn=0.0500 crit=0.1000 method=percentile
+---------------------------- Captured stdout call -----------------------------
+2026-09-11T21:58:09 [INFO] qds.signature: Generated QDS signature: id=f7ba6a32... msg='forgery_test' len=16 seed=42
+2026-09-11T21:58:09 [INFO] attacks.base: Attack ForgeryAttack executed: intensity=0.50 evidence=9 indicators=4
+2026-09-11T21:58:09 [INFO] qds.verification: Verification ACCEPTED: score=1.0000 threshold=0.7000 matches=16/16
+2026-09-11T21:58:09 [INFO] security.detector: detect f7ba6a32-80b: NORMAL  score=0.0000
+------------------------------ Captured log call ------------------------------
+INFO     qds.signature:signature.py:269 Generated QDS signature: id=f7ba6a32... msg='forgery_test' len=16 seed=42
+INFO     attacks.base:base.py:229 Attack ForgeryAttack executed: intensity=0.50 evidence=9 indicators=4
+INFO     qds.verification:verification.py:267 Verification ACCEPTED: score=1.0000 threshold=0.7000 matches=16/16
+INFO     security.detector:detector.py:366 detect f7ba6a32-80b: NORMAL  score=0.0000
+_________________________ test_pipeline_impersonation _________________________
+tests\test_pipeline.py:40: in test_pipeline_impersonation
+    res = pipeline.run_scenario("impersonate_test", attack=atk, intensity=1.0)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src\pipeline.py:145: in run_scenario
+    verification_score=v_res.score,
+                       ^^^^^^^^^^^
+E   AttributeError: 'VerificationResult' object has no attribute 'score'
+---------------------------- Captured stdout setup ----------------------------
+2026-09-11T21:58:09 [INFO] qds.signature: Generated QDS signature: id=2a6be778... msg='calib_0' len=16 seed=42
+2026-09-11T21:58:09 [INFO] qds.verification: Verification ACCEPTED: score=1.0000 threshold=0.7000 matches=16/16
+2026-09-11T21:58:09 [INFO] qds.signature: Generated QDS signature: id=b6ae2622... msg='calib_1' len=16 seed=42
+2026-09-11T21:58:09 [INFO] qds.verification: Verification ACCEPTED: score=1.0000 threshold=0.7000 matches=16/16
+2026-09-11T21:58:09 [INFO] qds.signature: Generated QDS signature: id=f3d215cc... msg='calib_2' len=16 seed=42
+2026-09-11T21:58:09 [INFO] qds.verification: Verification ACCEPTED: score=1.0000 threshold=0.7000 matches=16/16
+2026-09-11T21:58:09 [INFO] qds.signature: Generated QDS signature: id=983cf149... msg='calib_3' len=16 seed=42
+2026-09-11T21:58:09 [INFO] qds.verification: Verification ACCEPTED: score=1.0000 threshold=0.7000 matches=16/16
+2026-09-11T21:58:09 [INFO] qds.signature: Generated QDS signature: id=bec0b5dd... msg='calib_4' len=16 seed=42
+2026-09-11T21:58:09 [INFO] qds.verification: Verification ACCEPTED: score=1.0000 threshold=0.7000 matches=16/16
+2026-09-11T21:58:09 [INFO] qds.signature: Generated QDS signature: id=765f2002... msg='calib_5' len=16 seed=42
+2026-09-11T21:58:09 [INFO] qds.verification: Verification ACCEPTED: score=1.0000 threshold=0.7000 matches=16/16
+2026-09-11T21:58:09 [INFO] qds.signature: Generated QDS signature: id=197e103e... msg='calib_6' len=16 seed=42
+2026-09-11T21:58:09 [INFO] qds.verification: Verification ACCEPTED: score=1.0000 threshold=0.7000 matches=16/16
+2026-09-11T21:58:09 [INFO] qds.signature: Generated QDS signature: id=2bdc7900... msg='calib_7' len=16 seed=42
+2026-09-11T21:58:09 [INFO] qds.verification: Verification ACCEPTED: score=1.0000 threshold=0.7000 matches=16/16
+2026-09-11T21:58:09 [INFO] qds.signature: Generated QDS signature: id=e5d01a7a... msg='calib_8' len=16 seed=42
+2026-09-11T21:58:09 [INFO] qds.verification: Verification ACCEPTED: score=1.0000 threshold=0.7000 matches=16/16
+2026-09-11T21:58:09 [INFO] qds.signature: Generated QDS signature: id=36ad85c6... msg='calib_9' len=16 seed=42
+2026-09-11T21:58:09 [INFO] qds.verification: Verification ACCEPTED: score=1.0000 threshold=0.7000 matches=16/16
+2026-09-11T21:58:09 [INFO] security.thresholds: percentile_calibrate: n=10 warn=0.0500 crit=0.1000 (p75/p95)
+2026-09-11T21:58:09 [INFO] security.detector: Calibrated: n=10 warn=0.0500 crit=0.1000 method=percentile
+----------------------------- Captured log setup ------------------------------
+INFO     qds.signature:signature.py:269 Generated QDS signature: id=2a6be778... msg='calib_0' len=16 seed=42
+INFO     qds.verification:verification.py:267 Verification ACCEPTED: score=1.0000 threshold=0.7000 matches=16/16
+INFO     qds.signature:signature.py:269 Generated QDS signature: id=b6ae2622... msg='calib_1' len=16 seed=42
+INFO     qds.verification:verification.py:267 Verification ACCEPTED: score=1.0000 threshold=0.7000 matches=16/16
+INFO     qds.signature:signature.py:269 Generated QDS signature: id=f3d215cc... msg='calib_2' len=16 seed=42
+INFO     qds.verification:verification.py:267 Verification ACCEPTED: score=1.0000 threshold=0.7000 matches=16/16
+INFO     qds.signature:signature.py:269 Generated QDS signature: id=983cf149... msg='calib_3' len=16 seed=42
+INFO     qds.verification:verification.py:267 Verification ACCEPTED: score=1.0000 threshold=0.7000 matches=16/16
+INFO     qds.signature:signature.py:269 Generated QDS signature: id=bec0b5dd... msg='calib_4' len=16 seed=42
+INFO     qds.verification:verification.py:267 Verification ACCEPTED: score=1.0000 threshold=0.7000 matches=16/16
+INFO     qds.signature:signature.py:269 Generated QDS signature: id=765f2002... msg='calib_5' len=16 seed=42
+INFO     qds.verification:verification.py:267 Verification ACCEPTED: score=1.0000 threshold=0.7000 matches=16/16
+INFO     qds.signature:signature.py:269 Generated QDS signature: id=197e103e... msg='calib_6' len=16 seed=42
+INFO     qds.verification:verification.py:267 Verification ACCEPTED: score=1.0000 threshold=0.7000 matches=16/16
+INFO     qds.signature:signature.py:269 Generated QDS signature: id=2bdc7900... msg='calib_7' len=16 seed=42
+INFO     qds.verification:verification.py:267 Verification ACCEPTED: score=1.0000 threshold=0.7000 matches=16/16
+INFO     qds.signature:signature.py:269 Generated QDS signature: id=e5d01a7a... msg='calib_8' len=16 seed=42
+INFO     qds.verification:verification.py:267 Verification ACCEPTED: score=1.0000 threshold=0.7000 matches=16/16
+INFO     qds.signature:signature.py:269 Generated QDS signature: id=36ad85c6... msg='calib_9' len=16 seed=42
+INFO     qds.verification:verification.py:267 Verification ACCEPTED: score=1.0000 threshold=0.7000 matches=16/16
+INFO     security.thresholds:thresholds.py:192 percentile_calibrate: n=10 warn=0.0500 crit=0.1000 (p75/p95)
+INFO     security.detector:detector.py:276 Calibrated: n=10 warn=0.0500 crit=0.1000 method=percentile
+---------------------------- Captured stdout call -----------------------------
+2026-09-11T21:58:09 [INFO] qds.signature: Generated QDS signature: id=34698412... msg='impersonate_test' len=16 seed=42
+2026-09-11T21:58:09 [INFO] attacks.base: Attack ImpersonationAttack executed: intensity=1.00 evidence=18 indicators=6
+2026-09-11T21:58:09 [INFO] qds.verification: Verification ACCEPTED: score=1.0000 threshold=0.7000 matches=16/16
+2026-09-11T21:58:09 [INFO] security.detector: detect 34698412-ece: NORMAL  score=0.0000
+------------------------------ Captured log call ------------------------------
+INFO     qds.signature:signature.py:269 Generated QDS signature: id=34698412... msg='impersonate_test' len=16 seed=42
+INFO     attacks.base:base.py:229 Attack ImpersonationAttack executed: intensity=1.00 evidence=18 indicators=6
+INFO     qds.verification:verification.py:267 Verification ACCEPTED: score=1.0000 threshold=0.7000 matches=16/16
+INFO     security.detector:detector.py:366 detect 34698412-ece: NORMAL  score=0.0000
+____________________________ test_pipeline_replay _____________________________
+tests\test_pipeline.py:48: in test_pipeline_replay
+    res = pipeline.run_scenario("replay_test", attack=atk, intensity=1.0)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src\pipeline.py:145: in run_scenario
+    verification_score=v_res.score,
+                       ^^^^^^^^^^^
+E   AttributeError: 'VerificationResult' object has no attribute 'score'
+---------------------------- Captured stdout setup ----------------------------
+2026-09-11T21:58:09 [INFO] qds.signature: Generated QDS signature: id=bd0604f7... msg='calib_0' len=16 seed=42
+2026-09-11T21:58:09 [INFO] qds.verification: Verification ACCEPTED: score=1.0000 threshold=0.7000 matches=16/16
+2026-09-11T21:58:09 [INFO] qds.signature: Generated QDS signature: id=9224da78... msg='calib_1' len=16 seed=42
+2026-09-11T21:58:09 [INFO] qds.verification: Verification ACCEPTED: score=1.0000 threshold=0.7000 matches=16/16
+2026-09-11T21:58:09 [INFO] qds.signature: Generated QDS signature: id=030be343... msg='calib_2' len=16 seed=42
+2026-09-11T21:58:09 [INFO] qds.verification: Verification ACCEPTED: score=1.0000 threshold=0.7000 matches=16/16
+2026-09-11T21:58:09 [INFO] qds.signature: Generated QDS signature: id=331e810d... msg='calib_3' len=16 seed=42
+2026-09-11T21:58:09 [INFO] qds.verification: Verification ACCEPTED: score=1.0000 threshold=0.7000 matches=16/16
+2026-09-11T21:58:09 [INFO] qds.signature: Generated QDS signature: id=2d4ad70d... msg='calib_4' len=16 seed=42
+2026-09-11T21:58:09 [INFO] qds.verification: Verification ACCEPTED: score=1.0000 threshold=0.7000 matches=16/16
+2026-09-11T21:58:09 [INFO] qds.signature: Generated QDS signature: id=42dd3fa8... msg='calib_5' len=16 seed=42
+2026-09-11T21:58:09 [INFO] qds.verification: Verification ACCEPTED: score=1.0000 threshold=0.7000 matches=16/16
+2026-09-11T21:58:09 [INFO] qds.signature: Generated QDS signature: id=84d41f14... msg='calib_6' len=16 seed=42
+2026-09-11T21:58:09 [INFO] qds.verification: Verification ACCEPTED: score=1.0000 threshold=0.7000 matches=16/16
+2026-09-11T21:58:09 [INFO] qds.signature: Generated QDS signature: id=2cb68738... msg='calib_7' len=16 seed=42
+2026-09-11T21:58:09 [INFO] qds.verification: Verification ACCEPTED: score=1.0000 threshold=0.7000 matches=16/16
+2026-09-11T21:58:09 [INFO] qds.signature: Generated QDS signature: id=39d576b7... msg='calib_8' len=16 seed=42
+2026-09-11T21:58:09 [INFO] qds.verification: Verification ACCEPTED: score=1.0000 threshold=0.7000 matches=16/16
+2026-09-11T21:58:09 [INFO] qds.signature: Generated QDS signature: id=8b17d16d... msg='calib_9' len=16 seed=42
+2026-09-11T21:58:09 [INFO] qds.verification: Verification ACCEPTED: score=1.0000 threshold=0.7000 matches=16/16
+2026-09-11T21:58:09 [INFO] security.thresholds: percentile_calibrate: n=10 warn=0.0500 crit=0.1000 (p75/p95)
+2026-09-11T21:58:09 [INFO] security.detector: Calibrated: n=10 warn=0.0500 crit=0.1000 method=percentile
+----------------------------- Captured log setup ------------------------------
+INFO     qds.signature:signature.py:269 Generated QDS signature: id=bd0604f7... msg='calib_0' len=16 seed=42
+INFO     qds.verification:verification.py:267 Verification ACCEPTED: score=1.0000 threshold=0.7000 matches=16/16
+INFO     qds.signature:signature.py:269 Generated QDS signature: id=9224da78... msg='calib_1' len=16 seed=42
+INFO     qds.verification:verification.py:267 Verification ACCEPTED: score=1.0000 threshold=0.7000 matches=16/16
+INFO     qds.signature:signature.py:269 Generated QDS signature: id=030be343... msg='calib_2' len=16 seed=42
+INFO     qds.verification:verification.py:267 Verification ACCEPTED: score=1.0000 threshold=0.7000 matches=16/16
+INFO     qds.signature:signature.py:269 Generated QDS signature: id=331e810d... msg='calib_3' len=16 seed=42
+INFO     qds.verification:verification.py:267 Verification ACCEPTED: score=1.0000 threshold=0.7000 matches=16/16
+INFO     qds.signature:signature.py:269 Generated QDS signature: id=2d4ad70d... msg='calib_4' len=16 seed=42
+INFO     qds.verification:verification.py:267 Verification ACCEPTED: score=1.0000 threshold=0.7000 matches=16/16
+INFO     qds.signature:signature.py:269 Generated QDS signature: id=42dd3fa8... msg='calib_5' len=16 seed=42
+INFO     qds.verification:verification.py:267 Verification ACCEPTED: score=1.0000 threshold=0.7000 matches=16/16
+INFO     qds.signature:signature.py:269 Generated QDS signature: id=84d41f14... msg='calib_6' len=16 seed=42
+INFO     qds.verification:verification.py:267 Verification ACCEPTED: score=1.0000 threshold=0.7000 matches=16/16
+INFO     qds.signature:signature.py:269 Generated QDS signature: id=2cb68738... msg='calib_7' len=16 seed=42
+INFO     qds.verification:verification.py:267 Verification ACCEPTED: score=1.0000 threshold=0.7000 matches=16/16
+INFO     qds.signature:signature.py:269 Generated QDS signature: id=39d576b7... msg='calib_8' len=16 seed=42
+INFO     qds.verification:verification.py:267 Verification ACCEPTED: score=1.0000 threshold=0.7000 matches=16/16
+INFO     qds.signature:signature.py:269 Generated QDS signature: id=8b17d16d... msg='calib_9' len=16 seed=42
+INFO     qds.verification:verification.py:267 Verification ACCEPTED: score=1.0000 threshold=0.7000 matches=16/16
+INFO     security.thresholds:thresholds.py:192 percentile_calibrate: n=10 warn=0.0500 crit=0.1000 (p75/p95)
+INFO     security.detector:detector.py:276 Calibrated: n=10 warn=0.0500 crit=0.1000 method=percentile
+---------------------------- Captured stdout call -----------------------------
+2026-09-11T21:58:09 [INFO] qds.signature: Generated QDS signature: id=ba2850f5... msg='replay_test' len=16 seed=42
+2026-09-11T21:58:09 [INFO] attacks.base: Attack ReplayAttack executed: intensity=1.00 evidence=4 indicators=5
+2026-09-11T21:58:09 [INFO] qds.verification: Verification ACCEPTED: score=1.0000 threshold=0.7000 matches=16/16
+2026-09-11T21:58:09 [INFO] security.detector: detect ba2850f5-da2: NORMAL  score=0.0000
+------------------------------ Captured log call ------------------------------
+INFO     qds.signature:signature.py:269 Generated QDS signature: id=ba2850f5... msg='replay_test' len=16 seed=42
+INFO     attacks.base:base.py:229 Attack ReplayAttack executed: intensity=1.00 evidence=4 indicators=5
+INFO     qds.verification:verification.py:267 Verification ACCEPTED: score=1.0000 threshold=0.7000 matches=16/16
+INFO     security.detector:detector.py:366 detect ba2850f5-da2: NORMAL  score=0.0000
+___________________ test_pipeline_unauthorized_verification ___________________
+tests\test_pipeline.py:54: in test_pipeline_unauthorized_verification
+    res = pipeline.run_scenario("unauth_test", attack=atk, intensity=1.0)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src\pipeline.py:145: in run_scenario
+    verification_score=v_res.score,
+                       ^^^^^^^^^^^
+E   AttributeError: 'VerificationResult' object has no attribute 'score'
+---------------------------- Captured stdout setup ----------------------------
+2026-09-11T21:58:09 [INFO] qds.signature: Generated QDS signature: id=2b9cd0f1... msg='calib_0' len=16 seed=42
+2026-09-11T21:58:09 [INFO] qds.verification: Verification ACCEPTED: score=1.0000 threshold=0.7000 matches=16/16
+2026-09-11T21:58:09 [INFO] qds.signature: Generated QDS signature: id=88e5ec75... msg='calib_1' len=16 seed=42
+2026-09-11T21:58:09 [INFO] qds.verification: Verification ACCEPTED: score=1.0000 threshold=0.7000 matches=16/16
+2026-09-11T21:58:09 [INFO] qds.signature: Generated QDS signature: id=31ba0c16... msg='calib_2' len=16 seed=42
+2026-09-11T21:58:09 [INFO] qds.verification: Verification ACCEPTED: score=1.0000 threshold=0.7000 matches=16/16
+2026-09-11T21:58:09 [INFO] qds.signature: Generated QDS signature: id=d57789f6... msg='calib_3' len=16 seed=42
+2026-09-11T21:58:09 [INFO] qds.verification: Verification ACCEPTED: score=1.0000 threshold=0.7000 matches=16/16
+2026-09-11T21:58:09 [INFO] qds.signature: Generated QDS signature: id=7acff888... msg='calib_4' len=16 seed=42
+2026-09-11T21:58:09 [INFO] qds.verification: Verification ACCEPTED: score=1.0000 threshold=0.7000 matches=16/16
+2026-09-11T21:58:09 [INFO] qds.signature: Generated QDS signature: id=93d8b214... msg='calib_5' len=16 seed=42
+2026-09-11T21:58:09 [INFO] qds.verification: Verification ACCEPTED: score=1.0000 threshold=0.7000 matches=16/16
+2026-09-11T21:58:09 [INFO] qds.signature: Generated QDS signature: id=f8c06955... msg='calib_6' len=16 seed=42
+2026-09-11T21:58:09 [INFO] qds.verification: Verification ACCEPTED: score=1.0000 threshold=0.7000 matches=16/16
+2026-09-11T21:58:09 [INFO] qds.signature: Generated QDS signature: id=81529e21... msg='calib_7' len=16 seed=42
+2026-09-11T21:58:09 [INFO] qds.verification: Verification ACCEPTED: score=1.0000 threshold=0.7000 matches=16/16
+2026-09-11T21:58:09 [INFO] qds.signature: Generated QDS signature: id=63778783... msg='calib_8' len=16 seed=42
+2026-09-11T21:58:09 [INFO] qds.verification: Verification ACCEPTED: score=1.0000 threshold=0.7000 matches=16/16
+2026-09-11T21:58:09 [INFO] qds.signature: Generated QDS signature: id=dd338be5... msg='calib_9' len=16 seed=42
+2026-09-11T21:58:09 [INFO] qds.verification: Verification ACCEPTED: score=1.0000 threshold=0.7000 matches=16/16
+2026-09-11T21:58:09 [INFO] security.thresholds: percentile_calibrate: n=10 warn=0.0500 crit=0.1000 (p75/p95)
+2026-09-11T21:58:09 [INFO] security.detector: Calibrated: n=10 warn=0.0500 crit=0.1000 method=percentile
+----------------------------- Captured log setup ------------------------------
+INFO     qds.signature:signature.py:269 Generated QDS signature: id=2b9cd0f1... msg='calib_0' len=16 seed=42
+INFO     qds.verification:verification.py:267 Verification ACCEPTED: score=1.0000 threshold=0.7000 matches=16/16
+INFO     qds.signature:signature.py:269 Generated QDS signature: id=88e5ec75... msg='calib_1' len=16 seed=42
+INFO     qds.verification:verification.py:267 Verification ACCEPTED: score=1.0000 threshold=0.7000 matches=16/16
+INFO     qds.signature:signature.py:269 Generated QDS signature: id=31ba0c16... msg='calib_2' len=16 seed=42
+INFO     qds.verification:verification.py:267 Verification ACCEPTED: score=1.0000 threshold=0.7000 matches=16/16
+INFO     qds.signature:signature.py:269 Generated QDS signature: id=d57789f6... msg='calib_3' len=16 seed=42
+INFO     qds.verification:verification.py:267 Verification ACCEPTED: score=1.0000 threshold=0.7000 matches=16/16
+INFO     qds.signature:signature.py:269 Generated QDS signature: id=7acff888... msg='calib_4' len=16 seed=42
+INFO     qds.verification:verification.py:267 Verification ACCEPTED: score=1.0000 threshold=0.7000 matches=16/16
+INFO     qds.signature:signature.py:269 Generated QDS signature: id=93d8b214... msg='calib_5' len=16 seed=42
+INFO     qds.verification:verification.py:267 Verification ACCEPTED: score=1.0000 threshold=0.7000 matches=16/16
+INFO     qds.signature:signature.py:269 Generated QDS signature: id=f8c06955... msg='calib_6' len=16 seed=42
+INFO     qds.verification:verification.py:267 Verification ACCEPTED: score=1.0000 threshold=0.7000 matches=16/16
+INFO     qds.signature:signature.py:269 Generated QDS signature: id=81529e21... msg='calib_7' len=16 seed=42
+INFO     qds.verification:verification.py:267 Verification ACCEPTED: score=1.0000 threshold=0.7000 matches=16/16
+INFO     qds.signature:signature.py:269 Generated QDS signature: id=63778783... msg='calib_8' len=16 seed=42
+INFO     qds.verification:verification.py:267 Verification ACCEPTED: score=1.0000 threshold=0.7000 matches=16/16
+INFO     qds.signature:signature.py:269 Generated QDS signature: id=dd338be5... msg='calib_9' len=16 seed=42
+INFO     qds.verification:verification.py:267 Verification ACCEPTED: score=1.0000 threshold=0.7000 matches=16/16
+INFO     security.thresholds:thresholds.py:192 percentile_calibrate: n=10 warn=0.0500 crit=0.1000 (p75/p95)
+INFO     security.detector:detector.py:276 Calibrated: n=10 warn=0.0500 crit=0.1000 method=percentile
+---------------------------- Captured stdout call -----------------------------
+2026-09-11T21:58:09 [INFO] qds.signature: Generated QDS signature: id=469d1e61... msg='unauth_test' len=16 seed=42
+2026-09-11T21:58:09 [INFO] attacks.base: Attack UnauthorizedVerificationAttack executed: intensity=1.00 evidence=2 indicators=4
+2026-09-11T21:58:09 [INFO] qds.verification: Verification ACCEPTED: score=1.0000 threshold=0.7000 matches=16/16
+2026-09-11T21:58:09 [INFO] security.detector: detect 469d1e61-9bc: NORMAL  score=0.0000
+------------------------------ Captured log call ------------------------------
+INFO     qds.signature:signature.py:269 Generated QDS signature: id=469d1e61... msg='unauth_test' len=16 seed=42
+INFO     attacks.base:base.py:229 Attack UnauthorizedVerificationAttack executed: intensity=1.00 evidence=2 indicators=4
+INFO     qds.verification:verification.py:267 Verification ACCEPTED: score=1.0000 threshold=0.7000 matches=16/16
+INFO     security.detector:detector.py:366 detect 469d1e61-9bc: NORMAL  score=0.0000
+_____________________ test_pipeline_channel_manipulation ______________________
+tests\test_pipeline.py:60: in test_pipeline_channel_manipulation
+    res = pipeline.run_scenario("chan_test", attack=atk, intensity=0.5)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src\pipeline.py:145: in run_scenario
+    verification_score=v_res.score,
+                       ^^^^^^^^^^^
+E   AttributeError: 'VerificationResult' object has no attribute 'score'
+---------------------------- Captured stdout setup ----------------------------
+2026-09-11T21:58:09 [INFO] qds.signature: Generated QDS signature: id=3a934fb8... msg='calib_0' len=16 seed=42
+2026-09-11T21:58:09 [INFO] qds.verification: Verification ACCEPTED: score=1.0000 threshold=0.7000 matches=16/16
+2026-09-11T21:58:09 [INFO] qds.signature: Generated QDS signature: id=3838f8d7... msg='calib_1' len=16 seed=42
+2026-09-11T21:58:09 [INFO] qds.verification: Verification ACCEPTED: score=1.0000 threshold=0.7000 matches=16/16
+2026-09-11T21:58:09 [INFO] qds.signature: Generated QDS signature: id=e6ebb709... msg='calib_2' len=16 seed=42
+2026-09-11T21:58:09 [INFO] qds.verification: Verification ACCEPTED: score=1.0000 threshold=0.7000 matches=16/16
+2026-09-11T21:58:09 [INFO] qds.signature: Generated QDS signature: id=1ff57dca... msg='calib_3' len=16 seed=42
+2026-09-11T21:58:09 [INFO] qds.verification: Verification ACCEPTED: score=1.0000 threshold=0.7000 matches=16/16
+2026-09-11T21:58:09 [INFO] qds.signature: Generated QDS signature: id=3d4b139b... msg='calib_4' len=16 seed=42
+2026-09-11T21:58:09 [INFO] qds.verification: Verification ACCEPTED: score=1.0000 threshold=0.7000 matches=16/16
+2026-09-11T21:58:09 [INFO] qds.signature: Generated QDS signature: id=04e7fa5f... msg='calib_5' len=16 seed=42
+2026-09-11T21:58:09 [INFO] qds.verification: Verification ACCEPTED: score=1.0000 threshold=0.7000 matches=16/16
+2026-09-11T21:58:09 [INFO] qds.signature: Generated QDS signature: id=aa3c16d1... msg='calib_6' len=16 seed=42
+2026-09-11T21:58:09 [INFO] qds.verification: Verification ACCEPTED: score=1.0000 threshold=0.7000 matches=16/16
+2026-09-11T21:58:09 [INFO] qds.signature: Generated QDS signature: id=e450e5dd... msg='calib_7' len=16 seed=42
+2026-09-11T21:58:09 [INFO] qds.verification: Verification ACCEPTED: score=1.0000 threshold=0.7000 matches=16/16
+2026-09-11T21:58:09 [INFO] qds.signature: Generated QDS signature: id=2fc96c09... msg='calib_8' len=16 seed=42
+2026-09-11T21:58:09 [INFO] qds.verification: Verification ACCEPTED: score=1.0000 threshold=0.7000 matches=16/16
+2026-09-11T21:58:09 [INFO] qds.signature: Generated QDS signature: id=28904fe0... msg='calib_9' len=16 seed=42
+2026-09-11T21:58:09 [INFO] qds.verification: Verification ACCEPTED: score=1.0000 threshold=0.7000 matches=16/16
+2026-09-11T21:58:09 [INFO] security.thresholds: percentile_calibrate: n=10 warn=0.0500 crit=0.1000 (p75/p95)
+2026-09-11T21:58:09 [INFO] security.detector: Calibrated: n=10 warn=0.0500 crit=0.1000 method=percentile
+----------------------------- Captured log setup ------------------------------
+INFO     qds.signature:signature.py:269 Generated QDS signature: id=3a934fb8... msg='calib_0' len=16 seed=42
+INFO     qds.verification:verification.py:267 Verification ACCEPTED: score=1.0000 threshold=0.7000 matches=16/16
+INFO     qds.signature:signature.py:269 Generated QDS signature: id=3838f8d7... msg='calib_1' len=16 seed=42
+INFO     qds.verification:verification.py:267 Verification ACCEPTED: score=1.0000 threshold=0.7000 matches=16/16
+INFO     qds.signature:signature.py:269 Generated QDS signature: id=e6ebb709... msg='calib_2' len=16 seed=42
+INFO     qds.verification:verification.py:267 Verification ACCEPTED: score=1.0000 threshold=0.7000 matches=16/16
+INFO     qds.signature:signature.py:269 Generated QDS signature: id=1ff57dca... msg='calib_3' len=16 seed=42
+INFO     qds.verification:verification.py:267 Verification ACCEPTED: score=1.0000 threshold=0.7000 matches=16/16
+INFO     qds.signature:signature.py:269 Generated QDS signature: id=3d4b139b... msg='calib_4' len=16 seed=42
+INFO     qds.verification:verification.py:267 Verification ACCEPTED: score=1.0000 threshold=0.7000 matches=16/16
+INFO     qds.signature:signature.py:269 Generated QDS signature: id=04e7fa5f... msg='calib_5' len=16 seed=42
+INFO     qds.verification:verification.py:267 Verification ACCEPTED: score=1.0000 threshold=0.7000 matches=16/16
+INFO     qds.signature:signature.py:269 Generated QDS signature: id=aa3c16d1... msg='calib_6' len=16 seed=42
+INFO     qds.verification:verification.py:267 Verification ACCEPTED: score=1.0000 threshold=0.7000 matches=16/16
+INFO     qds.signature:signature.py:269 Generated QDS signature: id=e450e5dd... msg='calib_7' len=16 seed=42
+INFO     qds.verification:verification.py:267 Verification ACCEPTED: score=1.0000 threshold=0.7000 matches=16/16
+INFO     qds.signature:signature.py:269 Generated QDS signature: id=2fc96c09... msg='calib_8' len=16 seed=42
+INFO     qds.verification:verification.py:267 Verification ACCEPTED: score=1.0000 threshold=0.7000 matches=16/16
+INFO     qds.signature:signature.py:269 Generated QDS signature: id=28904fe0... msg='calib_9' len=16 seed=42
+INFO     qds.verification:verification.py:267 Verification ACCEPTED: score=1.0000 threshold=0.7000 matches=16/16
+INFO     security.thresholds:thresholds.py:192 percentile_calibrate: n=10 warn=0.0500 crit=0.1000 (p75/p95)
+INFO     security.detector:detector.py:276 Calibrated: n=10 warn=0.0500 crit=0.1000 method=percentile
+---------------------------- Captured stdout call -----------------------------
+2026-09-11T21:58:09 [INFO] qds.signature: Generated QDS signature: id=4fbfbfbf... msg='chan_test' len=16 seed=42
+2026-09-11T21:58:09 [INFO] attacks.base: Attack ChannelManipulationAttack executed: intensity=0.50 evidence=17 indicators=5
+2026-09-11T21:58:09 [INFO] qiskit.passmanager.base_tasks: Pass: ContainsInstruction - 0.01836 (ms)
+2026-09-11T21:58:09 [INFO] qiskit.passmanager.base_tasks: Pass: UnitarySynthesis - 0.01764 (ms)
+2026-09-11T21:58:09 [INFO] qiskit.passmanager.base_tasks: Pass: HighLevelSynthesis - 0.01597 (ms)
+2026-09-11T21:58:09 [INFO] qiskit.passmanager.base_tasks: Pass: BasisTranslator - 0.04983 (ms)
+2026-09-11T21:58:09 [INFO] qiskit.passmanager.base_tasks: Pass: ElidePermutations - 0.00882 (ms)
+2026-09-11T21:58:09 [INFO] qiskit.passmanager.base_tasks: Pass: RemoveDiagonalGatesBeforeMeasure - 0.30899 (ms)
+2026-09-11T21:58:09 [INFO] qiskit.passmanager.base_tasks: Pass: RemoveIdentityEquivalent - 0.02408 (ms)
+2026-09-11T21:58:09 [INFO] qiskit.passmanager.base_tasks: Pass: InverseCancellation - 0.13447 (ms)
+2026-09-11T21:58:09 [INFO] qiskit.passmanager.base_tasks: Pass: ContractIdleWiresInControlFlow - 0.07033 (ms)
+2026-09-11T21:58:09 [INFO] qiskit.passmanager.base_tasks: Pass: CommutativeCancellation - 0.27633 (ms)
+2026-09-11T21:58:09 [INFO] qiskit.passmanager.base_tasks: Pass: ConsolidateBlocks - 0.01597 (ms)
+2026-09-11T21:58:09 [INFO] qiskit.passmanager.base_tasks: Pass: ConsolidateBlocks - 0.01240 (ms)
+2026-09-11T21:58:09 [INFO] qiskit.passmanager.base_tasks: Pass: ConsolidateBlocks - 0.63109 (ms)
+2026-09-11T21:58:09 [INFO] qiskit.passmanager.base_tasks: Pass: Split2QUnitaries - 0.00429 (ms)
+2026-09-11T21:58:09 [INFO] qiskit.passmanager.base_tasks: Pass: UnitarySynthesis - 0.01144 (ms)
+2026-09-11T21:58:09 [INFO] qiskit.passmanager.base_tasks: Pass: HighLevelSynthesis - 0.07057 (ms)
+2026-09-11T21:58:09 [INFO] qiskit.passmanager.base_tasks: Pass: BasisTranslator - 0.07653 (ms)
+2026-09-11T21:58:09 [INFO] qiskit.passmanager.base_tasks: Pass: TwoQubitPeepholeOptimization - 1.13988 (ms)
+2026-09-11T21:58:09 [INFO] qiskit.passmanager.base_tasks: Pass: Size - 0.02861 (ms)
+2026-09-11T21:58:09 [INFO] qiskit.passmanager.base_tasks: Pass: Depth - 0.02170 (ms)
+2026-09-11T21:58:09 [INFO] qiskit.passmanager.base_tasks: Pass: FixedPoint - 0.01621 (ms)
+2026-09-11T21:58:09 [INFO] qiskit.passmanager.base_tasks: Pass: FixedPoint - 0.00978 (ms)
+2026-09-11T21:58:09 [INFO] qiskit.passmanager.base_tasks: Pass: RemoveIdentityEquivalent - 0.02432 (ms)
+2026-09-11T21:58:09 [INFO] qiskit.passmanager.base_tasks: Pass: Optimize1qGatesDecomposition - 0.62728 (ms)
+2026-09-11T21:58:09 [INFO] qiskit.passmanager.base_tasks: Pass: CommutativeCancellation - 0.39959 (ms)
+2026-09-11T21:58:09 [INFO] qiskit.passmanager.base_tasks: Pass: ContractIdleWiresInControlFlow - 0.07653 (ms)
+2026-09-11T21:58:09 [INFO] qiskit.passmanager.base_tasks: Pass: GatesInBasis - 0.01812 (ms)
+2026-09-11T21:58:09 [INFO] qiskit.passmanager.base_tasks: Pass: Size - 0.00620 (ms)
+2026-09-11T21:58:09 [INFO] qiskit.passmanager.base_tasks: Pass: Depth - 0.00787 (ms)
+2026-09-11T21:58:09 [INFO] qiskit.passmanager.base_tasks: Pass: FixedPoint - 0.00525 (ms)
+2026-09-11T21:58:09 [INFO] qiskit.passmanager.base_tasks: Pass: FixedPoint - 0.00310 (ms)
+2026-09-11T21:58:09 [INFO] qiskit.passmanager.base_tasks: Pass: ContainsInstruction - 0.00834 (ms)
+2026-09-11T21:58:09 [INFO] qiskit.compiler.transpiler: Total Transpile Time - 41.50152 (ms)
+2026-09-11T21:58:09 [INFO] qiskit.passmanager.base_tasks: Pass: Decompose - 0.26917 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: ContainsInstruction - 0.01955 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: UnitarySynthesis - 0.04339 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: HighLevelSynthesis - 0.01025 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: BasisTranslator - 0.04125 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: ElidePermutations - 0.00644 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: RemoveDiagonalGatesBeforeMeasure - 0.61488 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: RemoveIdentityEquivalent - 0.03409 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: InverseCancellation - 0.48518 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: ContractIdleWiresInControlFlow - 0.17977 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: CommutativeCancellation - 0.65160 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: ConsolidateBlocks - 0.02050 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: ConsolidateBlocks - 0.01407 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: ConsolidateBlocks - 0.59128 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: Split2QUnitaries - 0.00501 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: UnitarySynthesis - 0.01049 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: HighLevelSynthesis - 0.06700 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: BasisTranslator - 0.62799 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: TwoQubitPeepholeOptimization - 0.41533 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: Size - 0.01097 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: Depth - 0.01287 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: FixedPoint - 0.00715 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: FixedPoint - 0.00238 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: RemoveIdentityEquivalent - 0.00930 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: Optimize1qGatesDecomposition - 0.34642 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: CommutativeCancellation - 0.23079 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: ContractIdleWiresInControlFlow - 0.06843 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: GatesInBasis - 0.00882 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: Size - 0.00405 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: Depth - 0.00787 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: FixedPoint - 0.00405 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: FixedPoint - 0.00262 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: RemoveIdentityEquivalent - 0.00620 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: Optimize1qGatesDecomposition - 0.27776 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: CommutativeCancellation - 0.42748 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: ContractIdleWiresInControlFlow - 0.06151 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: GatesInBasis - 0.00596 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: Size - 0.00358 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: Depth - 0.00644 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: FixedPoint - 0.00358 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: FixedPoint - 0.00215 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: ContainsInstruction - 0.00834 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.compiler.transpiler: Total Transpile Time - 31.66747 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: Decompose - 0.15664 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: ContainsInstruction - 0.01025 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: UnitarySynthesis - 0.01216 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: HighLevelSynthesis - 0.00882 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: BasisTranslator - 0.03052 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: ElidePermutations - 0.00525 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: RemoveDiagonalGatesBeforeMeasure - 0.26464 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: RemoveIdentityEquivalent - 0.01359 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: InverseCancellation - 0.14353 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: ContractIdleWiresInControlFlow - 0.06652 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: CommutativeCancellation - 0.26441 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: ConsolidateBlocks - 0.01812 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: ConsolidateBlocks - 0.01574 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: ConsolidateBlocks - 0.62180 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: Split2QUnitaries - 0.00286 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: UnitarySynthesis - 0.00906 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: HighLevelSynthesis - 0.06437 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: BasisTranslator - 0.54669 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: TwoQubitPeepholeOptimization - 0.57697 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: Size - 0.00954 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: Depth - 0.01526 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: FixedPoint - 0.00858 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: FixedPoint - 0.00501 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: RemoveIdentityEquivalent - 0.01621 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: Optimize1qGatesDecomposition - 0.43893 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: CommutativeCancellation - 0.32520 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: ContractIdleWiresInControlFlow - 0.11420 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: GatesInBasis - 0.01717 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: Size - 0.00715 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: Depth - 0.01049 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: FixedPoint - 0.00644 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: FixedPoint - 0.00286 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: RemoveIdentityEquivalent - 0.01144 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: Optimize1qGatesDecomposition - 0.42105 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: CommutativeCancellation - 0.31996 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: ContractIdleWiresInControlFlow - 0.09227 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: GatesInBasis - 0.00978 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: Size - 0.00525 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: Depth - 0.01073 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: FixedPoint - 0.00501 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: FixedPoint - 0.00262 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: ContainsInstruction - 0.01001 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.compiler.transpiler: Total Transpile Time - 31.92878 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: Decompose - 0.19670 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: ContainsInstruction - 0.01431 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: UnitarySynthesis - 0.01335 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: HighLevelSynthesis - 0.00978 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: BasisTranslator - 0.04244 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: ElidePermutations - 0.00668 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: RemoveDiagonalGatesBeforeMeasure - 0.27227 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: RemoveIdentityEquivalent - 0.01621 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: InverseCancellation - 0.14448 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: ContractIdleWiresInControlFlow - 0.07677 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: CommutativeCancellation - 0.29063 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: ConsolidateBlocks - 0.01669 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: ConsolidateBlocks - 0.01907 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: ConsolidateBlocks - 0.67925 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: Split2QUnitaries - 0.00596 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: UnitarySynthesis - 0.01311 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: HighLevelSynthesis - 0.08845 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: BasisTranslator - 0.47922 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: TwoQubitPeepholeOptimization - 0.43058 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: Size - 0.00787 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: Depth - 0.01144 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: FixedPoint - 0.00787 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: FixedPoint - 0.00381 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: RemoveIdentityEquivalent - 0.01097 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: Optimize1qGatesDecomposition - 0.36454 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: CommutativeCancellation - 0.28658 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: ContractIdleWiresInControlFlow - 0.12374 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: GatesInBasis - 0.00834 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: Size - 0.00477 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: Depth - 0.00930 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: FixedPoint - 0.00477 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: FixedPoint - 0.00310 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: RemoveIdentityEquivalent - 0.00858 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: Optimize1qGatesDecomposition - 0.27704 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: CommutativeCancellation - 0.23460 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: ContractIdleWiresInControlFlow - 0.07796 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: GatesInBasis - 0.00787 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: Size - 0.00501 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: Depth - 0.00906 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: FixedPoint - 0.00429 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: FixedPoint - 0.00310 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: ContainsInstruction - 0.01001 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.compiler.transpiler: Total Transpile Time - 30.60770 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: Decompose - 0.20242 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: ContainsInstruction - 0.01121 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: UnitarySynthesis - 0.01264 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: HighLevelSynthesis - 0.00930 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: BasisTranslator - 0.03862 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: ElidePermutations - 0.00525 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: RemoveDiagonalGatesBeforeMeasure - 0.28992 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: RemoveIdentityEquivalent - 0.01502 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: InverseCancellation - 0.13852 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: ContractIdleWiresInControlFlow - 0.07081 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: CommutativeCancellation - 0.31877 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: ConsolidateBlocks - 0.01454 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: ConsolidateBlocks - 0.01669 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: ConsolidateBlocks - 0.63848 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: Split2QUnitaries - 0.00334 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: UnitarySynthesis - 0.01168 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: HighLevelSynthesis - 0.07176 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: BasisTranslator - 0.38910 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: TwoQubitPeepholeOptimization - 0.41318 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: Size - 0.00787 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: Depth - 0.01073 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: FixedPoint - 0.00620 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: FixedPoint - 0.00310 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: RemoveIdentityEquivalent - 0.00882 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: Optimize1qGatesDecomposition - 0.31710 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: CommutativeCancellation - 0.24366 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: ContractIdleWiresInControlFlow - 0.08059 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: GatesInBasis - 0.00858 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: Size - 0.00525 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: Depth - 0.01001 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: FixedPoint - 0.00477 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: FixedPoint - 0.00286 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: RemoveIdentityEquivalent - 0.00811 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: Optimize1qGatesDecomposition - 0.25225 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: CommutativeCancellation - 0.20933 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: ContractIdleWiresInControlFlow - 0.07248 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: GatesInBasis - 0.00691 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: Size - 0.00405 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: Depth - 0.00834 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: FixedPoint - 0.00381 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: FixedPoint - 0.00238 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: ContainsInstruction - 0.00834 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.compiler.transpiler: Total Transpile Time - 29.96731 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: Decompose - 0.20266 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: ContainsInstruction - 0.01025 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: UnitarySynthesis - 0.01049 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: HighLevelSynthesis - 0.00763 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: BasisTranslator - 0.02885 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: ElidePermutations - 0.00477 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: RemoveDiagonalGatesBeforeMeasure - 0.32306 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: RemoveIdentityEquivalent - 0.01550 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: InverseCancellation - 0.23365 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: ContractIdleWiresInControlFlow - 0.11706 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: CommutativeCancellation - 0.35334 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: ConsolidateBlocks - 0.01788 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: ConsolidateBlocks - 0.01979 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: ConsolidateBlocks - 0.71311 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: Split2QUnitaries - 0.00381 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: UnitarySynthesis - 0.01240 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: HighLevelSynthesis - 0.08512 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: BasisTranslator - 0.45633 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: TwoQubitPeepholeOptimization - 0.49901 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: Size - 0.00978 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: Depth - 0.01264 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: FixedPoint - 0.00691 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: FixedPoint - 0.00310 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: RemoveIdentityEquivalent - 0.01264 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: Optimize1qGatesDecomposition - 0.34904 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: CommutativeCancellation - 0.29588 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: ContractIdleWiresInControlFlow - 0.08821 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: GatesInBasis - 0.00882 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: Size - 0.00548 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: Depth - 0.00882 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: FixedPoint - 0.00548 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: FixedPoint - 0.00262 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: RemoveIdentityEquivalent - 0.00787 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: Optimize1qGatesDecomposition - 0.43726 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: CommutativeCancellation - 0.23031 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: ContractIdleWiresInControlFlow - 0.07629 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: GatesInBasis - 0.00644 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: Size - 0.00453 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: Depth - 0.00763 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: FixedPoint - 0.00405 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: FixedPoint - 0.00262 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: ContainsInstruction - 0.00858 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.compiler.transpiler: Total Transpile Time - 30.93243 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: Decompose - 0.18740 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: ContainsInstruction - 0.01025 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: UnitarySynthesis - 0.01025 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: HighLevelSynthesis - 0.00834 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: BasisTranslator - 0.02956 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: ElidePermutations - 0.00429 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: RemoveDiagonalGatesBeforeMeasure - 0.25415 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: RemoveIdentityEquivalent - 0.01359 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: InverseCancellation - 0.14067 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: ContractIdleWiresInControlFlow - 0.07176 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: CommutativeCancellation - 0.23818 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: ConsolidateBlocks - 0.01287 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: ConsolidateBlocks - 0.01359 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: ConsolidateBlocks - 0.50402 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: Split2QUnitaries - 0.00334 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: UnitarySynthesis - 0.00882 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: HighLevelSynthesis - 0.05674 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: BasisTranslator - 0.02766 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: TwoQubitPeepholeOptimization - 0.37026 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: Size - 0.00882 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: Depth - 0.01287 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: FixedPoint - 0.00691 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: FixedPoint - 0.00262 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: RemoveIdentityEquivalent - 0.01240 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: Optimize1qGatesDecomposition - 0.35286 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: CommutativeCancellation - 0.31376 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: ContractIdleWiresInControlFlow - 0.10991 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: GatesInBasis - 0.01574 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: Size - 0.00525 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: Depth - 0.00954 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: FixedPoint - 0.00548 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: FixedPoint - 0.00262 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: ContainsInstruction - 0.00978 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.compiler.transpiler: Total Transpile Time - 28.51129 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: Decompose - 0.26131 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: ContainsInstruction - 0.01025 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: UnitarySynthesis - 0.01025 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: HighLevelSynthesis - 0.00811 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: BasisTranslator - 0.03457 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: ElidePermutations - 0.00501 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: RemoveDiagonalGatesBeforeMeasure - 0.23317 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: RemoveIdentityEquivalent - 0.01168 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: InverseCancellation - 0.12827 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: ContractIdleWiresInControlFlow - 0.07820 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: CommutativeCancellation - 0.29755 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: ConsolidateBlocks - 0.01812 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: ConsolidateBlocks - 0.01407 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: ConsolidateBlocks - 0.68331 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: Split2QUnitaries - 0.00262 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: UnitarySynthesis - 0.01001 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: HighLevelSynthesis - 0.06938 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: BasisTranslator - 0.39244 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: TwoQubitPeepholeOptimization - 0.33593 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: Size - 0.00691 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: Depth - 0.01097 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: FixedPoint - 0.00548 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: FixedPoint - 0.00310 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: RemoveIdentityEquivalent - 0.00834 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: Optimize1qGatesDecomposition - 0.28467 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: CommutativeCancellation - 0.31257 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: ContractIdleWiresInControlFlow - 0.08273 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: GatesInBasis - 0.00763 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: Size - 0.00453 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: Depth - 0.00906 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: FixedPoint - 0.00429 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: FixedPoint - 0.00238 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: RemoveIdentityEquivalent - 0.00691 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: Optimize1qGatesDecomposition - 0.42105 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: CommutativeCancellation - 0.32854 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: ContractIdleWiresInControlFlow - 0.13590 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: GatesInBasis - 0.01240 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: Size - 0.00811 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: Depth - 0.01335 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: FixedPoint - 0.00834 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: FixedPoint - 0.00405 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: ContainsInstruction - 0.01264 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.compiler.transpiler: Total Transpile Time - 29.53935 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: Decompose - 0.24557 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: ContainsInstruction - 0.01049 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: UnitarySynthesis - 0.01001 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: HighLevelSynthesis - 0.00811 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: BasisTranslator - 0.03076 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: ElidePermutations - 0.00429 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: RemoveDiagonalGatesBeforeMeasure - 0.24128 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: RemoveIdentityEquivalent - 0.01383 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: InverseCancellation - 0.13113 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: ContractIdleWiresInControlFlow - 0.07010 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: CommutativeCancellation - 0.24104 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: ConsolidateBlocks - 0.01907 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: ConsolidateBlocks - 0.01574 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: ConsolidateBlocks - 0.79083 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: Split2QUnitaries - 0.00381 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: UnitarySynthesis - 0.01407 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: HighLevelSynthesis - 0.07510 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: BasisTranslator - 0.56052 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: TwoQubitPeepholeOptimization - 0.40627 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: Size - 0.00834 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: Depth - 0.01097 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: FixedPoint - 0.00739 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: FixedPoint - 0.00262 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: RemoveIdentityEquivalent - 0.01097 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: Optimize1qGatesDecomposition - 0.33903 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: CommutativeCancellation - 0.27394 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: ContractIdleWiresInControlFlow - 0.13232 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: GatesInBasis - 0.01025 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: Size - 0.00620 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: Depth - 0.00978 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: FixedPoint - 0.00501 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: FixedPoint - 0.00262 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: RemoveIdentityEquivalent - 0.01144 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: Optimize1qGatesDecomposition - 0.35357 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: CommutativeCancellation - 0.25821 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: ContractIdleWiresInControlFlow - 0.08225 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: GatesInBasis - 0.00858 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: Size - 0.00548 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: Depth - 0.01001 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: FixedPoint - 0.00477 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: FixedPoint - 0.00262 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: ContainsInstruction - 0.01025 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.compiler.transpiler: Total Transpile Time - 30.21193 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: Decompose - 0.19097 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: ContainsInstruction - 0.01645 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: UnitarySynthesis - 0.02789 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: HighLevelSynthesis - 0.01574 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: BasisTranslator - 0.06223 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: ElidePermutations - 0.00596 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: RemoveDiagonalGatesBeforeMeasure - 0.33021 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: RemoveIdentityEquivalent - 0.02170 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: InverseCancellation - 0.15283 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: ContractIdleWiresInControlFlow - 0.08869 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: CommutativeCancellation - 0.25725 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: ConsolidateBlocks - 0.01788 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: ConsolidateBlocks - 0.02003 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: ConsolidateBlocks - 0.70596 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: Split2QUnitaries - 0.00501 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: UnitarySynthesis - 0.01287 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: HighLevelSynthesis - 0.08106 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: BasisTranslator - 0.04292 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: TwoQubitPeepholeOptimization - 0.36860 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: Size - 0.00787 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: Depth - 0.01121 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: FixedPoint - 0.00763 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: FixedPoint - 0.00262 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: RemoveIdentityEquivalent - 0.01049 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: Optimize1qGatesDecomposition - 0.40245 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: CommutativeCancellation - 0.32926 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: ContractIdleWiresInControlFlow - 0.09179 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: GatesInBasis - 0.01049 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: Size - 0.00572 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: Depth - 0.00858 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: FixedPoint - 0.00548 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: FixedPoint - 0.00238 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: ContainsInstruction - 0.00882 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.compiler.transpiler: Total Transpile Time - 30.14684 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: Decompose - 0.17381 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: ContainsInstruction - 0.01025 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: UnitarySynthesis - 0.01049 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: HighLevelSynthesis - 0.00787 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: BasisTranslator - 0.02980 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: ElidePermutations - 0.00477 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: RemoveDiagonalGatesBeforeMeasure - 0.24152 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: RemoveIdentityEquivalent - 0.01240 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: InverseCancellation - 0.12612 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: ContractIdleWiresInControlFlow - 0.07153 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: CommutativeCancellation - 0.25153 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: ConsolidateBlocks - 0.01407 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: ConsolidateBlocks - 0.01645 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: ConsolidateBlocks - 0.60415 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: Split2QUnitaries - 0.00238 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: UnitarySynthesis - 0.00978 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: HighLevelSynthesis - 0.06247 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: BasisTranslator - 0.38981 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: TwoQubitPeepholeOptimization - 0.33498 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: Size - 0.13375 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: Depth - 0.01431 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: FixedPoint - 0.00668 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: FixedPoint - 0.00381 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: RemoveIdentityEquivalent - 0.01264 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: Optimize1qGatesDecomposition - 0.43035 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: CommutativeCancellation - 0.49782 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: ContractIdleWiresInControlFlow - 0.10228 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: GatesInBasis - 0.01121 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: Size - 0.00787 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: Depth - 0.01216 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: FixedPoint - 0.00572 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: FixedPoint - 0.00429 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: RemoveIdentityEquivalent - 0.01025 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: Optimize1qGatesDecomposition - 0.32067 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: CommutativeCancellation - 0.24891 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: ContractIdleWiresInControlFlow - 0.10920 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: GatesInBasis - 0.01216 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: Size - 0.00620 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: Depth - 0.01073 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: FixedPoint - 0.00501 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: FixedPoint - 0.00286 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: ContainsInstruction - 0.00954 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.compiler.transpiler: Total Transpile Time - 30.00951 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: Decompose - 0.20671 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: ContainsInstruction - 0.01097 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: UnitarySynthesis - 0.01216 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: HighLevelSynthesis - 0.00739 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: BasisTranslator - 0.02980 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: ElidePermutations - 0.00477 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: RemoveDiagonalGatesBeforeMeasure - 0.23508 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: RemoveIdentityEquivalent - 0.01168 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: InverseCancellation - 0.12851 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: ContractIdleWiresInControlFlow - 0.07677 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: CommutativeCancellation - 0.25415 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: ConsolidateBlocks - 0.01407 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: ConsolidateBlocks - 0.02146 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: ConsolidateBlocks - 0.82016 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: Split2QUnitaries - 0.00525 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: UnitarySynthesis - 0.01502 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: HighLevelSynthesis - 0.09394 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: BasisTranslator - 0.64993 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: TwoQubitPeepholeOptimization - 0.63157 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: Size - 0.00954 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: Depth - 0.01216 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: FixedPoint - 0.00739 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: FixedPoint - 0.00286 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: RemoveIdentityEquivalent - 0.01287 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: Optimize1qGatesDecomposition - 0.35763 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: CommutativeCancellation - 0.27299 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: ContractIdleWiresInControlFlow - 0.09465 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: GatesInBasis - 0.01049 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: Size - 0.00572 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: Depth - 0.01144 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: FixedPoint - 0.00501 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: FixedPoint - 0.00310 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: RemoveIdentityEquivalent - 0.00930 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: Optimize1qGatesDecomposition - 0.28419 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: CommutativeCancellation - 0.23341 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: ContractIdleWiresInControlFlow - 0.15616 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: GatesInBasis - 0.01121 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: Size - 0.00644 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: Depth - 0.01287 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: FixedPoint - 0.00596 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: FixedPoint - 0.00381 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: ContainsInstruction - 0.01359 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.compiler.transpiler: Total Transpile Time - 30.37715 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: Decompose - 0.20242 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: ContainsInstruction - 0.01049 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: UnitarySynthesis - 0.01073 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: HighLevelSynthesis - 0.01001 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: BasisTranslator - 0.03695 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: ElidePermutations - 0.00715 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: RemoveDiagonalGatesBeforeMeasure - 0.45824 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: RemoveIdentityEquivalent - 0.02027 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: InverseCancellation - 0.22817 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: ContractIdleWiresInControlFlow - 0.08869 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: CommutativeCancellation - 0.30351 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: ConsolidateBlocks - 0.01502 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: ConsolidateBlocks - 0.01645 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: ConsolidateBlocks - 0.67735 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: Split2QUnitaries - 0.00405 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: UnitarySynthesis - 0.01264 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: HighLevelSynthesis - 0.07749 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: BasisTranslator - 0.49710 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: TwoQubitPeepholeOptimization - 0.40317 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: Size - 0.00930 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: Depth - 0.01168 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: FixedPoint - 0.00763 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: FixedPoint - 0.00262 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: RemoveIdentityEquivalent - 0.01168 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: Optimize1qGatesDecomposition - 0.40889 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: CommutativeCancellation - 0.40412 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: ContractIdleWiresInControlFlow - 0.09704 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: GatesInBasis - 0.01192 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: Size - 0.00668 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: Depth - 0.01073 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: FixedPoint - 0.00596 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: FixedPoint - 0.00334 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: RemoveIdentityEquivalent - 0.01025 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: Optimize1qGatesDecomposition - 0.30541 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: CommutativeCancellation - 0.23699 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: ContractIdleWiresInControlFlow - 0.07701 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: GatesInBasis - 0.00954 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: Size - 0.00453 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: Depth - 0.00882 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: FixedPoint - 0.00548 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: FixedPoint - 0.00262 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: ContainsInstruction - 0.01168 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.compiler.transpiler: Total Transpile Time - 31.00514 (ms)
+2026-09-11T21:58:10 [INFO] qiskit.passmanager.base_tasks: Pass: Decompose - 0.21744 (ms)
+2026-09-11T21:58:11 [INFO] qiskit.passmanager.base_tasks: Pass: ContainsInstruction - 0.01526 (ms)
+2026-09-11T21:58:11 [INFO] qiskit.passmanager.base_tasks: Pass: UnitarySynthesis - 0.01121 (ms)
+2026-09-11T21:58:11 [INFO] qiskit.passmanager.base_tasks: Pass: HighLevelSynthesis - 0.00715 (ms)
+2026-09-11T21:58:11 [INFO] qiskit.passmanager.base_tasks: Pass: BasisTranslator - 0.02980 (ms)
+2026-09-11T21:58:11 [INFO] qiskit.passmanager.base_tasks: Pass: ElidePermutations - 0.00501 (ms)
+2026-09-11T21:58:11 [INFO] qiskit.passmanager.base_tasks: Pass: RemoveDiagonalGatesBeforeMeasure - 0.23174 (ms)
+2026-09-11T21:58:11 [INFO] qiskit.passmanager.base_tasks: Pass: RemoveIdentityEquivalent - 0.01144 (ms)
+2026-09-11T21:58:11 [INFO] qiskit.passmanager.base_tasks: Pass: InverseCancellation - 0.12779 (ms)
+2026-09-11T21:58:11 [INFO] qiskit.passmanager.base_tasks: Pass: ContractIdleWiresInControlFlow - 0.09608 (ms)
+2026-09-11T21:58:11 [INFO] qiskit.passmanager.base_tasks: Pass: CommutativeCancellation - 0.26369 (ms)
+2026-09-11T21:58:11 [INFO] qiskit.passmanager.base_tasks: Pass: ConsolidateBlocks - 0.01431 (ms)
+2026-09-11T21:58:11 [INFO] qiskit.passmanager.base_tasks: Pass: ConsolidateBlocks - 0.01526 (ms)
+2026-09-11T21:58:11 [INFO] qiskit.passmanager.base_tasks: Pass: ConsolidateBlocks - 0.60248 (ms)
+2026-09-11T21:58:11 [INFO] qiskit.passmanager.base_tasks: Pass: Split2QUnitaries - 0.00286 (ms)
+2026-09-11T21:58:11 [INFO] qiskit.passmanager.base_tasks: Pass: UnitarySynthesis - 0.00930 (ms)
+2026-09-11T21:58:11 [INFO] qiskit.passmanager.base_tasks: Pass: HighLevelSynthesis - 0.06080 (ms)
+2026-09-11T21:58:11 [INFO] qiskit.passmanager.base_tasks: Pass: BasisTranslator - 0.41962 (ms)
+2026-09-11T21:58:11 [INFO] qiskit.passmanager.base_tasks: Pass: TwoQubitPeepholeOptimization - 0.43678 (ms)
+2026-09-11T21:58:11 [INFO] qiskit.passmanager.base_tasks: Pass: Size - 0.00978 (ms)
+2026-09-11T21:58:11 [INFO] qiskit.passmanager.base_tasks: Pass: Depth - 0.01192 (ms)
+2026-09-11T21:58:11 [INFO] qiskit.passmanager.base_tasks: Pass: FixedPoint - 0.00787 (ms)
+2026-09-11T21:58:11 [INFO] qiskit.passmanager.base_tasks: Pass: FixedPoint - 0.00310 (ms)
+2026-09-11T21:58:11 [INFO] qiskit.passmanager.base_tasks: Pass: RemoveIdentityEquivalent - 0.01597 (ms)
+2026-09-11T21:58:11 [INFO] qiskit.passmanager.base_tasks: Pass: Optimize1qGatesDecomposition - 0.43082 (ms)
+2026-09-11T21:58:11 [INFO] qiskit.passmanager.base_tasks: Pass: CommutativeCancellation - 0.48232 (ms)
+2026-09-11T21:58:11 [INFO] qiskit.passmanager.base_tasks: Pass: ContractIdleWiresInControlFlow - 0.09704 (ms)
+2026-09-11T21:58:11 [INFO] qiskit.passmanager.base_tasks: Pass: GatesInBasis - 0.01097 (ms)
+2026-09-11T21:58:11 [INFO] qiskit.passmanager.base_tasks: Pass: Size - 0.00596 (ms)
+2026-09-11T21:58:11 [INFO] qiskit.passmanager.base_tasks: Pass: Depth - 0.01049 (ms)
+2026-09-11T21:58:11 [INFO] qiskit.passmanager.base_tasks: Pass: FixedPoint - 0.00501 (ms)
+2026-09-11T21:58:11 [INFO] qiskit.passmanager.base_tasks: Pass: FixedPoint - 0.00238 (ms)
+2026-09-11T21:58:11 [INFO] qiskit.passmanager.base_tasks: Pass: RemoveIdentityEquivalent - 0.00882 (ms)
+2026-09-11T21:58:11 [INFO] qiskit.passmanager.base_tasks: Pass: Optimize1qGatesDecomposition - 0.27180 (ms)
+2026-09-11T21:58:11 [INFO] qiskit.passmanager.base_tasks: Pass: CommutativeCancellation - 0.20981 (ms)
+2026-09-11T21:58:11 [INFO] qiskit.passmanager.base_tasks: Pass: ContractIdleWiresInControlFlow - 0.09012 (ms)
+2026-09-11T21:58:11 [INFO] qiskit.passmanager.base_tasks: Pass: GatesInBasis - 0.00763 (ms)
+2026-09-11T21:58:11 [INFO] qiskit.passmanager.base_tasks: Pass: Size - 0.00405 (ms)
+2026-09-11T21:58:11 [INFO] qiskit.passmanager.base_tasks: Pass: Depth - 0.00906 (ms)
+2026-09-11T21:58:11 [INFO] qiskit.passmanager.base_tasks: Pass: FixedPoint - 0.00477 (ms)
+2026-09-11T21:58:11 [INFO] qiskit.passmanager.base_tasks: Pass: FixedPoint - 0.00238 (ms)
+2026-09-11T21:58:11 [INFO] qiskit.passmanager.base_tasks: Pass: ContainsInstruction - 0.01216 (ms)
+2026-09-11T21:58:11 [INFO] qiskit.compiler.transpiler: Total Transpile Time - 30.39598 (ms)
+2026-09-11T21:58:11 [INFO] qiskit.passmanager.base_tasks: Pass: Decompose - 0.20218 (ms)
+2026-09-11T21:58:11 [INFO] qiskit.passmanager.base_tasks: Pass: ContainsInstruction - 0.01097 (ms)
+2026-09-11T21:58:11 [INFO] qiskit.passmanager.base_tasks: Pass: UnitarySynthesis - 0.01192 (ms)
+2026-09-11T21:58:11 [INFO] qiskit.passmanager.base_tasks: Pass: HighLevelSynthesis - 0.00787 (ms)
+2026-09-11T21:58:11 [INFO] qiskit.passmanager.base_tasks: Pass: BasisTranslator - 0.03791 (ms)
+2026-09-11T21:58:11 [INFO] qiskit.passmanager.base_tasks: Pass: ElidePermutations - 0.00525 (ms)
+2026-09-11T21:58:11 [INFO] qiskit.passmanager.base_tasks: Pass: RemoveDiagonalGatesBeforeMeasure - 0.24438 (ms)
+2026-09-11T21:58:11 [INFO] qiskit.passmanager.base_tasks: Pass: RemoveIdentityEquivalent - 0.01240 (ms)
+2026-09-11T21:58:11 [INFO] qiskit.passmanager.base_tasks: Pass: InverseCancellation - 0.13804 (ms)
+2026-09-11T21:58:11 [INFO] qiskit.passmanager.base_tasks: Pass: ContractIdleWiresInControlFlow - 0.06914 (ms)
+2026-09-11T21:58:11 [INFO] qiskit.passmanager.base_tasks: Pass: CommutativeCancellation - 0.28920 (ms)
+2026-09-11T21:58:11 [INFO] qiskit.passmanager.base_tasks: Pass: ConsolidateBlocks - 0.02837 (ms)
+2026-09-11T21:58:11 [INFO] qiskit.passmanager.base_tasks: Pass: ConsolidateBlocks - 0.02646 (ms)
+2026-09-11T21:58:11 [INFO] qiskit.passmanager.base_tasks: Pass: ConsolidateBlocks - 0.66543 (ms)
+2026-09-11T21:58:11 [INFO] qiskit.passmanager.base_tasks: Pass: Split2QUnitaries - 0.00310 (ms)
+2026-09-11T21:58:11 [INFO] qiskit.passmanager.base_tasks: Pass: UnitarySynthesis - 0.01001 (ms)
+2026-09-11T21:58:11 [INFO] qiskit.passmanager.base_tasks: Pass: HighLevelSynthesis - 0.06580 (ms)
+2026-09-11T21:58:11 [INFO] qiskit.passmanager.base_tasks: Pass: BasisTranslator - 0.41676 (ms)
+2026-09-11T21:58:11 [INFO] qiskit.passmanager.base_tasks: Pass: TwoQubitPeepholeOptimization - 0.97442 (ms)
+2026-09-11T21:58:11 [INFO] qiskit.passmanager.base_tasks: Pass: Size - 0.00787 (ms)
+2026-09-11T21:58:11 [INFO] qiskit.passmanager.base_tasks: Pass: Depth - 0.01073 (ms)
+2026-09-11T21:58:11 [INFO] qiskit.passmanager.base_tasks: Pass: FixedPoint - 0.00644 (ms)
+2026-09-11T21:58:11 [INFO] qiskit.passmanager.base_tasks: Pass: FixedPoint - 0.00286 (ms)
+2026-09-11T21:58:11 [INFO] qiskit.passmanager.base_tasks: Pass: RemoveIdentityEquivalent - 0.02098 (ms)
+2026-09-11T21:58:11 [INFO] qiskit.passmanager.base_tasks: Pass: Optimize1qGatesDecomposition - 0.35334 (ms)
+2026-09-11T21:58:11 [INFO] qiskit.passmanager.base_tasks: Pass: CommutativeCancellation - 0.28944 (ms)
+2026-09-11T21:58:11 [INFO] qiskit.passmanager.base_tasks: Pass: ContractIdleWiresInControlFlow - 0.09584 (ms)
+2026-09-11T21:58:11 [INFO] qiskit.passmanager.base_tasks: Pass: GatesInBasis - 0.01621 (ms)
+2026-09-11T21:58:11 [INFO] qiskit.passmanager.base_tasks: Pass: Size - 0.00644 (ms)
+2026-09-11T21:58:11 [INFO] qiskit.passmanager.base_tasks: Pass: Depth - 0.01550 (ms)
+2026-09-11T21:58:11 [INFO] qiskit.passmanager.base_tasks: Pass: FixedPoint - 0.00596 (ms)
+2026-09-11T21:58:11 [INFO] qiskit.passmanager.base_tasks: Pass: FixedPoint - 0.00310 (ms)
+2026-09-11T21:58:11 [INFO] qiskit.passmanager.base_tasks: Pass: RemoveIdentityEquivalent - 0.01478 (ms)
+2026-09-11T21:58:11 [INFO] qiskit.passmanager.base_tasks: Pass: Optimize1qGatesDecomposition - 0.33307 (ms)
+2026-09-11T21:58:11 [INFO] qiskit.passmanager.base_tasks: Pass: CommutativeCancellation - 0.41699 (ms)
+2026-09-11T21:58:11 [INFO] qiskit.passmanager.base_tasks: Pass: ContractIdleWiresInControlFlow - 0.09036 (ms)
+2026-09-11T21:58:11 [INFO] qiskit.passmanager.base_tasks: Pass: GatesInBasis - 0.01121 (ms)
+2026-09-11T21:58:11 [INFO] qiskit.passmanager.base_tasks: Pass: Size - 0.00620 (ms)
+2026-09-11T21:58:11 [INFO] qiskit.passmanager.base_tasks: Pass: Depth - 0.06962 (ms)
+2026-09-11T21:58:11 [INFO] qiskit.passmanager.base_tasks: Pass: FixedPoint - 0.00501 (ms)
+2026-09-11T21:58:11 [INFO] qiskit.passmanager.base_tasks: Pass: FixedPoint - 0.00286 (ms)
+2026-09-11T21:58:11 [INFO] qiskit.passmanager.base_tasks: Pass: ContainsInstruction - 0.01001 (ms)
+2026-09-11T21:58:11 [INFO] qiskit.compiler.transpiler: Total Transpile Time - 30.50256 (ms)
+2026-09-11T21:58:11 [INFO] qiskit.passmanager.base_tasks: Pass: Decompose - 0.24486 (ms)
+2026-09-11T21:58:11 [INFO] qiskit.passmanager.base_tasks: Pass: ContainsInstruction - 0.01574 (ms)
+2026-09-11T21:58:11 [INFO] qiskit.passmanager.base_tasks: Pass: UnitarySynthesis - 0.01645 (ms)
+2026-09-11T21:58:11 [INFO] qiskit.passmanager.base_tasks: Pass: HighLevelSynthesis - 0.01049 (ms)
+2026-09-11T21:58:11 [INFO] qiskit.passmanager.base_tasks: Pass: BasisTranslator - 0.05293 (ms)
+2026-09-11T21:58:11 [INFO] qiskit.passmanager.base_tasks: Pass: ElidePermutations - 0.00882 (ms)
+2026-09-11T21:58:11 [INFO] qiskit.passmanager.base_tasks: Pass: RemoveDiagonalGatesBeforeMeasure - 0.76079 (ms)
+2026-09-11T21:58:11 [INFO] qiskit.passmanager.base_tasks: Pass: RemoveIdentityEquivalent - 0.02003 (ms)
+2026-09-11T21:58:11 [INFO] qiskit.passmanager.base_tasks: Pass: InverseCancellation - 0.32592 (ms)
+2026-09-11T21:58:11 [INFO] qiskit.passmanager.base_tasks: Pass: ContractIdleWiresInControlFlow - 0.16761 (ms)
+2026-09-11T21:58:11 [INFO] qiskit.passmanager.base_tasks: Pass: CommutativeCancellation - 0.36383 (ms)
+2026-09-11T21:58:11 [INFO] qiskit.passmanager.base_tasks: Pass: ConsolidateBlocks - 0.01788 (ms)
+2026-09-11T21:58:11 [INFO] qiskit.passmanager.base_tasks: Pass: ConsolidateBlocks - 0.01621 (ms)
+2026-09-11T21:58:11 [INFO] qiskit.passmanager.base_tasks: Pass: ConsolidateBlocks - 0.73647 (ms)
+2026-09-11T21:58:11 [INFO] qiskit.passmanager.base_tasks: Pass: Split2QUnitaries - 0.00358 (ms)
+2026-09-11T21:58:11 [INFO] qiskit.passmanager.base_tasks: Pass: UnitarySynthesis - 0.01264 (ms)
+2026-09-11T21:58:11 [INFO] qiskit.passmanager.base_tasks: Pass: HighLevelSynthesis - 0.06938 (ms)
+2026-09-11T21:58:11 [INFO] qiskit.passmanager.base_tasks: Pass: BasisTranslator - 0.47398 (ms)
+2026-09-11T21:58:11 [INFO] qiskit.passmanager.base_tasks: Pass: TwoQubitPeepholeOptimization - 0.35119 (ms)
+2026-09-11T21:58:11 [INFO] qiskit.passmanager.base_tasks: Pass: Size - 0.00668 (ms)
+2026-09-11T21:58:11 [INFO] qiskit.passmanager.base_tasks: Pass: Depth - 0.00906 (ms)
+2026-09-11T21:58:11 [INFO] qiskit.passmanager.base_tasks: Pass: FixedPoint - 0.00691 (ms)
+2026-09-11T21:58:11 [INFO] qiskit.passmanager.base_tasks: Pass: FixedPoint - 0.00262 (ms)
+2026-09-11T21:58:11 [INFO] qiskit.passmanager.base_tasks: Pass: RemoveIdentityEquivalent - 0.00882 (ms)
+2026-09-11T21:58:11 [INFO] qiskit.passmanager.base_tasks: Pass: Optimize1qGatesDecomposition - 0.32210 (ms)
+2026-09-11T21:58:11 [INFO] qiskit.passmanager.base_tasks: Pass: CommutativeCancellation - 0.30589 (ms)
+2026-09-11T21:58:11 [INFO] qiskit.passmanager.base_tasks: Pass: ContractIdleWiresInControlFlow - 0.14997 (ms)
+2026-09-11T21:58:11 [INFO] qiskit.passmanager.base_tasks: Pass: GatesInBasis - 0.01001 (ms)
+2026-09-11T21:58:11 [INFO] qiskit.passmanager.base_tasks: Pass: Size - 0.00501 (ms)
+2026-09-11T21:58:11 [INFO] qiskit.passmanager.base_tasks: Pass: Depth - 0.00906 (ms)
+2026-09-11T21:58:11 [INFO] qiskit.passmanager.base_tasks: Pass: FixedPoint - 0.00429 (ms)
+2026-09-11T21:58:11 [INFO] qiskit.passmanager.base_tasks: Pass: FixedPoint - 0.00262 (ms)
+2026-09-11T21:58:11 [INFO] qiskit.passmanager.base_tasks: Pass: RemoveIdentityEquivalent - 0.00811 (ms)
+2026-09-11T21:58:11 [INFO] qiskit.passmanager.base_tasks: Pass: Optimize1qGatesDecomposition - 0.28610 (ms)
+2026-09-11T21:58:11 [INFO] qiskit.passmanager.base_tasks: Pass: CommutativeCancellation - 0.25582 (ms)
+2026-09-11T21:58:11 [INFO] qiskit.passmanager.base_tasks: Pass: ContractIdleWiresInControlFlow - 0.11849 (ms)
+2026-09-11T21:58:11 [INFO] qiskit.passmanager.base_tasks: Pass: GatesInBasis - 0.01049 (ms)
+2026-09-11T21:58:11 [INFO] qiskit.passmanager.base_tasks: Pass: Size - 0.00596 (ms)
+2026-09-11T21:58:11 [INFO] qiskit.passmanager.base_tasks: Pass: Depth - 0.01264 (ms)
+2026-09-11T21:58:11 [INFO] qiskit.passmanager.base_tasks: Pass: FixedPoint - 0.00453 (ms)
+2026-09-11T21:58:11 [INFO] qiskit.passmanager.base_tasks: Pass: FixedPoint - 0.00572 (ms)
+2026-09-11T21:58:11 [INFO] qiskit.passmanager.base_tasks: Pass: ContainsInstruction - 0.01240 (ms)
+2026-09-11T21:58:11 [INFO] qiskit.compiler.transpiler: Total Transpile Time - 37.30130 (ms)
+2026-09-11T21:58:11 [INFO] qiskit.passmanager.base_tasks: Pass: Decompose - 0.23246 (ms)
+2026-09-11T21:58:11 [INFO] qds.verification: Verification ACCEPTED: score=1.0000 threshold=0.7000 matches=16/16
+2026-09-11T21:58:11 [INFO] security.detector: detect 4fbfbfbf-04f: NORMAL  score=0.0000
+------------------------------ Captured log call ------------------------------
+INFO     qds.signature:signature.py:269 Generated QDS signature: id=4fbfbfbf... msg='chan_test' len=16 seed=42
+INFO     attacks.base:base.py:229 Attack ChannelManipulationAttack executed: intensity=0.50 evidence=17 indicators=5
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: ContainsInstruction - 0.01836 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: UnitarySynthesis - 0.01764 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: HighLevelSynthesis - 0.01597 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: BasisTranslator - 0.04983 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: ElidePermutations - 0.00882 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: RemoveDiagonalGatesBeforeMeasure - 0.30899 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: RemoveIdentityEquivalent - 0.02408 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: InverseCancellation - 0.13447 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: ContractIdleWiresInControlFlow - 0.07033 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: CommutativeCancellation - 0.27633 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: ConsolidateBlocks - 0.01597 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: ConsolidateBlocks - 0.01240 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: ConsolidateBlocks - 0.63109 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: Split2QUnitaries - 0.00429 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: UnitarySynthesis - 0.01144 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: HighLevelSynthesis - 0.07057 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: BasisTranslator - 0.07653 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: TwoQubitPeepholeOptimization - 1.13988 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: Size - 0.02861 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: Depth - 0.02170 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: FixedPoint - 0.01621 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: FixedPoint - 0.00978 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: RemoveIdentityEquivalent - 0.02432 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: Optimize1qGatesDecomposition - 0.62728 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: CommutativeCancellation - 0.39959 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: ContractIdleWiresInControlFlow - 0.07653 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: GatesInBasis - 0.01812 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: Size - 0.00620 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: Depth - 0.00787 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: FixedPoint - 0.00525 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: FixedPoint - 0.00310 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: ContainsInstruction - 0.00834 (ms)
+INFO     qiskit.compiler.transpiler:transpiler.py:345 Total Transpile Time - 41.50152 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: Decompose - 0.26917 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: ContainsInstruction - 0.01955 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: UnitarySynthesis - 0.04339 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: HighLevelSynthesis - 0.01025 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: BasisTranslator - 0.04125 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: ElidePermutations - 0.00644 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: RemoveDiagonalGatesBeforeMeasure - 0.61488 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: RemoveIdentityEquivalent - 0.03409 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: InverseCancellation - 0.48518 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: ContractIdleWiresInControlFlow - 0.17977 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: CommutativeCancellation - 0.65160 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: ConsolidateBlocks - 0.02050 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: ConsolidateBlocks - 0.01407 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: ConsolidateBlocks - 0.59128 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: Split2QUnitaries - 0.00501 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: UnitarySynthesis - 0.01049 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: HighLevelSynthesis - 0.06700 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: BasisTranslator - 0.62799 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: TwoQubitPeepholeOptimization - 0.41533 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: Size - 0.01097 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: Depth - 0.01287 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: FixedPoint - 0.00715 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: FixedPoint - 0.00238 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: RemoveIdentityEquivalent - 0.00930 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: Optimize1qGatesDecomposition - 0.34642 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: CommutativeCancellation - 0.23079 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: ContractIdleWiresInControlFlow - 0.06843 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: GatesInBasis - 0.00882 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: Size - 0.00405 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: Depth - 0.00787 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: FixedPoint - 0.00405 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: FixedPoint - 0.00262 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: RemoveIdentityEquivalent - 0.00620 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: Optimize1qGatesDecomposition - 0.27776 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: CommutativeCancellation - 0.42748 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: ContractIdleWiresInControlFlow - 0.06151 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: GatesInBasis - 0.00596 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: Size - 0.00358 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: Depth - 0.00644 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: FixedPoint - 0.00358 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: FixedPoint - 0.00215 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: ContainsInstruction - 0.00834 (ms)
+INFO     qiskit.compiler.transpiler:transpiler.py:345 Total Transpile Time - 31.66747 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: Decompose - 0.15664 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: ContainsInstruction - 0.01025 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: UnitarySynthesis - 0.01216 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: HighLevelSynthesis - 0.00882 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: BasisTranslator - 0.03052 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: ElidePermutations - 0.00525 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: RemoveDiagonalGatesBeforeMeasure - 0.26464 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: RemoveIdentityEquivalent - 0.01359 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: InverseCancellation - 0.14353 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: ContractIdleWiresInControlFlow - 0.06652 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: CommutativeCancellation - 0.26441 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: ConsolidateBlocks - 0.01812 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: ConsolidateBlocks - 0.01574 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: ConsolidateBlocks - 0.62180 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: Split2QUnitaries - 0.00286 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: UnitarySynthesis - 0.00906 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: HighLevelSynthesis - 0.06437 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: BasisTranslator - 0.54669 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: TwoQubitPeepholeOptimization - 0.57697 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: Size - 0.00954 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: Depth - 0.01526 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: FixedPoint - 0.00858 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: FixedPoint - 0.00501 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: RemoveIdentityEquivalent - 0.01621 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: Optimize1qGatesDecomposition - 0.43893 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: CommutativeCancellation - 0.32520 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: ContractIdleWiresInControlFlow - 0.11420 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: GatesInBasis - 0.01717 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: Size - 0.00715 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: Depth - 0.01049 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: FixedPoint - 0.00644 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: FixedPoint - 0.00286 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: RemoveIdentityEquivalent - 0.01144 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: Optimize1qGatesDecomposition - 0.42105 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: CommutativeCancellation - 0.31996 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: ContractIdleWiresInControlFlow - 0.09227 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: GatesInBasis - 0.00978 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: Size - 0.00525 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: Depth - 0.01073 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: FixedPoint - 0.00501 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: FixedPoint - 0.00262 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: ContainsInstruction - 0.01001 (ms)
+INFO     qiskit.compiler.transpiler:transpiler.py:345 Total Transpile Time - 31.92878 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: Decompose - 0.19670 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: ContainsInstruction - 0.01431 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: UnitarySynthesis - 0.01335 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: HighLevelSynthesis - 0.00978 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: BasisTranslator - 0.04244 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: ElidePermutations - 0.00668 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: RemoveDiagonalGatesBeforeMeasure - 0.27227 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: RemoveIdentityEquivalent - 0.01621 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: InverseCancellation - 0.14448 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: ContractIdleWiresInControlFlow - 0.07677 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: CommutativeCancellation - 0.29063 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: ConsolidateBlocks - 0.01669 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: ConsolidateBlocks - 0.01907 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: ConsolidateBlocks - 0.67925 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: Split2QUnitaries - 0.00596 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: UnitarySynthesis - 0.01311 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: HighLevelSynthesis - 0.08845 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: BasisTranslator - 0.47922 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: TwoQubitPeepholeOptimization - 0.43058 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: Size - 0.00787 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: Depth - 0.01144 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: FixedPoint - 0.00787 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: FixedPoint - 0.00381 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: RemoveIdentityEquivalent - 0.01097 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: Optimize1qGatesDecomposition - 0.36454 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: CommutativeCancellation - 0.28658 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: ContractIdleWiresInControlFlow - 0.12374 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: GatesInBasis - 0.00834 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: Size - 0.00477 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: Depth - 0.00930 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: FixedPoint - 0.00477 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: FixedPoint - 0.00310 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: RemoveIdentityEquivalent - 0.00858 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: Optimize1qGatesDecomposition - 0.27704 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: CommutativeCancellation - 0.23460 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: ContractIdleWiresInControlFlow - 0.07796 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: GatesInBasis - 0.00787 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: Size - 0.00501 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: Depth - 0.00906 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: FixedPoint - 0.00429 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: FixedPoint - 0.00310 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: ContainsInstruction - 0.01001 (ms)
+INFO     qiskit.compiler.transpiler:transpiler.py:345 Total Transpile Time - 30.60770 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: Decompose - 0.20242 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: ContainsInstruction - 0.01121 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: UnitarySynthesis - 0.01264 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: HighLevelSynthesis - 0.00930 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: BasisTranslator - 0.03862 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: ElidePermutations - 0.00525 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: RemoveDiagonalGatesBeforeMeasure - 0.28992 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: RemoveIdentityEquivalent - 0.01502 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: InverseCancellation - 0.13852 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: ContractIdleWiresInControlFlow - 0.07081 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: CommutativeCancellation - 0.31877 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: ConsolidateBlocks - 0.01454 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: ConsolidateBlocks - 0.01669 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: ConsolidateBlocks - 0.63848 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: Split2QUnitaries - 0.00334 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: UnitarySynthesis - 0.01168 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: HighLevelSynthesis - 0.07176 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: BasisTranslator - 0.38910 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: TwoQubitPeepholeOptimization - 0.41318 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: Size - 0.00787 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: Depth - 0.01073 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: FixedPoint - 0.00620 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: FixedPoint - 0.00310 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: RemoveIdentityEquivalent - 0.00882 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: Optimize1qGatesDecomposition - 0.31710 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: CommutativeCancellation - 0.24366 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: ContractIdleWiresInControlFlow - 0.08059 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: GatesInBasis - 0.00858 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: Size - 0.00525 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: Depth - 0.01001 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: FixedPoint - 0.00477 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: FixedPoint - 0.00286 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: RemoveIdentityEquivalent - 0.00811 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: Optimize1qGatesDecomposition - 0.25225 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: CommutativeCancellation - 0.20933 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: ContractIdleWiresInControlFlow - 0.07248 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: GatesInBasis - 0.00691 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: Size - 0.00405 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: Depth - 0.00834 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: FixedPoint - 0.00381 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: FixedPoint - 0.00238 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: ContainsInstruction - 0.00834 (ms)
+INFO     qiskit.compiler.transpiler:transpiler.py:345 Total Transpile Time - 29.96731 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: Decompose - 0.20266 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: ContainsInstruction - 0.01025 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: UnitarySynthesis - 0.01049 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: HighLevelSynthesis - 0.00763 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: BasisTranslator - 0.02885 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: ElidePermutations - 0.00477 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: RemoveDiagonalGatesBeforeMeasure - 0.32306 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: RemoveIdentityEquivalent - 0.01550 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: InverseCancellation - 0.23365 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: ContractIdleWiresInControlFlow - 0.11706 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: CommutativeCancellation - 0.35334 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: ConsolidateBlocks - 0.01788 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: ConsolidateBlocks - 0.01979 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: ConsolidateBlocks - 0.71311 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: Split2QUnitaries - 0.00381 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: UnitarySynthesis - 0.01240 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: HighLevelSynthesis - 0.08512 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: BasisTranslator - 0.45633 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: TwoQubitPeepholeOptimization - 0.49901 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: Size - 0.00978 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: Depth - 0.01264 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: FixedPoint - 0.00691 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: FixedPoint - 0.00310 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: RemoveIdentityEquivalent - 0.01264 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: Optimize1qGatesDecomposition - 0.34904 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: CommutativeCancellation - 0.29588 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: ContractIdleWiresInControlFlow - 0.08821 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: GatesInBasis - 0.00882 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: Size - 0.00548 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: Depth - 0.00882 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: FixedPoint - 0.00548 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: FixedPoint - 0.00262 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: RemoveIdentityEquivalent - 0.00787 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: Optimize1qGatesDecomposition - 0.43726 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: CommutativeCancellation - 0.23031 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: ContractIdleWiresInControlFlow - 0.07629 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: GatesInBasis - 0.00644 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: Size - 0.00453 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: Depth - 0.00763 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: FixedPoint - 0.00405 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: FixedPoint - 0.00262 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: ContainsInstruction - 0.00858 (ms)
+INFO     qiskit.compiler.transpiler:transpiler.py:345 Total Transpile Time - 30.93243 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: Decompose - 0.18740 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: ContainsInstruction - 0.01025 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: UnitarySynthesis - 0.01025 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: HighLevelSynthesis - 0.00834 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: BasisTranslator - 0.02956 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: ElidePermutations - 0.00429 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: RemoveDiagonalGatesBeforeMeasure - 0.25415 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: RemoveIdentityEquivalent - 0.01359 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: InverseCancellation - 0.14067 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: ContractIdleWiresInControlFlow - 0.07176 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: CommutativeCancellation - 0.23818 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: ConsolidateBlocks - 0.01287 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: ConsolidateBlocks - 0.01359 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: ConsolidateBlocks - 0.50402 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: Split2QUnitaries - 0.00334 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: UnitarySynthesis - 0.00882 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: HighLevelSynthesis - 0.05674 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: BasisTranslator - 0.02766 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: TwoQubitPeepholeOptimization - 0.37026 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: Size - 0.00882 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: Depth - 0.01287 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: FixedPoint - 0.00691 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: FixedPoint - 0.00262 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: RemoveIdentityEquivalent - 0.01240 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: Optimize1qGatesDecomposition - 0.35286 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: CommutativeCancellation - 0.31376 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: ContractIdleWiresInControlFlow - 0.10991 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: GatesInBasis - 0.01574 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: Size - 0.00525 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: Depth - 0.00954 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: FixedPoint - 0.00548 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: FixedPoint - 0.00262 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: ContainsInstruction - 0.00978 (ms)
+INFO     qiskit.compiler.transpiler:transpiler.py:345 Total Transpile Time - 28.51129 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: Decompose - 0.26131 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: ContainsInstruction - 0.01025 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: UnitarySynthesis - 0.01025 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: HighLevelSynthesis - 0.00811 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: BasisTranslator - 0.03457 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: ElidePermutations - 0.00501 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: RemoveDiagonalGatesBeforeMeasure - 0.23317 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: RemoveIdentityEquivalent - 0.01168 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: InverseCancellation - 0.12827 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: ContractIdleWiresInControlFlow - 0.07820 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: CommutativeCancellation - 0.29755 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: ConsolidateBlocks - 0.01812 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: ConsolidateBlocks - 0.01407 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: ConsolidateBlocks - 0.68331 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: Split2QUnitaries - 0.00262 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: UnitarySynthesis - 0.01001 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: HighLevelSynthesis - 0.06938 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: BasisTranslator - 0.39244 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: TwoQubitPeepholeOptimization - 0.33593 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: Size - 0.00691 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: Depth - 0.01097 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: FixedPoint - 0.00548 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: FixedPoint - 0.00310 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: RemoveIdentityEquivalent - 0.00834 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: Optimize1qGatesDecomposition - 0.28467 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: CommutativeCancellation - 0.31257 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: ContractIdleWiresInControlFlow - 0.08273 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: GatesInBasis - 0.00763 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: Size - 0.00453 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: Depth - 0.00906 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: FixedPoint - 0.00429 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: FixedPoint - 0.00238 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: RemoveIdentityEquivalent - 0.00691 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: Optimize1qGatesDecomposition - 0.42105 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: CommutativeCancellation - 0.32854 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: ContractIdleWiresInControlFlow - 0.13590 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: GatesInBasis - 0.01240 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: Size - 0.00811 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: Depth - 0.01335 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: FixedPoint - 0.00834 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: FixedPoint - 0.00405 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: ContainsInstruction - 0.01264 (ms)
+INFO     qiskit.compiler.transpiler:transpiler.py:345 Total Transpile Time - 29.53935 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: Decompose - 0.24557 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: ContainsInstruction - 0.01049 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: UnitarySynthesis - 0.01001 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: HighLevelSynthesis - 0.00811 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: BasisTranslator - 0.03076 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: ElidePermutations - 0.00429 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: RemoveDiagonalGatesBeforeMeasure - 0.24128 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: RemoveIdentityEquivalent - 0.01383 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: InverseCancellation - 0.13113 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: ContractIdleWiresInControlFlow - 0.07010 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: CommutativeCancellation - 0.24104 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: ConsolidateBlocks - 0.01907 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: ConsolidateBlocks - 0.01574 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: ConsolidateBlocks - 0.79083 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: Split2QUnitaries - 0.00381 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: UnitarySynthesis - 0.01407 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: HighLevelSynthesis - 0.07510 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: BasisTranslator - 0.56052 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: TwoQubitPeepholeOptimization - 0.40627 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: Size - 0.00834 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: Depth - 0.01097 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: FixedPoint - 0.00739 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: FixedPoint - 0.00262 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: RemoveIdentityEquivalent - 0.01097 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: Optimize1qGatesDecomposition - 0.33903 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: CommutativeCancellation - 0.27394 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: ContractIdleWiresInControlFlow - 0.13232 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: GatesInBasis - 0.01025 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: Size - 0.00620 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: Depth - 0.00978 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: FixedPoint - 0.00501 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: FixedPoint - 0.00262 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: RemoveIdentityEquivalent - 0.01144 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: Optimize1qGatesDecomposition - 0.35357 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: CommutativeCancellation - 0.25821 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: ContractIdleWiresInControlFlow - 0.08225 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: GatesInBasis - 0.00858 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: Size - 0.00548 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: Depth - 0.01001 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: FixedPoint - 0.00477 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: FixedPoint - 0.00262 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: ContainsInstruction - 0.01025 (ms)
+INFO     qiskit.compiler.transpiler:transpiler.py:345 Total Transpile Time - 30.21193 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: Decompose - 0.19097 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: ContainsInstruction - 0.01645 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: UnitarySynthesis - 0.02789 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: HighLevelSynthesis - 0.01574 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: BasisTranslator - 0.06223 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: ElidePermutations - 0.00596 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: RemoveDiagonalGatesBeforeMeasure - 0.33021 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: RemoveIdentityEquivalent - 0.02170 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: InverseCancellation - 0.15283 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: ContractIdleWiresInControlFlow - 0.08869 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: CommutativeCancellation - 0.25725 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: ConsolidateBlocks - 0.01788 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: ConsolidateBlocks - 0.02003 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: ConsolidateBlocks - 0.70596 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: Split2QUnitaries - 0.00501 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: UnitarySynthesis - 0.01287 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: HighLevelSynthesis - 0.08106 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: BasisTranslator - 0.04292 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: TwoQubitPeepholeOptimization - 0.36860 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: Size - 0.00787 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: Depth - 0.01121 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: FixedPoint - 0.00763 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: FixedPoint - 0.00262 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: RemoveIdentityEquivalent - 0.01049 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: Optimize1qGatesDecomposition - 0.40245 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: CommutativeCancellation - 0.32926 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: ContractIdleWiresInControlFlow - 0.09179 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: GatesInBasis - 0.01049 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: Size - 0.00572 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: Depth - 0.00858 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: FixedPoint - 0.00548 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: FixedPoint - 0.00238 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: ContainsInstruction - 0.00882 (ms)
+INFO     qiskit.compiler.transpiler:transpiler.py:345 Total Transpile Time - 30.14684 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: Decompose - 0.17381 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: ContainsInstruction - 0.01025 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: UnitarySynthesis - 0.01049 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: HighLevelSynthesis - 0.00787 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: BasisTranslator - 0.02980 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: ElidePermutations - 0.00477 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: RemoveDiagonalGatesBeforeMeasure - 0.24152 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: RemoveIdentityEquivalent - 0.01240 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: InverseCancellation - 0.12612 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: ContractIdleWiresInControlFlow - 0.07153 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: CommutativeCancellation - 0.25153 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: ConsolidateBlocks - 0.01407 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: ConsolidateBlocks - 0.01645 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: ConsolidateBlocks - 0.60415 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: Split2QUnitaries - 0.00238 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: UnitarySynthesis - 0.00978 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: HighLevelSynthesis - 0.06247 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: BasisTranslator - 0.38981 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: TwoQubitPeepholeOptimization - 0.33498 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: Size - 0.13375 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: Depth - 0.01431 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: FixedPoint - 0.00668 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: FixedPoint - 0.00381 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: RemoveIdentityEquivalent - 0.01264 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: Optimize1qGatesDecomposition - 0.43035 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: CommutativeCancellation - 0.49782 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: ContractIdleWiresInControlFlow - 0.10228 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: GatesInBasis - 0.01121 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: Size - 0.00787 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: Depth - 0.01216 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: FixedPoint - 0.00572 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: FixedPoint - 0.00429 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: RemoveIdentityEquivalent - 0.01025 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: Optimize1qGatesDecomposition - 0.32067 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: CommutativeCancellation - 0.24891 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: ContractIdleWiresInControlFlow - 0.10920 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: GatesInBasis - 0.01216 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: Size - 0.00620 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: Depth - 0.01073 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: FixedPoint - 0.00501 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: FixedPoint - 0.00286 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: ContainsInstruction - 0.00954 (ms)
+INFO     qiskit.compiler.transpiler:transpiler.py:345 Total Transpile Time - 30.00951 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: Decompose - 0.20671 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: ContainsInstruction - 0.01097 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: UnitarySynthesis - 0.01216 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: HighLevelSynthesis - 0.00739 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: BasisTranslator - 0.02980 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: ElidePermutations - 0.00477 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: RemoveDiagonalGatesBeforeMeasure - 0.23508 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: RemoveIdentityEquivalent - 0.01168 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: InverseCancellation - 0.12851 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: ContractIdleWiresInControlFlow - 0.07677 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: CommutativeCancellation - 0.25415 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: ConsolidateBlocks - 0.01407 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: ConsolidateBlocks - 0.02146 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: ConsolidateBlocks - 0.82016 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: Split2QUnitaries - 0.00525 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: UnitarySynthesis - 0.01502 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: HighLevelSynthesis - 0.09394 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: BasisTranslator - 0.64993 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: TwoQubitPeepholeOptimization - 0.63157 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: Size - 0.00954 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: Depth - 0.01216 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: FixedPoint - 0.00739 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: FixedPoint - 0.00286 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: RemoveIdentityEquivalent - 0.01287 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: Optimize1qGatesDecomposition - 0.35763 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: CommutativeCancellation - 0.27299 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: ContractIdleWiresInControlFlow - 0.09465 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: GatesInBasis - 0.01049 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: Size - 0.00572 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: Depth - 0.01144 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: FixedPoint - 0.00501 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: FixedPoint - 0.00310 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: RemoveIdentityEquivalent - 0.00930 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: Optimize1qGatesDecomposition - 0.28419 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: CommutativeCancellation - 0.23341 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: ContractIdleWiresInControlFlow - 0.15616 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: GatesInBasis - 0.01121 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: Size - 0.00644 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: Depth - 0.01287 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: FixedPoint - 0.00596 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: FixedPoint - 0.00381 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: ContainsInstruction - 0.01359 (ms)
+INFO     qiskit.compiler.transpiler:transpiler.py:345 Total Transpile Time - 30.37715 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: Decompose - 0.20242 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: ContainsInstruction - 0.01049 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: UnitarySynthesis - 0.01073 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: HighLevelSynthesis - 0.01001 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: BasisTranslator - 0.03695 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: ElidePermutations - 0.00715 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: RemoveDiagonalGatesBeforeMeasure - 0.45824 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: RemoveIdentityEquivalent - 0.02027 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: InverseCancellation - 0.22817 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: ContractIdleWiresInControlFlow - 0.08869 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: CommutativeCancellation - 0.30351 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: ConsolidateBlocks - 0.01502 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: ConsolidateBlocks - 0.01645 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: ConsolidateBlocks - 0.67735 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: Split2QUnitaries - 0.00405 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: UnitarySynthesis - 0.01264 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: HighLevelSynthesis - 0.07749 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: BasisTranslator - 0.49710 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: TwoQubitPeepholeOptimization - 0.40317 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: Size - 0.00930 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: Depth - 0.01168 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: FixedPoint - 0.00763 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: FixedPoint - 0.00262 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: RemoveIdentityEquivalent - 0.01168 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: Optimize1qGatesDecomposition - 0.40889 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: CommutativeCancellation - 0.40412 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: ContractIdleWiresInControlFlow - 0.09704 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: GatesInBasis - 0.01192 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: Size - 0.00668 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: Depth - 0.01073 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: FixedPoint - 0.00596 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: FixedPoint - 0.00334 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: RemoveIdentityEquivalent - 0.01025 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: Optimize1qGatesDecomposition - 0.30541 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: CommutativeCancellation - 0.23699 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: ContractIdleWiresInControlFlow - 0.07701 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: GatesInBasis - 0.00954 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: Size - 0.00453 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: Depth - 0.00882 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: FixedPoint - 0.00548 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: FixedPoint - 0.00262 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: ContainsInstruction - 0.01168 (ms)
+INFO     qiskit.compiler.transpiler:transpiler.py:345 Total Transpile Time - 31.00514 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: Decompose - 0.21744 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: ContainsInstruction - 0.01526 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: UnitarySynthesis - 0.01121 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: HighLevelSynthesis - 0.00715 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: BasisTranslator - 0.02980 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: ElidePermutations - 0.00501 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: RemoveDiagonalGatesBeforeMeasure - 0.23174 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: RemoveIdentityEquivalent - 0.01144 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: InverseCancellation - 0.12779 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: ContractIdleWiresInControlFlow - 0.09608 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: CommutativeCancellation - 0.26369 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: ConsolidateBlocks - 0.01431 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: ConsolidateBlocks - 0.01526 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: ConsolidateBlocks - 0.60248 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: Split2QUnitaries - 0.00286 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: UnitarySynthesis - 0.00930 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: HighLevelSynthesis - 0.06080 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: BasisTranslator - 0.41962 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: TwoQubitPeepholeOptimization - 0.43678 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: Size - 0.00978 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: Depth - 0.01192 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: FixedPoint - 0.00787 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: FixedPoint - 0.00310 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: RemoveIdentityEquivalent - 0.01597 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: Optimize1qGatesDecomposition - 0.43082 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: CommutativeCancellation - 0.48232 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: ContractIdleWiresInControlFlow - 0.09704 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: GatesInBasis - 0.01097 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: Size - 0.00596 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: Depth - 0.01049 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: FixedPoint - 0.00501 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: FixedPoint - 0.00238 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: RemoveIdentityEquivalent - 0.00882 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: Optimize1qGatesDecomposition - 0.27180 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: CommutativeCancellation - 0.20981 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: ContractIdleWiresInControlFlow - 0.09012 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: GatesInBasis - 0.00763 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: Size - 0.00405 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: Depth - 0.00906 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: FixedPoint - 0.00477 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: FixedPoint - 0.00238 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: ContainsInstruction - 0.01216 (ms)
+INFO     qiskit.compiler.transpiler:transpiler.py:345 Total Transpile Time - 30.39598 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: Decompose - 0.20218 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: ContainsInstruction - 0.01097 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: UnitarySynthesis - 0.01192 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: HighLevelSynthesis - 0.00787 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: BasisTranslator - 0.03791 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: ElidePermutations - 0.00525 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: RemoveDiagonalGatesBeforeMeasure - 0.24438 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: RemoveIdentityEquivalent - 0.01240 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: InverseCancellation - 0.13804 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: ContractIdleWiresInControlFlow - 0.06914 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: CommutativeCancellation - 0.28920 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: ConsolidateBlocks - 0.02837 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: ConsolidateBlocks - 0.02646 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: ConsolidateBlocks - 0.66543 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: Split2QUnitaries - 0.00310 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: UnitarySynthesis - 0.01001 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: HighLevelSynthesis - 0.06580 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: BasisTranslator - 0.41676 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: TwoQubitPeepholeOptimization - 0.97442 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: Size - 0.00787 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: Depth - 0.01073 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: FixedPoint - 0.00644 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: FixedPoint - 0.00286 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: RemoveIdentityEquivalent - 0.02098 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: Optimize1qGatesDecomposition - 0.35334 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: CommutativeCancellation - 0.28944 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: ContractIdleWiresInControlFlow - 0.09584 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: GatesInBasis - 0.01621 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: Size - 0.00644 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: Depth - 0.01550 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: FixedPoint - 0.00596 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: FixedPoint - 0.00310 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: RemoveIdentityEquivalent - 0.01478 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: Optimize1qGatesDecomposition - 0.33307 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: CommutativeCancellation - 0.41699 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: ContractIdleWiresInControlFlow - 0.09036 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: GatesInBasis - 0.01121 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: Size - 0.00620 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: Depth - 0.06962 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: FixedPoint - 0.00501 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: FixedPoint - 0.00286 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: ContainsInstruction - 0.01001 (ms)
+INFO     qiskit.compiler.transpiler:transpiler.py:345 Total Transpile Time - 30.50256 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: Decompose - 0.24486 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: ContainsInstruction - 0.01574 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: UnitarySynthesis - 0.01645 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: HighLevelSynthesis - 0.01049 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: BasisTranslator - 0.05293 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: ElidePermutations - 0.00882 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: RemoveDiagonalGatesBeforeMeasure - 0.76079 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: RemoveIdentityEquivalent - 0.02003 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: InverseCancellation - 0.32592 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: ContractIdleWiresInControlFlow - 0.16761 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: CommutativeCancellation - 0.36383 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: ConsolidateBlocks - 0.01788 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: ConsolidateBlocks - 0.01621 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: ConsolidateBlocks - 0.73647 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: Split2QUnitaries - 0.00358 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: UnitarySynthesis - 0.01264 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: HighLevelSynthesis - 0.06938 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: BasisTranslator - 0.47398 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: TwoQubitPeepholeOptimization - 0.35119 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: Size - 0.00668 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: Depth - 0.00906 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: FixedPoint - 0.00691 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: FixedPoint - 0.00262 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: RemoveIdentityEquivalent - 0.00882 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: Optimize1qGatesDecomposition - 0.32210 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: CommutativeCancellation - 0.30589 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: ContractIdleWiresInControlFlow - 0.14997 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: GatesInBasis - 0.01001 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: Size - 0.00501 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: Depth - 0.00906 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: FixedPoint - 0.00429 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: FixedPoint - 0.00262 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: RemoveIdentityEquivalent - 0.00811 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: Optimize1qGatesDecomposition - 0.28610 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: CommutativeCancellation - 0.25582 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: ContractIdleWiresInControlFlow - 0.11849 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: GatesInBasis - 0.01049 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: Size - 0.00596 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: Depth - 0.01264 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: FixedPoint - 0.00453 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: FixedPoint - 0.00572 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: ContainsInstruction - 0.01240 (ms)
+INFO     qiskit.compiler.transpiler:transpiler.py:345 Total Transpile Time - 37.30130 (ms)
+INFO     qiskit.passmanager.base_tasks:base_tasks.py:113 Pass: Decompose - 0.23246 (ms)
+INFO     qds.verification:verification.py:267 Verification ACCEPTED: score=1.0000 threshold=0.7000 matches=16/16
+INFO     security.detector:detector.py:366 detect 4fbfbfbf-04f: NORMAL  score=0.0000
+=========================== short test summary info ===========================
+FAILED tests/test_pipeline.py::test_pipeline_legitimate - AttributeError: 'Ve...
+FAILED tests/test_pipeline.py::test_pipeline_forgery - AssertionError: assert...
+FAILED tests/test_pipeline.py::test_pipeline_impersonation - AttributeError: ...
+FAILED tests/test_pipeline.py::test_pipeline_replay - AttributeError: 'Verifi...
+FAILED tests/test_pipeline.py::test_pipeline_unauthorized_verification - Attr...
+FAILED tests/test_pipeline.py::test_pipeline_channel_manipulation - Attribute...
+============================== 6 failed in 4.74s ==============================
