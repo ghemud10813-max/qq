@@ -6,7 +6,6 @@ Modules
 bell_states   : Preparation, simulation, and validation of all four Bell states (Phase 1)
 teleportation : Quantum teleportation protocol with fidelity validation (Phase 2)
 noise         : Channel noise models and fidelity-vs-noise sweep (Phase 2.5)
-pauli_states  : Pauli eigenstate preparation +X/-X/+Y/-Y/+Z/-Z (Phase 3)
 measurements  : Single- and multi-qubit measurement helpers in X/Y/Z bases (Phase 3)
 """
 

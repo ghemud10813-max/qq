@@ -11,7 +11,8 @@ Sections
 3.  Generated QDS signature summary
 4.  Legitimate verification result
 5.  Modified-signature verification result
-6.  Teleportation fidelity for all six eigenstates
+6.  Teleportation inside the live QDSScheme key-distribution path
+7.  End-to-end keygen -> sign -> verify round trip
 
 Usage
 -----
@@ -44,6 +45,9 @@ from qds.pauli_states import (
     all_eigenstates,
     projective_measurement_probs,
 )
+from qds.key_distribution import distribute_public_key_verbose
+from qds.keygen import generate_key_pair
+from qds.scheme import QDSScheme
 from qds.signature import generate_signature, signature_summary
 from qds.verification import DEFAULT_ACCEPT_THRESHOLD, verify_signature
 from quantum.teleportation import (
@@ -180,27 +184,101 @@ def _section_modified_verification(sig) -> None:
 # Section 6: Teleportation fidelity
 # ---------------------------------------------------------------------------
 
-def _section_teleportation(seed: int) -> None:
+def _section_teleportation(seed: int) -> bool:
+    """Validate the teleportation step the live QDS scheme actually runs.
+
+    This is deliberately **not** a standalone fidelity check on abstract
+    Bloch angles.  It teleports a real signer key table through
+    ``qds.key_distribution`` -- the same code path ``QDSScheme`` uses when
+    ``distribute=True`` -- and asserts both that fidelity meets the Phase 2
+    threshold and that the verifier reconstructs the key table correctly.
+    """
     print(f"\n{_SEP}")
-    print("  SECTION 6 -- Teleportation Fidelity for Pauli Eigenstates")
+    print("  SECTION 6 -- Teleportation Inside QDS Key Distribution")
     print(_SEP)
-    print(f"  {'State':>6}  {'theta/pi':>10}  {'phi/pi':>10}  {'Fidelity':>12}  {'Status'}")
-    print(f"  {'-'*6}  {'-'*10}  {'-'*10}  {'-'*12}  {'-'*6}")
-    rows = []
+
+    table_size = 12
+    priv, _ = generate_key_pair(
+        signer_id="signer_alice",
+        table_size=table_size,
+        private_seed=bytes([seed % 256]) * 32,
+    )
+
+    print("  Teleporting the signer's key table to the verifier")
+    print(f"  (Bell pair -> Bell measurement -> Pauli correction), n={table_size}\n")
+
+    res = distribute_public_key_verbose(priv, shots=1024, seed=seed)
+
+    print(f"  {'idx':>4}  {'sent':>6}  {'received':>9}  {'corr':>6}  "
+          f"{'fidelity':>12}  {'status'}")
+    print(f"  {'-'*4}  {'-'*6}  {'-'*9}  {'-'*6}  {'-'*12}  {'-'*6}")
+
     all_pass = True
-    for name, theta, phi in STANDARD_STATES:
-        f = calculate_teleportation_fidelity(theta, phi, shots=4096, seed=seed)
-        status = "PASS" if f >= FIDELITY_THRESHOLD else "FAIL"
-        if f < FIDELITY_THRESHOLD:
-            all_pass = False
+    for i, (sent, got, fid, bits) in enumerate(
+        zip(res.sent_labels, res.received_labels, res.fidelities, res.correction_bits)
+    ):
+        ok = (sent == got) and (fid >= FIDELITY_THRESHOLD)
+        all_pass = all_pass and ok
         print(
-            f"  {name:>6}  {theta/np.pi:>10.4f}  {phi/np.pi:>10.4f}  "
-            f"{f:>12.10f}  {status}"
+            f"  {i:>4}  {sent:>6}  {got:>9}  {str(bits):>6}  "
+            f"{fid:>12.10f}  {'PASS' if ok else 'FAIL'}"
         )
-        rows.append({"state": name, "fidelity": f, "status": status})
+
     print(_THIN)
+    print(f"  Mean channel fidelity       : {res.mean_fidelity:.10f}")
+    print(f"  Key-table reconstruction    : "
+          f"{res.table_size - res.reconstruction_errors}/{res.table_size} "
+          f"({res.reconstruction_accuracy * 100:.2f}%)")
     print(f"  All states pass F >= {FIDELITY_THRESHOLD}: {all_pass}")
+
+    # Noise sweep on the same live path, so channel-manipulation attacks
+    # can be related to a measured baseline.
+    print(f"\n  Channel degradation on the live key-distribution path:")
+    print(f"  {'noise':>14}  {'p':>6}  {'mean_F':>12}  {'recon_acc':>10}")
+    print(f"  {'-'*14}  {'-'*6}  {'-'*12}  {'-'*10}")
+    for noise in ("depolarizing", "bit_flip"):
+        for p_noise in (0.05, 0.20):
+            r = distribute_public_key_verbose(
+                priv, noise_type=noise, noise_level=p_noise,
+                shots=512, seed=seed, max_states=6,
+            )
+            print(f"  {noise:>14}  {p_noise:>6.2f}  {r.mean_fidelity:>12.6f}  "
+                  f"{r.reconstruction_accuracy:>10.4f}")
+
     return all_pass
+
+
+def _section_end_to_end(length: int, seed: int) -> bool:
+    """Full keygen -> teleported distribution -> sign -> verify round trip."""
+    print(f"\n{_SEP}")
+    print("  SECTION 7 -- End-to-End QDSScheme Round Trip")
+    print(_SEP)
+
+    message = b"SIH26141 phase-3 end-to-end validation message"
+    scheme = QDSScheme(
+        signature_length=length,
+        table_size=16,
+        distribute=True,
+        shots=512,
+    )
+    scheme.generate_keys(signer_id="signer_alice")
+    sig = scheme.sign(message)
+    ok_res = scheme.verify(sig, message)
+    tampered = scheme.verify(sig, message + b"!")
+
+    print(f"  Key id                  : {sig.key_id[:8]}...")
+    print(f"  Distribution fidelity   : {scheme.public_key.distribution_fidelity:.10f}")
+    print(f"  Message digest          : {sig.message_hash[:32]}...")
+    print(f"  Key-derived signature   : {sig.is_key_derived}")
+    print(f"  Honest verification     : score={ok_res.verification_score:.4f} "
+          f"accepted={ok_res.accepted}")
+    print(f"  Tampered message        : score={tampered.verification_score:.4f} "
+          f"accepted={tampered.accepted}")
+    print(_THIN)
+
+    passed = ok_res.accepted and not tampered.accepted
+    print(f"  Round trip: {'PASS' if passed else 'FAIL'}")
+    return passed
 
 
 # ---------------------------------------------------------------------------
@@ -230,13 +308,17 @@ def run_validation(length: int, seed: int) -> bool:
     _section_legit_verification(sig)
     _section_modified_verification(sig)
     teleport_ok = _section_teleportation(seed)
+    e2e_ok = _section_end_to_end(length, seed)
 
     elapsed = time.perf_counter() - t0
     print(f"\n{_SEP}")
     print(f"  Elapsed : {elapsed:.2f}s")
-    print(f"  Teleportation baseline : {'PASS' if teleport_ok else 'FAIL'}")
+    print(f"  Teleportation in key distribution : "
+          f"{'PASS' if teleport_ok else 'FAIL'}")
+    print(f"  End-to-end QDSScheme round trip   : "
+          f"{'PASS' if e2e_ok else 'FAIL'}")
     print(_SEP)
-    return teleport_ok
+    return teleport_ok and e2e_ok
 
 
 def parse_args() -> argparse.Namespace:

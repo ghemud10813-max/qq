@@ -18,7 +18,7 @@ No AI/ML is used.
 
 from __future__ import annotations
 
-from typing import List
+from typing import List, Optional, Tuple
 
 import numpy as np
 
@@ -28,16 +28,29 @@ from utils.logger import get_logger
 
 logger = get_logger(__name__)
 
-__all__: list[str] = ["ImpersonationAttack"]
+__all__: list[str] = ["ImpersonationAttack", "IMPERSONATION_STRATEGIES"]
+
+#: Supported impersonator models.
+IMPERSONATION_STRATEGIES: Tuple[str, ...] = ("own_seed", "own_keypair")
 
 
 class ImpersonationAttack(BaseAttack):
     """Simulate signer impersonation using unauthorized key material.
 
-    The impersonator generates a completely different signature sequence
-    using their own seed, then replaces a controlled fraction of the
-    legitimate statevectors with their own.  At intensity 1.0, all
-    elements are replaced with the impersonator's states.
+    Two impersonator models are provided:
+
+    ``strategy='own_seed'`` (default, backward compatible)
+        The impersonator derives a state sequence from its own arbitrary
+        RNG seed.  This tests detection of *unrelated* key material.
+
+    ``strategy='own_keypair'``
+        The *realistic* model: the impersonator runs the real key-generation
+        protocol, obtaining a perfectly valid QDS key pair of its own, and
+        signs the victim's message with it.  Its signature is internally
+        self-consistent -- it would verify against **its own** public key.
+        It fails only because the verifier holds Alice's key, which is the
+        property the scheme must guarantee.  This is a materially stronger
+        adversary than an attacker emitting unrelated noise.
 
     Parameters
     ----------
@@ -45,11 +58,67 @@ class ImpersonationAttack(BaseAttack):
         Random seed for reproducibility.
     impersonator_id : str
         Identity string for the impersonator.
+    strategy : str
+        One of :data:`IMPERSONATION_STRATEGIES`.
+    message : bytes or str or None
+        For ``strategy='own_keypair'``: the message the impersonator signs
+        with its own key.  Defaults to a fixed placeholder.
+
+    Raises
+    ------
+    ValueError
+        If *strategy* is not recognised.
     """
 
-    def __init__(self, seed: int = 42, impersonator_id: str = "attacker_eve") -> None:
+    def __init__(
+        self,
+        seed: int = 42,
+        impersonator_id: str = "attacker_eve",
+        strategy: str = "own_seed",
+        message: Optional[bytes] = None,
+    ) -> None:
         super().__init__(seed=seed)
+        if strategy not in IMPERSONATION_STRATEGIES:
+            raise ValueError(
+                f"Unknown impersonation strategy {strategy!r}. "
+                f"Supported: {list(IMPERSONATION_STRATEGIES)}"
+            )
         self._impersonator_id = impersonator_id
+        self._strategy = strategy
+        self._message = message if message is not None else b"impersonated-message"
+
+    @property
+    def strategy(self) -> str:
+        """The impersonator model in use."""
+        return self._strategy
+
+    @property
+    def variant(self) -> str:
+        """Attack name qualified by strategy, e.g. ``'ImpersonationAttack[learned]'``.
+
+        ``name`` deliberately stays the bare class name so existing result
+        files and callers keep working; use *variant* when results from
+        different adversary models must stay distinguishable.
+        """
+        return f"{self.__class__.__name__}[{self._strategy}]"
+
+    def _impersonator_states(self, n: int) -> List["np.ndarray"]:
+        """Build the impersonator's substitute statevector sequence."""
+        if self._strategy == "own_keypair":
+            # A genuine, valid key pair belonging to the attacker.
+            from qds.keygen import generate_key_pair
+            from qds.signer import sign_message
+
+            priv, _ = generate_key_pair(signer_id=self._impersonator_id)
+            forged = sign_message(self._message, priv, length=n)
+            return [e.statevector.copy() for e in forged.elements]
+
+        imp_rng = np.random.default_rng(self._seed + 9999)
+        labels = list(EIGENSTATE_LABELS)
+        return [
+            get_eigenstate(labels[int(idx)]).statevector.copy()
+            for idx in imp_rng.integers(0, len(labels), size=n)
+        ]
 
     def _execute_attack(
         self,
@@ -82,6 +151,7 @@ class ImpersonationAttack(BaseAttack):
             "legitimate_signer_id": metadata.signer_id,
             "impersonate_fraction": n_impersonate / n if n > 0 else 0.0,
             "impersonated_positions": [],
+            "strategy": self._strategy,
         }
 
         if n_impersonate == 0:
@@ -93,12 +163,8 @@ class ImpersonationAttack(BaseAttack):
                 attack_indicators=indicators,
             )
 
-        # Generate impersonator's own state sequence with a different seed
-        imp_rng = np.random.default_rng(self._seed + 9999)
-        labels = list(EIGENSTATE_LABELS)
-        imp_indices = imp_rng.integers(0, len(labels), size=n)
-        imp_states = [get_eigenstate(labels[int(idx)]).statevector.copy()
-                      for idx in imp_indices]
+        # Build the impersonator's own state sequence per its strategy
+        imp_states = self._impersonator_states(n)
 
         # Replace a fraction of positions with impersonator states
         positions = self._rng.choice(n, size=n_impersonate, replace=False)
@@ -120,7 +186,7 @@ class ImpersonationAttack(BaseAttack):
         )
         evidence.append(
             f"impersonation_summary: {n_impersonate}/{n} elements replaced "
-            f"({100.0 * n_impersonate / n:.1f}%)"
+            f"({100.0 * n_impersonate / n:.1f}%) via strategy={self._strategy}"
         )
 
         return AttackResult(

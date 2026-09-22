@@ -9,87 +9,95 @@ from pathlib import Path
 
 RESULTS_DIR = Path(__file__).parent.parent.parent / "experiments" / "results"
 
-def load_security_summary():
-    """Load latest security overview metrics."""
-    try:
-        df = pd.read_csv(RESULTS_DIR / "security_summary.csv")
-        return pd.Series(
-            df.Value.values, index=df.Metric
-        ).to_dict()
-    except Exception:
-        return {}
-        
-def load_performance_summary():
-    """Load performance benchmarks."""
-    try:
-        import json
-        with open(RESULTS_DIR / "benchmark_config.json", "r") as f:
-            return json.load(f)
-    except Exception:
-        return {}
+# Every KPI below is loaded from the canonical experiment output via the
+# dashboard data contract. Nothing here computes a security metric, and
+# nothing falls back to a plausible-looking placeholder: if a run has not
+# been performed, the UI says so rather than showing a number that no
+# measurement produced.
+from dashboard.data_source import (  # noqa: E402
+    load_experiment_config,
+    load_metrics,
+    missing_results_message,
+    pct,
+    pct_ci,
+    results_available,
+)
 
 
 def render_top_kpis():
-    """Render the top dashboard key performance indicators."""
-    summary = load_security_summary()
-    perf = load_performance_summary()
-    
+    """Render the top dashboard KPIs from the canonical experiment run."""
     st.markdown("### System Security Posture")
+
+    if not results_available():
+        st.warning(missing_results_message())
+        st.divider()
+        return
+
+    m = load_metrics() or {}
+    cfg = load_experiment_config() or {}
+
     cols = st.columns(6)
-    
-    # 1. Overall Security Status
+
+    # 1. Overall status, derived from the measured F1.
     with cols[0]:
-        val = summary.get("F1 Score", "N/A")
-        if isinstance(val, float) and val > 0.90:
+        f1 = m.get("f1")
+        if f1 is not None and f1 > 0.90:
             st.metric("Status", "SECURE", "Operational")
+        elif f1 is not None:
+            st.metric("Status", "DEGRADED", f"F1 {pct(f1)}")
         else:
-            st.metric("Status", "DEGRADED", "-")
-            
-    # 2. Latest Accuracy
+            st.metric("Status", "UNKNOWN", "-")
+
     with cols[1]:
-        acc = summary.get("Accuracy", "N/A")
-        try:
-            acc = f"{acc:.2%}" if isinstance(acc, float) else acc
-        except Exception:
-            pass
-        st.metric("Global Accuracy", acc)
-        
-    # 3. Detection Rate
+        st.metric("Global Accuracy", pct(m.get("accuracy")))
+
     with cols[2]:
-        dr = summary.get("Detection Rate", "N/A")
-        try:
-            dr = f"{dr:.2%}" if isinstance(dr, float) else dr
-        except Exception:
-            pass
-        st.metric("Detection Rate (TPR)", dr)
-        
-    # 4. False Acceptance Rate
+        st.metric(
+            "Detection Rate (TPR)",
+            pct(m.get("detection_rate")),
+            pct_ci(m.get("detection_rate"), m.get("detection_rate_ci")),
+            help="95% Clopper-Pearson interval shown below the value.",
+        )
+
     with cols[3]:
-        far = summary.get("FAR", "N/A")
-        try:
-            far = f"{far:.2%}" if isinstance(far, float) else far
-        except Exception:
-            pass
-        st.metric("False Acceptance Rate", far)
-        
-    # 5. False Rejection Rate
+        st.metric(
+            "False Acceptance Rate",
+            pct(m.get("far")),
+            pct_ci(m.get("far"), m.get("far_ci")),
+            delta_color="off",
+            help=f"Attacks that passed, over n={m.get('far_n', '?')} attack sessions.",
+        )
+
     with cols[4]:
-        frr = summary.get("FRR", "N/A")
-        try:
-            frr = f"{frr:.2%}" if isinstance(frr, float) else frr
-        except Exception:
-            pass
-        st.metric("False Rejection Rate", frr)
-        
-    # 6. Current Median Threshold
+        st.metric(
+            "False Rejection Rate",
+            pct(m.get("frr")),
+            pct_ci(m.get("frr"), m.get("frr_ci")),
+            delta_color="off",
+            help=f"Legitimate sessions denied, over n={m.get('frr_n', '?')}.",
+        )
+
     with cols[5]:
-        th = summary.get("Threshold_Critical", "N/A")
-        try:
-            th = f"{th:.4f}" if isinstance(th, float) else th
-        except Exception:
-            pass
-        st.metric("Current Def. Threshold", th)
-        
+        th = m.get("threshold")
+        st.metric(
+            "Calibrated Threshold",
+            f"{th:.5f}" if isinstance(th, (int, float)) else "N/A",
+            "experimentally selected",
+            delta_color="off",
+            help=cfg.get("threshold_rule", ""),
+        )
+
+    # Provenance: make it obvious which run these numbers came from.
+    ts = cfg.get("timestamp_utc", "unknown")
+    trials = cfg.get("trials_per_class", "?")
+    seed = cfg.get("seed", "?")
+    commit = cfg.get("git_commit") or "n/a"
+    st.caption(
+        f"Source: experiments/results/final - run {ts} - "
+        f"{trials} sessions/class - seed {seed} - commit {commit} - "
+        f"mean teleportation fidelity {m.get('mean_teleportation_fidelity', float('nan')):.4f}"
+    )
+
     st.divider()
 
 
@@ -99,7 +107,7 @@ def log_event(event_type: str, action: str, score: float, decision: str):
     import uuid
     if "event_logs" not in st.session_state:
         st.session_state.event_logs = []
-        
+
     st.session_state.event_logs.insert(0, {
         "timestamp": datetime.datetime.now().strftime("%H:%M:%S"),
         "session_id": str(uuid.uuid4())[:8],
@@ -119,7 +127,7 @@ def render_event_log():
     with col2:
         if st.button("Clear Log"):
             st.session_state.event_logs = []
-            
+
     if not st.session_state.get("event_logs"):
         st.info("No events logged yet. Perform verification or launch an attack to see live logs.")
     else:

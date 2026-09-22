@@ -19,6 +19,15 @@ Models physically meaningful quantum channel disturbances:
 3. **Configurable disturbance probability**: Each element is
    independently disturbed with probability proportional to intensity.
 
+4. **Real quantum channel** (``mode='quantum_channel'``): rather than
+   applying an analytic map to an abstract vector, each state is actually
+   transmitted through the 3-qubit teleportation circuit on Aer -- Bell
+   pair, Bell measurement, classical Pauli correction -- with the
+   adversary injecting a Qiskit noise model onto the channel qubits.  The
+   verifier then receives whatever genuinely came out the far end.  This is
+   the mode that exercises the same transport path the live QDS scheme
+   uses for key distribution (:mod:`qds.key_distribution`).
+
 The disturbances are quantum-mechanically motivated:
 - Depolarizing channel:  ρ → (1-p)ρ + p·I/2
 - Dephasing channel:     |ψ⟩ → Rz(θ)|ψ⟩  with random θ
@@ -139,11 +148,49 @@ class ChannelManipulationAttack(BaseAttack):
         self,
         seed: int = 42,
         mode: str = "both",
+        channel_noise: str = "depolarizing",
+        shots: int = 256,
     ) -> None:
         super().__init__(seed=seed)
-        if mode not in ("depolarizing", "dephasing", "both"):
-            raise ValueError(f"mode must be 'depolarizing', 'dephasing', or 'both', got {mode!r}")
+        valid = ("depolarizing", "dephasing", "both", "quantum_channel")
+        if mode not in valid:
+            raise ValueError(f"mode must be one of {valid}, got {mode!r}")
         self._mode = mode
+        self._channel_noise = channel_noise
+        self._shots = shots
+
+    @property
+    def mode(self) -> str:
+        """Disturbance model in use."""
+        return self._mode
+
+    def _run_quantum_channel(
+        self,
+        statevectors: List[np.ndarray],
+        intensity: float,
+    ) -> tuple[List[np.ndarray], List[float]]:
+        """Transmit every state through the real noisy teleportation channel.
+
+        Returns
+        -------
+        tuple
+            ``(received_statevectors, per_element_fidelities)``.
+        """
+        from qds.key_distribution import teleport_statevector
+
+        received: List[np.ndarray] = []
+        fidelities: List[float] = []
+        for i, sv in enumerate(statevectors):
+            got, fid = teleport_statevector(
+                sv,
+                noise_type=self._channel_noise,
+                noise_level=intensity,
+                shots=self._shots,
+                seed=self._seed + i,
+            )
+            received.append(got)
+            fidelities.append(fid)
+        return received, fidelities
 
     def _execute_attack(
         self,
@@ -182,6 +229,31 @@ class ChannelManipulationAttack(BaseAttack):
             evidence.append("intensity=0.0: no channel manipulation applied")
             return AttackResult(
                 statevectors=statevectors,
+                metadata=metadata,
+                evidence=evidence,
+                attack_indicators=indicators,
+            )
+
+        if self._mode == "quantum_channel":
+            received, fidelities = self._run_quantum_channel(statevectors, intensity)
+            mean_fid = float(np.mean(fidelities)) if fidelities else 1.0
+            n_degraded = sum(1 for f in fidelities if f < 0.999)
+
+            indicators["n_disturbed"] = n_degraded
+            indicators["disturbed_positions"] = [
+                i for i, f in enumerate(fidelities) if f < 0.999
+            ]
+            indicators["channel_noise"] = self._channel_noise
+            indicators["mean_channel_fidelity"] = mean_fid
+            indicators["element_fidelities"] = fidelities
+
+            evidence.append(
+                f"quantum_channel_interference: {n_degraded}/{n} teleported "
+                f"states degraded by injected {self._channel_noise} noise "
+                f"(p={intensity:.2f}), mean channel fidelity={mean_fid:.4f}"
+            )
+            return AttackResult(
+                statevectors=received,
                 metadata=metadata,
                 evidence=evidence,
                 attack_indicators=indicators,

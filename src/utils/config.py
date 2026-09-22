@@ -179,6 +179,44 @@ class ConfigLoader:
         """Whether to insert barriers between circuit stages."""
         return bool(self.get_nested("circuit", "barrier", default=True))
 
+    # ------------------------------------------------------------------
+    # Security-evaluation sample sizes
+    # ------------------------------------------------------------------
+
+    @property
+    def n_legitimate_sessions(self) -> int:
+        """Legitimate sessions to simulate for FAR/TN statistics."""
+        return int(self.get_nested("evaluation", "n_legitimate_sessions", default=300))
+
+    @property
+    def n_attack_sessions_per_type(self) -> int:
+        """Attack sessions to simulate per attack category."""
+        return int(
+            self.get_nested("evaluation", "n_attack_sessions_per_type", default=300)
+        )
+
+    @property
+    def confidence_level(self) -> float:
+        """Confidence level for reported FAR/FRR intervals."""
+        return float(self.get_nested("evaluation", "confidence_level", default=0.95))
+
+    @property
+    def interval_method(self) -> str:
+        """Binomial interval estimator: 'wilson' or 'clopper_pearson'."""
+        return str(
+            self.get_nested("evaluation", "interval_method", default="clopper_pearson")
+        )
+
+    @property
+    def evaluation_signature_length(self) -> int:
+        """Signature length used by the security-evaluation experiments."""
+        return int(self.get_nested("evaluation", "signature_length", default=32))
+
+    @property
+    def n_baseline_sessions(self) -> int:
+        """Sessions used to calibrate the detector before evaluation."""
+        return int(self.get_nested("evaluation", "n_baseline_sessions", default=40))
+
     @property
     def phase_flags(self) -> dict[str, bool]:
         """Active/inactive status of each project phase."""

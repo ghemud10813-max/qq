@@ -25,6 +25,21 @@ ATTACKS = {
     "CHANNEL_MANIPULATION": ChannelManipulationAttack,
 }
 
+def _match_counts(res) -> tuple[int, int]:
+    """Return ``(matches, total)`` for a scenario result.
+
+    The full Phase 4 ``DetectionResult`` carries exact counts, but it is
+    ``None`` on the authorization-failure path, so fall back to the
+    ``sample_count`` / ``mismatch_rate`` fields that are always present.
+    """
+    dr = getattr(res, "detection_result", None)
+    stats = getattr(dr, "stats", None)
+    if stats is not None:
+        return round(stats.match_rate * stats.total), stats.total
+    total = res.sample_count
+    return round((1.0 - res.mismatch_rate) * total), total
+
+
 def render_attack_panel():
     st.subheader("Interactive Quantum-Cyber Attack Simulation")
     st.write("Visually inject and analyze quantum interception, forgery, or replay threats against QVERIS.")
@@ -90,8 +105,8 @@ def render_attack_panel():
         
         if current_res:
             attack_event = {
-                "type": current_res.attack_metadata.name.upper(),
-                "intensity": intensity,
+                "type": str(current_res.attack_type).upper(),
+                "intensity": current_res.intensity,
                 "classification": current_res.classification,
                 "status": "RUNNING"
             }
@@ -107,15 +122,16 @@ def render_attack_panel():
         c_stat, c_quant, c_sec, c_lat = st.columns(4)
         with c_stat:
             st.markdown("**ATTACK STATUS**")
-            st.write(f"Type: `{current_res.attack_metadata.name}`")
-            st.write(f"Intensity: `{intensity:.2f}`")
+            st.write(f"Type: `{current_res.attack_type}`")
+            st.write(f"Intensity: `{current_res.intensity:.2f}`")
             st.write(f"Detection: `{current_res.detection_status}`")
             st.write(f"Authorizn: `{current_res.authorization_status}`")
             
         with c_quant:
             st.markdown("**QUANTUM METRICS**")
-            st.write(f"Fidelity: `{current_res.teleportation_fidelity:.4f}`")
-            st.write(f"Matches: `{current_res.measurement_statistics['matches']}/{current_res.measurement_statistics['total']}`")
+            matches, total = _match_counts(current_res)
+            st.write(f"Match Rate: `{1.0 - current_res.mismatch_rate:.4f}`")
+            st.write(f"Matches: `{matches}/{total}`")
             st.write(f"Verif Score: `{current_res.verification_score:.4f}`")
             
         with c_sec:
@@ -127,7 +143,7 @@ def render_attack_panel():
             
         with c_lat:
             st.markdown("**LATENCY**")
-            st.write(f"Exec Time: `{current_res.latency:.3f} s`")
+            st.write(f"Exec Time: `{getattr(current_res, 'latency', 0.0):.3f} s`")
             
         st.info(f"**Detector Reason**: {current_res.reason}")
 

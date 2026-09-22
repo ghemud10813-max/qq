@@ -89,3 +89,17 @@ secrets/
 *.key
 *.crt
 *.p12
+
+# --- Debug / scratch output (never part of the deliverable) ---
+# These accumulated in the repo root from redirected console runs and were
+# committed by accident; several contained garbled Windows console output
+# from old ModuleNotFoundError crashes.
+out*.txt
+err*.txt
+exp_*.txt
+experiment_output.txt
+full_*.txt
+test_*.txt
+*_utf8.txt
+tmp_runner*.py
+nul

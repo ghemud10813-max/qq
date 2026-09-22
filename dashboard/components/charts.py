@@ -1,98 +1,224 @@
 """
 dashboard/components/charts.py
 ==============================
-Interactive chart components using Plotly and pre-computed datasets.
+Threat-analytics charts, read from the canonical experiment output.
+
+SIH26141 | Blockchain & Cybersecurity.
+
+Every chart here is backed by `experiments/results/final/`, which only
+`experiments/run_final_experiment.py` writes. This module loads and
+renders; it computes no security metric of its own.
+
+An earlier revision read whichever CSVs happened to sit in
+`experiments/results/`, mixing per-phase development diagnostics with
+final results and silently showing a stale figure when a file was absent.
+Now a missing input says so explicitly -- a blank panel is better than a
+number nobody can trace to a run.
 """
-import pandas as pd
-import streamlit as st
-import plotly.express as px
-import plotly.graph_objects as go
+
+from __future__ import annotations
+
+import sys
 from pathlib import Path
 
-RESULTS_DIR = Path(__file__).parent.parent.parent / "experiments" / "results"
+import pandas as pd
+import streamlit as st
 
-def load_csv_safe(filename: str) -> pd.DataFrame:
-    try:
-        path = RESULTS_DIR / filename
-        if path.exists():
-            return pd.read_csv(path)
-    except Exception:
-        pass
-    return pd.DataFrame()
+_ROOT = Path(__file__).resolve().parent.parent.parent
+for _p in (_ROOT / "src", _ROOT):
+    if str(_p) not in sys.path:
+        sys.path.insert(0, str(_p))
+
+from dashboard.data_source import (  # noqa: E402
+    load_attack_metrics,
+    load_comparison,
+    load_confusion_matrix,
+    load_intensity,
+    load_metrics,
+    load_threshold_analysis,
+    missing_results_message,
+    plot_path,
+    results_available,
+)
+
+RESULTS_DIR = _ROOT / "experiments" / "results" / "final"
 
 
-def render_attack_comparison():
-    """Render interactive attack detection comparison."""
-    df = load_csv_safe("attack_metrics.csv")
-    if df.empty:
-        st.warning("Attack metrics data not available. (Run Phase 6.5 tests to generate).")
-        return
-        
-    st.subheader("Attack-wise Detection Rate")
-    # Need to filter or aggregate to get per-attack Detection Rate (TPR)
-    # The dataframe might contain TPR per attack type.
-    if "attack_type" in df.columns and "detection_rate" in df.columns:
-        fig = px.bar(df, x="attack_type", y="detection_rate", color="detection_rate",
-                     color_continuous_scale="reds", range_y=[0, 1],
-                     title="Detection Effectiveness by Attack Type")
-        fig.update_layout(template="plotly_dark", yaxis_tickformat=".1%")
-        st.plotly_chart(fig, use_container_width=True)
+def _require_results() -> bool:
+    """Show the regeneration instruction when no canonical run exists."""
+    if results_available():
+        return True
+    st.warning(missing_results_message())
+    return False
+
+
+def _show_plot(name: str, caption: str = "") -> None:
+    """Render a generated figure, or say why it is absent."""
+    p = plot_path(name)
+    if p:
+        st.image(p, width="stretch")
+        if caption:
+            st.caption(caption)
     else:
-        st.image(str(RESULTS_DIR / "attack_detection_comparison.png"), use_column_width=True)
+        st.info(f"`{name}` not found — re-run the canonical experiment.")
 
 
-def render_threshold_analysis():
-    """Render interactive threshold vs FAR/FRR chart."""
-    df = load_csv_safe("threshold_analysis.csv")
-    if df.empty:
-        st.warning("Threshold analysis data not available.")
+# ---------------------------------------------------------------------------
+# Attack comparison
+# ---------------------------------------------------------------------------
+
+def render_attack_comparison() -> None:
+    """Per-attack detection rates with confidence intervals."""
+    st.subheader("Attack Detection Performance")
+    if not _require_results():
         return
-        
-    if all(c in df.columns for c in ["threshold", "far", "frr", "detection_rate"]):
-        fig = go.Figure()
-        fig.add_trace(go.Scatter(x=df["threshold"], y=df["far"], name="False Acceptance Rate (FAR)", line=dict(color='red')))
-        fig.add_trace(go.Scatter(x=df["threshold"], y=df["frr"], name="False Rejection Rate (FRR)", line=dict(color='orange')))
-        fig.add_trace(go.Scatter(x=df["threshold"], y=df["detection_rate"], name="Detection Rate", line=dict(color='green')))
-        
-        fig.update_layout(
-            template="plotly_dark",
-            title="System Threshold Tradeoffs",
-            xaxis_title="Anomaly Threshold",
-            yaxis_title="Rate",
-            yaxis_tickformat=".1%",
-            hovermode="x unified"
+
+    df = load_attack_metrics()
+    if df is None or df.empty:
+        st.info("No attack metrics in the canonical results.")
+        return
+
+    show = df.copy()
+    show["detection_rate"] = (show["detection_rate"] * 100).round(2)
+    show["95% CI"] = [
+        f"[{lo * 100:.2f}, {hi * 100:.2f}]"
+        for lo, hi in zip(show["ci_lower"], show["ci_upper"])
+    ]
+    show["classified"] = (show["classification_accuracy"] * 100).round(1)
+    st.dataframe(
+        show[["attack_type", "trials", "detected", "missed",
+              "detection_rate", "95% CI", "classified",
+              "mean_anomaly_score", "mean_fidelity", "mean_purity"]],
+        width="stretch", hide_index=True,
+    )
+    st.caption(
+        "Detection rate is the fraction flagged as SUSPICIOUS or THREAT. "
+        "`classified` is how often the engine also named the correct attack. "
+        "Intervals are 95% Clopper-Pearson."
+    )
+    _show_plot("attack_comparison.png")
+
+    st.divider()
+    st.markdown("#### Normal vs Attack Telemetry")
+    comp = load_comparison()
+    if comp is not None and not comp.empty:
+        cols = ["condition", "fidelity", "purity", "trace_distance",
+                "entropy", "mismatch_rate", "anomaly_score"]
+        st.dataframe(comp[[c for c in cols if c in comp.columns]].round(4),
+                     width="stretch", hide_index=True)
+        st.caption(
+            "Purity is the discriminator between forgery and channel noise: "
+            "substituting an eigenstate leaves the state pure, while a "
+            "depolarizing channel decoheres it."
         )
-        st.plotly_chart(fig, use_container_width=True)
-    else:
-        st.info("Interactive threshold data structurally incompatible, viewing static render:")
-        st.image(str(RESULTS_DIR / "roc_curve.png"))
+    _show_plot("normal_vs_attack.png")
 
 
-def render_performance_analytics():
-    """Render performance and scalability charts."""
-    cols = st.columns(2)
-    with cols[0]:
-        st.markdown("**Signature Length Scalability**")
-        df_sig = load_csv_safe("signature_scalability.csv")
-        if not df_sig.empty and "signature_length" in df_sig.columns and "mean_end_to_end_time" in df_sig.columns:
-            # converting s to ms
-            df_sig['MeanLatency_ms'] = df_sig['mean_end_to_end_time'] * 1000
-            fig1 = px.line(df_sig, x="signature_length", y="MeanLatency_ms", markers=True, title="Latency vs Signature Size")
-            fig1.update_layout(template="plotly_dark")
-            st.plotly_chart(fig1, use_container_width=True)
-        else:
-            p = RESULTS_DIR / "signature_latency.png"
-            if p.exists():
-                st.image(str(p), use_column_width=True)
-                
-    with cols[1]:
-        st.markdown("**Session Load Throughput**")
-        df_sess = load_csv_safe("session_scalability.csv")
-        if not df_sess.empty and "session_count" in df_sess.columns and "throughput_sessions_per_sec" in df_sess.columns:
-            fig2 = px.line(df_sess, x="session_count", y="throughput_sessions_per_sec", markers=True, title="Throughput vs Concurrent Sessions")
-            fig2.update_layout(template="plotly_dark")
-            st.plotly_chart(fig2, use_container_width=True)
-        else:
-            p = RESULTS_DIR / "session_throughput.png"
-            if p.exists():
-                st.image(str(p), use_column_width=True)
+# ---------------------------------------------------------------------------
+# Threshold analysis
+# ---------------------------------------------------------------------------
+
+def render_threshold_analysis() -> None:
+    """Threshold sweep, confusion matrix and detection-vs-intensity."""
+    st.subheader("Threshold & Error-Rate Analysis")
+    if not _require_results():
+        return
+
+    m = load_metrics() or {}
+    df = load_threshold_analysis()
+
+    if df is not None and not df.empty:
+        st.markdown("#### FAR / FRR vs Threshold")
+        chart = df[["threshold", "far", "frr"]].set_index("threshold")
+        st.line_chart(chart)
+        st.caption(
+            f"Selected operating point: {m.get('threshold', float('nan')):.6f}. "
+            "FAR is attacks that passed; FRR is legitimate sessions denied."
+        )
+        _show_plot("far_frr_vs_threshold.png")
+
+    st.divider()
+    c1, c2 = st.columns(2)
+
+    with c1:
+        st.markdown("#### Confusion Matrix")
+        cm = load_confusion_matrix()
+        if cm is not None:
+            st.dataframe(cm, width="stretch")
+        _show_plot("confusion_matrix.png")
+
+    with c2:
+        st.markdown("#### Detection vs Attack Intensity")
+        inten = load_intensity()
+        if inten is not None and not inten.empty:
+            pivot = inten.pivot_table(
+                index="intensity", columns="attack_type",
+                values="detection_rate", aggfunc="mean",
+            )
+            st.line_chart(pivot)
+        _show_plot("detection_vs_intensity.png")
+
+    st.divider()
+    st.markdown("#### Fidelity vs Channel Noise")
+    _show_plot(
+        "fidelity_vs_noise.png",
+        "Measured on the live teleportation channel: injected depolarizing "
+        "noise degrades the fidelity of the state the verifier receives.",
+    )
+
+
+# ---------------------------------------------------------------------------
+# Performance / scalability
+# ---------------------------------------------------------------------------
+
+def render_performance_analytics() -> None:
+    """Latency, throughput and scaling behaviour."""
+    st.subheader("Performance & Scalability")
+    if not _require_results():
+        return
+
+    m = load_metrics() or {}
+    lat = m.get("latency_ms", {})
+
+    cols = st.columns(5)
+    cols[0].metric("Signature gen", f"{lat.get('signature_generation_mean', 0):.2f} ms")
+    cols[1].metric("Quantum channel", f"{lat.get('quantum_channel_mean', 0):.2f} ms")
+    cols[2].metric("Verification", f"{lat.get('verification_mean', 0):.2f} ms")
+    cols[3].metric("Detection", f"{lat.get('detection_mean', 0):.2f} ms")
+    cols[4].metric("Throughput",
+                   f"{m.get('throughput_sessions_per_sec', 0):.1f}/s")
+    st.caption(
+        f"End-to-end mean {lat.get('end_to_end_mean', 0):.2f} ms, "
+        f"median {lat.get('end_to_end_median', 0):.2f} ms."
+    )
+
+    st.divider()
+    c1, c2 = st.columns(2)
+
+    with c1:
+        st.markdown("#### Latency vs Signature Length")
+        path = RESULTS_DIR / "scalability_length.csv"
+        if path.exists():
+            df = pd.read_csv(path)
+            st.dataframe(
+                df[["signature_length", "total_ms", "throughput_per_sec",
+                    "mean_fidelity"]].round(3),
+                width="stretch", hide_index=True,
+            )
+        _show_plot("latency_vs_length.png",
+                   "Stacked by pipeline stage, measured on the real pipeline.")
+
+    with c2:
+        st.markdown("#### Throughput vs Signature Length")
+        _show_plot("throughput_vs_length.png")
+
+    st.divider()
+    st.markdown("#### Shot Count: Cost vs Statistical Precision")
+    path = RESULTS_DIR / "scalability_shots.csv"
+    if path.exists():
+        st.dataframe(pd.read_csv(path).round(5), width="stretch", hide_index=True)
+    _show_plot(
+        "scalability_vs_shots.png",
+        "More shots per element cost time but tighten the baseline anomaly-score "
+        "spread, which is what lets the detector run a tighter threshold.",
+    )

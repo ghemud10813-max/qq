@@ -16,8 +16,16 @@ Design
 - ``QDSSignature``      : the complete signed artefact (header + elements).
 - ``generate_signature``: produces a deterministic signature from a seed.
 
-No cryptographic hash replaces the quantum state sequence; the states
-themselves carry the authenticity information as required by the QDS spec.
+Two generation paths exist:
+
+- :func:`generate_signature` -- legacy, seed-derived.  The seed is a
+  *public* config value, so this path is reproducible by anyone and
+  provides **no unforgeability**.  It is retained only to generate
+  neutral baseline traffic for detector calibration.
+- :func:`qds.signer.sign_message` -- key-derived.  The eigenstate sequence
+  is a function of both the signer's secret key and a SHA-256 digest of
+  the message content, and is the path used for all security claims.
+
 No AI/ML is used.
 """
 
@@ -126,9 +134,20 @@ class QDSSignature:
     length : int
         Number of signature elements.
     seed : int
-        RNG seed used during generation (for auditability).
+        RNG seed used during generation (for auditability).  ``-1`` for
+        key-derived signatures, which use no public seed.
     elements : list[SignatureElement]
         Ordered sequence of Pauli eigenstate elements.
+    message_hash : str
+        Hex SHA-256 digest of the signed message content.  Empty for
+        legacy seed-derived signatures.
+    key_id : str
+        Identifier of the signing key pair.  Empty for legacy signatures.
+    signer_id : str
+        Identity of the signer.
+    key_indices : tuple[int, ...]
+        Key-table position used at each signature index.  Public: the
+        verifier recomputes these from the message digest.
     """
 
     signature_id: str
@@ -136,6 +155,20 @@ class QDSSignature:
     length: int
     seed: int
     elements: List[SignatureElement] = field(default_factory=list)
+    message_hash: str = ""
+    key_id: str = ""
+    signer_id: str = ""
+    key_indices: Tuple[int, ...] = ()
+
+    @property
+    def is_key_derived(self) -> bool:
+        """``True`` when this signature was produced from a real private key.
+
+        Legacy seed-derived signatures (``generate_signature``) carry no
+        key material and offer no unforgeability; key-derived signatures
+        (``qds.signer.sign_message``) do.
+        """
+        return bool(self.key_id)
 
     # ------------------------------------------------------------------
     # Convenience accessors
@@ -243,6 +276,12 @@ def generate_signature(
     if seed is None:
         cfg = ConfigLoader()
         seed = cfg.random_seed
+
+    logger.debug(
+        "generate_signature() is the legacy seed-derived path and provides "
+        "NO unforgeability (the seed is public). Use qds.signer.sign_message "
+        "with a PrivateKey for security-relevant signatures."
+    )
 
     rng = get_rng(seed)
     pool = list(label_pool)

@@ -38,10 +38,13 @@ def test_optimize_threshold():
     
     res = optimize_threshold(legit, attacks, candidate_thresholds=[0.10, 0.18, 0.28], max_frr=0.50, critical_offset=0.0)
     
-    # at 0.10: legit[1,2] > 0.1 -> 2 FP. attacks[0,1,2] > 0.1 -> 3 TP, 0 FN. FRR=0.
-    # at 0.18: legit[2] > 0.15 (wait 0.15 < 0.18) -> 0 FP. attacks[0,1] > 0.18 -> 2 TP, 1 FN. FRR=0.33. FAR=0.
-    # FAR is minimized at 0.18 without dropping FRR > 0.50.
-    assert res.best_threshold == 0.18
+    # Sweep (FAR = missed attacks, FRR = legitimate wrongly denied):
+    #   t=0.10 -> all 3 attacks caught, 1 legit flagged: FAR=0.000, FRR=0.333
+    #   t=0.18 -> 1 attack missed, 0 legit flagged:      FAR=0.333, FRR=0.000
+    #   t=0.28 -> 2 attacks missed, 0 legit flagged:     FAR=0.667, FRR=0.000
+    # The optimiser minimises FAR subject to FRR <= max_frr (0.50), so it
+    # picks t=0.10 -- the point that lets no attack through.
+    assert res.best_threshold == 0.10
     assert res.best_metrics.far == 0.0
     assert pytest.approx(res.best_metrics.frr) == 1/3
     

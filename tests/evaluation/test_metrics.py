@@ -34,8 +34,39 @@ def test_calculate_metrics():
     assert metrics.f1_score == 0.5
     assert metrics.specificity == 1.0 / 2.0
     
+    # FAR = FN/(FN+TP): attacks that slipped through.
+    # FRR = FP/(FP+TN): legitimate sessions wrongly denied.
+    # (Symmetric here -- see test_far_frr_not_swapped for the asymmetric case.)
     assert metrics.far == 1.0 / (1.0 + 1.0)
     assert metrics.frr == 1.0 / (1.0 + 1.0)
+
+
+def test_far_frr_not_swapped():
+    """FAR must count missed attacks, FRR must count rejected legitimates.
+
+    Uses deliberately asymmetric counts so a swap cannot pass: 3 attacks all
+    missed (FN=3, TP=0) and 4 legitimate sessions all correct (FP=0, TN=4).
+    Every attack got through, so FAR must be 1.0; no honest user was turned
+    away, so FRR must be 0.0.
+    """
+    results = [
+        AttackScenarioResult("LEGITIMATE", 0.0, 10, 0.0, 0.0, "NORMAL", "NOT_APPLICABLE", ""),
+        AttackScenarioResult("LEGITIMATE", 0.0, 10, 0.0, 0.0, "NORMAL", "NOT_APPLICABLE", ""),
+        AttackScenarioResult("LEGITIMATE", 0.0, 10, 0.0, 0.0, "NORMAL", "NOT_APPLICABLE", ""),
+        AttackScenarioResult("LEGITIMATE", 0.0, 10, 0.0, 0.0, "NORMAL", "NOT_APPLICABLE", ""),
+        AttackScenarioResult("FORGERY", 1.0, 10, 0.01, 0.01, "NORMAL", "MISSED", ""),
+        AttackScenarioResult("FORGERY", 1.0, 10, 0.01, 0.01, "NORMAL", "MISSED", ""),
+        AttackScenarioResult("FORGERY", 1.0, 10, 0.01, 0.01, "NORMAL", "MISSED", ""),
+    ]
+    metrics = calculate_metrics(results)
+
+    assert metrics.tp == 0
+    assert metrics.fn == 3
+    assert metrics.fp == 0
+    assert metrics.tn == 4
+
+    assert metrics.far == 1.0, "every attack passed -> FAR must be 1.0"
+    assert metrics.frr == 0.0, "no legitimate session denied -> FRR must be 0.0"
 
 
 def test_zero_denominator_handling():

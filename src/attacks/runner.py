@@ -257,27 +257,25 @@ class AttackRunner:
             intensity=intensity,
         )
 
-        # --- Authorization check (independent of anomaly score) ---
+        # --- Authorization check (classical layer) ---
+        # This runs *alongside* the quantum-statistical detector, not
+        # instead of it.  An earlier revision returned here immediately with
+        # anomaly_score=0.0, which is why this attack category reported a
+        # score of exactly 0.0000 in every results file while every other
+        # category was scored statistically.  The unauthorized party has to
+        # measure the states to read them, and that collapse is a real,
+        # measurable perturbation -- so we now fall through to full
+        # verification and detection, and merge the authorization verdict in
+        # at the end.
+        auth_failed = False
+        auth_reason = ""
         if isinstance(attack, UnauthorizedVerificationAttack) and intensity > 0:
             auth_check = check_authorization(
                 verifier_id=attack_result.metadata.verifier_id,
                 metadata=attack_result.metadata,
             )
-            return AttackScenarioResult(
-                attack_type=attack_type,
-                intensity=intensity,
-                sample_count=sig.length,
-                mismatch_rate=0.0,
-                anomaly_score=0.0,
-                classification="REJECTED",
-                detection_status="DETECTED",
-                reason=f"authorization_failure: {auth_check.reason}",
-                verification_score=0.0,
-                authorization_status="UNAUTHORIZED",
-                replay_detected=False,
-                evidence=attack_result.evidence,
-                detection_result=None,
-            )
+            auth_failed = not auth_check.is_authorized
+            auth_reason = auth_check.reason
 
         # --- Replay check ---
         replay_detected = False
@@ -323,6 +321,11 @@ class AttackRunner:
             detected = True
             reasons.append("replay_session_mismatch: replay consistency check failed")
 
+        # Classical authorization detection (defence in depth)
+        if auth_failed:
+            detected = True
+            reasons.append(f"authorization_failure: {auth_reason}")
+
         # Build reason string
         if detected:
             detection_status = "DETECTED"
@@ -344,7 +347,10 @@ class AttackRunner:
             detection_status=detection_status,
             reason=reason,
             verification_score=vr.verification_score,
-            authorization_status=attack_result.authorization_status,
+            authorization_status=(
+                "UNAUTHORIZED" if auth_failed
+                else attack_result.authorization_status
+            ),
             replay_detected=replay_detected,
             evidence=attack_result.evidence,
             detection_result=dr,

@@ -98,10 +98,23 @@ def calculate_metrics(results: Sequence[AttackScenarioResult]) -> Classification
     f1_score = safe_div(2 * precision * recall, precision + recall)
     specificity = safe_div(tn, tn + fp)
     
-    # FAR = FP / (FP + TN)
-    far = safe_div(fp, fp + tn)
-    # FRR = FN / (FN + TP)
-    frr = safe_div(fn, fn + tp)
+    # The positive class here is "attack" (see the TP/FN assignment above),
+    # so the error types map to the security rates as follows:
+    #
+    #   FN = an attack session that was NOT detected -> the system ACCEPTED
+    #        a forgery. That is a false ACCEPTANCE.
+    #   FP = a legitimate session flagged as an attack -> the system REJECTED
+    #        an honest user. That is a false REJECTION.
+    #
+    # An earlier revision had these two the wrong way round (far = fp/(fp+tn),
+    # frr = fn/(fn+tp)), which inverted every headline security number: the
+    # figure published as "FAR - risk of an attack passing" was in fact the
+    # rate of turning away legitimate users, and vice versa.
+    #
+    # FAR = FN / (FN + TP)   -- attack sessions that slipped through
+    far = safe_div(fn, fn + tp)
+    # FRR = FP / (FP + TN)   -- legitimate sessions wrongly denied
+    frr = safe_div(fp, fp + tn)
     
     return ClassificationMetrics(
         tp=tp, tn=tn, fp=fp, fn=fn,

@@ -21,6 +21,7 @@ from dashboard.components import quantum_view
 from dashboard.components import attack_panel
 from dashboard.components import security_panel
 from dashboard.components import intro_simulation
+from dashboard.components import live_session
 
 # ---------------------------------------------------------------------------
 # Dashboard Initialization
@@ -58,13 +59,17 @@ def main():
         
     metrics.render_top_kpis()
     
-    tab_overview, tab_verify, tab_attacks, tab_analytics, tab_quantum = st.tabs([
+    tab_live, tab_overview, tab_verify, tab_attacks, tab_analytics, tab_quantum = st.tabs([
+        "Live Session",
         "Overview & Performance",
         "Live Verification",
         "Attack Simulation",
         "Threshold Analytics",
         "Quantum Noise"
     ])
+
+    with tab_live:
+        live_session.render_live_session()
     
     with tab_overview:
         charts.render_attack_comparison()
