@@ -15,6 +15,7 @@ if str(src_path) not in sys.path:
 if str(root_path) not in sys.path:
     sys.path.insert(0, str(root_path))
 
+from dashboard.components import _theme  # noqa: F401  (registers the pastel Plotly template)
 from dashboard.components import metrics
 from dashboard.components import charts
 from dashboard.components import quantum_view
@@ -31,28 +32,30 @@ st.set_page_config(
     page_title="QVeris Dashboard",
     page_icon="🛡️",
     layout="wide",
-    initial_sidebar_state="expanded"
+    initial_sidebar_state="collapsed"
 )
 
-# Custom minimalistic dark cybersecurity UI theme overrides
-st.markdown("""
-<style>
-.stApp {
-    background-color: #0E1117;
-}
-.st-emotion-cache-1wivap2 {
-    color: #00FF41;
-}
-</style>
-""", unsafe_allow_html=True)
+# Light pastel theme + motion styles (see docs/animation_storyboard.md).
+from dashboard.components._web import read_web  # noqa: E402
+
+st.markdown(f"<style>{read_web('theme.css')}</style>", unsafe_allow_html=True)
+
+
+def _section(kicker: str, title: str) -> None:
+    """Chapter-style section heading that continues the story's language."""
+    st.markdown(
+        f"<div class='qv-section'><span class='k'>{kicker}</span><h2>{title}</h2></div>",
+        unsafe_allow_html=True,
+    )
 
 
 def main():
-    st.title("QVeris")
-    st.caption("Quantum-Inspired Threat Detection & Security Analytics")
-    
+    # Cinematic intro that docks into a scroll-driven story hero.
     intro_simulation.render_intro()
-    
+
+    _section("After the story", "The live system")
+    st.caption("Quantum-Inspired Threat Detection & Security Analytics. Everything below runs the real engine.")
+
     # Initialize basic session state vars for simulated logging
     if "event_logs" not in st.session_state:
         st.session_state.event_logs = []
@@ -83,10 +86,8 @@ def main():
         attack_panel.render_attack_panel()
         
     with tab_analytics:
-        st.subheader("Threshold Analysis (FAR/FRR)")
         charts.render_threshold_analysis()
         st.divider()
-        st.subheader("Performance & Scalability")
         charts.render_performance_analytics()
         
     with tab_quantum:

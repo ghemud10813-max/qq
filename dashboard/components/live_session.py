@@ -109,6 +109,30 @@ def _run(runner, message: bytes, attack: str, intensity: float):
     raise ValueError(f"Unknown attack {attack!r}")
 
 
+def _lab_result(res, config: dict) -> dict:
+    """Attack Lab film input built from a real session's telemetry."""
+    import uuid
+
+    flagged = res.decision != "LEGITIMATE"
+    reason = f"Detected: {res.detected_attack}." if flagged else "No anomaly beyond the calibrated baseline."
+    return {
+        "id": uuid.uuid4().hex,
+        "config": config,
+        "classification": res.decision,
+        "authorization": "AUTHORIZED" if res.authorized else "UNAUTHORIZED",
+        "anomaly": float(res.anomaly_score),
+        "threshold": float(res.threshold),
+        "mismatch_rate": 1.0 - res.matches / max(1, res.total_elements),
+        "verification": float(res.verification_score),
+        "elements": [{
+            "label": e.expected_label, "basis": e.expected_basis, "match": bool(e.match),
+            "purity": float(e.purity), "p0": float(e.p0), "p1": float(e.p1),
+        } for e in res.elements],
+        "reason": reason,
+        "evidence": [str(x) for x in res.evidence[:3]],
+    }
+
+
 def render_live_session() -> None:
     """Render the live verification / attack-lab panel."""
     st.subheader("Live Verification Session")
@@ -129,29 +153,46 @@ def render_live_session() -> None:
         shots = st.select_slider("Shots per element", [64, 128, 256, 512], 128)
         run = st.button("RUN SESSION", type="primary")
 
-    if not run:
-        with out:
-            st.info("Configure a scenario and run a session.")
-        return
+    import hashlib
 
-    runner = _get_runner(sig_len, shots, 42)
-    with st.spinner("Executing quantum session..."):
-        res = _run(runner, message.encode(), attack, intensity)
+    from dashboard.components.attack_simulation_3d import lab_config, render_lab
 
+    config = lab_config(
+        "NONE" if attack.startswith("NONE") else attack, intensity, sig_len,
+        shots=shots, seed=42, message=message,
+        digest=hashlib.sha256(message.encode()).hexdigest(),
+    )
+
+    # Runs happen in the control column so the 3D scene keeps its place in
+    # the layout (and Streamlit keeps its WebGL iframe alive across reruns).
+    if run:
+        runner = _get_runner(sig_len, shots, 42)
+        with ctrl, st.spinner("Executing quantum session..."):
+            res = _run(runner, message.encode(), attack, intensity)
+        st.session_state.live_session = {"res": res, "params": (sig_len, shots), "lab": _lab_result(res, config)}
+
+    last = st.session_state.get("live_session")
     with out:
+        # Morphs live with the controls; replays each measured session.
+        render_lab("lab-live", "LIVE SESSION", config, last["lab"] if last else None, height=520)
+        if not last:
+            st.caption("Change the controls to see the configured attack; run a session to measure it.")
+            return
+        res = last["res"]
         c1, c2, c3, c4 = st.columns(4)
         c1.metric("Verification", f"{res.verification_score:.3f}",
                   f"{res.matches}/{res.total_elements} matched")
         c2.metric("Teleportation F", f"{res.telemetry.mean_fidelity:.4f}")
         c3.metric("Anomaly score", f"{res.anomaly_score:.4f}",
                   f"threshold {res.threshold:.4f}", delta_color="off")
-        colour = {"LEGITIMATE": "green", "SUSPICIOUS": "orange", "THREAT": "red"}
+        tone = {"LEGITIMATE": "ok", "SUSPICIOUS": "warn", "THREAT": "bad"}
         c4.markdown(
-            f"**DECISION**<br><span style='color:{colour.get(res.decision,'grey')};"
-            f"font-size:1.4rem;font-weight:700'>{res.decision}</span><br>"
-            f"<small>{res.detected_attack}</small>",
+            f"**DECISION**<br><span class='qv-verdict {tone.get(res.decision, '')}'>"
+            f"{res.decision}</span><br><small>{res.detected_attack}</small>",
             unsafe_allow_html=True,
         )
+
+    runner = _get_runner(*last["params"], 42)
 
     st.divider()
     t_explain, t_measure, t_bloch, t_timeline, t_forensics = st.tabs(

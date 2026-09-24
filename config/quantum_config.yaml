@@ -36,9 +36,9 @@ phases:
   phase8_dashboard: false
   phase9_integration: false
 detection:
-  warning_threshold: 0.018625
-  critical_threshold: 0.046563
+  warning_threshold: 0.018766
+  critical_threshold: 0.046916
   calibrated_by: experiments/run_final_experiment.py
-  calibrated_at: '2026-09-21T02:48:37.862742+00:00'
+  calibrated_at: '2026-09-23T12:33:34.892886+00:00'
   calibrated_for_signature_length: 16
   calibrated_for_shots: 256

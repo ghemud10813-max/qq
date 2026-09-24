@@ -40,9 +40,9 @@ for _p in (_ROOT / "src", _ROOT):
 
 __all__ = ["render_bloch_sphere", "render_bloch_panel"]
 
-_EXPECTED_COLOUR = "#2ca02c"   # green: what should have arrived
-_RECEIVED_COLOUR = "#d62728"   # red:   what did arrive
-_DISTURB_COLOUR = "#ff7f0e"    # orange: the difference
+_EXPECTED_COLOUR = "#4FC3A1"   # mint: what should have arrived (Bob's key)
+_RECEIVED_COLOUR = "#E8697A"   # coral: what did arrive
+_DISTURB_COLOUR = "#F4A77A"    # peach: the difference
 
 
 def _sphere_surface(opacity: float = 0.12):
@@ -56,7 +56,7 @@ def _sphere_surface(opacity: float = 0.12):
     z = np.outer(np.ones_like(u), np.cos(v))
     return go.Surface(
         x=x, y=y, z=z, opacity=opacity, showscale=False,
-        colorscale=[[0, "#8899aa"], [1, "#8899aa"]], hoverinfo="skip",
+        colorscale=[[0, "#C9C4FF"], [1, "#D6E6FB"]], hoverinfo="skip",
     )
 
 
@@ -68,7 +68,7 @@ def _axes():
     for vec, name in (((1, 0, 0), "X"), ((0, 1, 0), "Y"), ((0, 0, 1), "Z")):
         traces.append(go.Scatter3d(
             x=[-vec[0], vec[0]], y=[-vec[1], vec[1]], z=[-vec[2], vec[2]],
-            mode="lines", line=dict(color="#667788", width=2),
+            mode="lines", line=dict(color="#5A6384", width=2),
             hoverinfo="skip", showlegend=False,
         ))
 
@@ -82,7 +82,7 @@ def _axes():
         y=[p[1] for p in labels.values()],
         z=[p[2] for p in labels.values()],
         mode="text", text=list(labels.keys()),
-        textfont=dict(size=11, color="#99aabb"),
+        textfont=dict(size=12, color="#5A6384", family="JetBrains Mono, monospace"),
         hoverinfo="skip", showlegend=False,
     ))
     return traces
@@ -181,7 +181,9 @@ def render_bloch_sphere(element, height: int = 520) -> Optional[Any]:
         height=height,
         margin=dict(l=0, r=0, t=30, b=0),
         paper_bgcolor="rgba(0,0,0,0)",
+        font=dict(family="Inter, sans-serif", color="#1E2440"),
         scene=dict(
+            bgcolor="rgba(0,0,0,0)",
             xaxis=dict(range=[-1.3, 1.3], title="X", showbackground=False),
             yaxis=dict(range=[-1.3, 1.3], title="Y", showbackground=False),
             zaxis=dict(range=[-1.3, 1.3], title="Z", showbackground=False),
@@ -232,7 +234,7 @@ def render_bloch_panel(result) -> None:
     with left:
         fig = render_bloch_sphere(element)
         if fig is not None:
-            st.plotly_chart(fig, use_container_width=True)
+            st.plotly_chart(fig, width="stretch")
 
     with right:
         st.metric("Fidelity", f"{element.fidelity:.4f}")
