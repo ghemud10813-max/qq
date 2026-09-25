@@ -1,0 +1,7 @@
+/* Page-level layouts. */
+.page-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; flex-wrap: wrap; margin-bottom: 20px; }
+.page-head h1 { margin-top: 6px; }
+.page-head p { margin: 6px 0 0; color: var(--text-2); max-width: 720px; }
+.section-title { display: flex; align-items: baseline; gap: 14px; margin: 36px 0 16px; }
+.section-title .kicker { flex: none; }
+.section-title h2 { margin: 0; }
