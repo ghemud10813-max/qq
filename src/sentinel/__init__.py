@@ -25,7 +25,14 @@ Layout
 No AI/ML is used anywhere in this package.
 """
 
+import logging as _logging
+
 __version__ = "2.0.0"
+
+# v1's utils.logger configures the root logger at INFO; Qiskit's transpiler is
+# very chatty at that level. Keep third-party numerics at WARNING.
+for _name in ("qiskit", "qiskit_aer", "stevedore"):
+    _logging.getLogger(_name).setLevel(_logging.WARNING)
 ENGINE_NAME = "QVeris Sentinel"
 
 __all__ = ["__version__", "ENGINE_NAME"]

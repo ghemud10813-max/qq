@@ -79,7 +79,20 @@ def classify_channel(baseline: ChannelEstimate, current: ChannelEstimate) -> Fin
 
     t_norm = float(np.linalg.norm(c_A))
     t_thresh = max(0.03, 4 * sigma)
-    rot_thresh = max(math.radians(4.0), 4 * sigma)
+    # The rotation part of a polar decomposition is undefined along directions the map
+    # crushes to ~0 (full dephasing, intercept-resend). Measure rotation only on
+    # well-conditioned singular directions, with a threshold scaled by relative noise.
+    W, sv, Vt = np.linalg.svd(M_A)
+    good = sv > 0.3
+    if good.all():
+        rot_angle = theta
+        rot_thresh = max(math.radians(4.0), 4 * sigma / max(float(sv.min()), 1e-6))
+    elif good.any():
+        dots = np.abs(np.einsum("ij,ji->i", W.T, Vt.T))  # |u_i . v_i| per singular direction
+        rot_angle = float(max(math.acos(min(1.0, d)) for d, g in zip(dots, good) if g))
+        rot_thresh = max(math.radians(6.0), 4 * sigma / max(float(sv[good].min()), 1e-6))
+    else:
+        rot_angle, rot_thresh = 0.0, math.inf
     unit_thresh = max(0.03, 4 * sigma)
     spread = max(0.05, 4 * sigma)
 
@@ -105,7 +118,7 @@ def classify_channel(baseline: ChannelEstimate, current: ChannelEstimate) -> Fin
             {"translation": t_norm}, direction.tolist(), ["state-dependent (non-unital) tampering"], attack_map, sigma)
 
     # 2. Coherent rotation
-    if theta > rot_thresh:
+    if rot_angle > rot_thresh:
         name = _axis_name(axis)
         return Fingerprint(
             "coherent_rotation",

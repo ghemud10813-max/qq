@@ -74,8 +74,9 @@ class ProtocolParams:
             raise ParamsError("digest_bits must be one of 32, 64, 128, 256")
         if self.digest_bits != 256 and not self.analysis_only:
             raise ParamsError("digest_bits below 256 is allowed only for analysis runs")
-        if not (64 <= self.L <= 16384):
-            raise ParamsError("L must be in [64, 16384]")
+        min_L = 16 if self.analysis_only else 64
+        if not (min_L <= self.L <= 16384):
+            raise ParamsError(f"L must be in [{min_L}, 16384]")
         if not (0.02 <= self.f_pe <= 0.5):
             raise ParamsError("f_pe must be in [0.02, 0.5]")
         if not (100 <= self.bell_pairs_per_setting <= 50000):

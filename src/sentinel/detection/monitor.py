@@ -21,7 +21,13 @@ from sentinel.detection.findings import Finding
 from sentinel.protocol.distribution import LinkEvidence
 from sentinel.sequential import Cusum, Ewma
 
-__all__ = ["LinkMonitor"]
+__all__ = ["LinkMonitor", "noise_aware_limits"]
+
+
+def noise_aware_limits(q: float, n: int, q0: float, n0: int, k_cfg: float, h_cfg: float) -> tuple[float, float, float]:
+    """(k, h, sigma) for a QBER CUSUM step: k >= 2 sigma and h >= 6 sigma of one run's noise."""
+    se = math.hypot(math.sqrt(max(q * (1 - q), 1e-12) / max(n, 1)), math.sqrt(max(q0 * (1 - q0), 1e-12) / max(n0, 1)))
+    return max(k_cfg, 2 * se), max(h_cfg, 6 * se), se
 
 
 class LinkMonitor:
@@ -43,10 +49,8 @@ class LinkMonitor:
         # The reference value k and limit h never sit below the sampling noise of a
         # single run (k >= 2 sigma, h >= 6 sigma): otherwise honest noise alone drifts.
         q, q0 = ev.qber["rate"], base.qber["rate"]
-        se_q = math.hypot(math.sqrt(max(q * (1 - q), 1e-12) / max(ev.qber["n"], 1)),
-                          math.sqrt(max(q0 * (1 - q0), 1e-12) / max(base.qber["n"], 1)))
+        kq, hq, _ = noise_aware_limits(q, ev.qber["n"], q0, base.qber["n"], self.qber.k, self.qber.h)
         se_s = math.hypot(ev.bell.S_se, base.bell.S_se)
-        kq, hq = max(self.qber.k, 2 * se_q), max(self.qber.h, 6 * se_q)
         ks, hs = max(self.chsh.k, 2 * se_s), max(self.chsh.h, 6 * se_s)
         cq, aq = self.qber.update(q - q0, kq, hq)
         cs, as_ = self.chsh.update(base.bell.S - ev.bell.S, ks, hs)

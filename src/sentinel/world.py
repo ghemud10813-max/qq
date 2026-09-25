@@ -318,6 +318,7 @@ class World:
         self._next_seq = next_seq
         self._lock = threading.RLock()
         self.quarantined: set = set()
+        self.monitors_enabled = True
 
     # -- helpers -------------------------------------------------------------
     def rs(self) -> RandomSource:
@@ -384,7 +385,7 @@ class World:
         findings.append(margin_finding(outcome.design))
         apply_holm(findings, self.detection.alpha_family)
         points = {}
-        if update_monitors and not counterfactual:
+        if update_monitors and self.monitors_enabled and not counterfactual:
             for v in group.recipients:
                 ev = outcome.evidence[v]
                 mon = LinkMonitor(ev.link_id, self.detection, self.monitor_states.get(ev.link_id))
