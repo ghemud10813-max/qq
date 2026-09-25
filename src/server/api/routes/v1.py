@@ -417,10 +417,8 @@ def job_cancel(job_id: str, request: Request):
 
 @router.get("/analytics/latest/{kind}", tags=["analytics"])
 def job_latest(kind: str, request: Request):
-    j = ctx(request).jobs.latest(kind)
-    if not j:
-        raise ApiNotFound(f"no completed {kind} job yet")
-    return j
+    # null (not 404) when the analysis has never been run: that is a normal state.
+    return ctx(request).jobs.latest(kind)
 
 
 # ======================================================================= theory and playground

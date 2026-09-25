@@ -19,7 +19,8 @@ logging.getLogger("httpx").setLevel(logging.WARNING)
 
 def make_settings(tmp_path, **kw) -> Settings:
     base = dict(data_dir=tmp_path, background=False, preset="demo", seed=None, api_key=None,
-                heavy_rate_capacity=10_000, heavy_rate_refill=1_000, autostart_traffic=False)
+                heavy_rate_capacity=10_000, heavy_rate_refill=1_000, autostart_traffic=False,
+                web_dist=tmp_path / "no-web-build")
     base.update(kw)
     return Settings.from_env(**base)
 

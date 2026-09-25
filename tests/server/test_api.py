@@ -304,3 +304,18 @@ def test_background_workers_fill_reservoir(tmp_path):
             time.sleep(0.5)
         assert all(r["active"] >= r["target"] for r in res.values()), res
         assert ok(c.get(f"{API}/detection/baselines"))
+
+
+def test_serves_built_frontend_with_spa_fallback(tmp_path):
+    dist = tmp_path / "dist"
+    (dist / "assets").mkdir(parents=True)
+    (dist / "index.html").write_text("<!doctype html><title>QVeris</title>")
+    (dist / "assets" / "app.js").write_text("console.log(1)")
+    (dist / "favicon.svg").write_text("<svg/>")
+    with TestClient(create_app(make_settings(tmp_path, web_dist=dist, skip_calibration=True))) as c:
+        assert "QVeris" in c.get("/").text
+        assert "QVeris" in c.get("/attack-lab").text          # client-side route
+        assert c.get("/assets/app.js").text == "console.log(1)"
+        assert c.get("/favicon.svg").text == "<svg/>"
+        assert c.get("/api/v1/nope").status_code == 404        # API 404s stay JSON
+        assert c.get("/api/v1/analytics/latest/roc").json() is None

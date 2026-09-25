@@ -319,3 +319,6 @@ path.flow-dash { animation: flow 3s linear infinite; }
 .hold-fill { position: absolute; inset: 0; background: rgba(255, 255, 255, .18); transform-origin: 0 50%; pointer-events: none; }
 
 button.chip.legend-chip[aria-pressed="true"] { background: var(--bg-2); color: var(--text-1); border-color: var(--line); }
+.panel-head { flex-wrap: wrap; }
+.panel-head > .row { max-width: 100%; min-width: 0; }
+.panel-head > .row > .seg { max-width: 100%; }
