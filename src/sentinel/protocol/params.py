@@ -116,8 +116,8 @@ PRESETS: dict[str, dict] = {
     "high": {"L": 8192, "bell_pairs_per_setting": 4000,
              "eps_rob_target": 1e-12, "eps_forge_target": 1e-12, "eps_rep_target": 1e-12,
              "delta_pe": 1e-14, "sprt_alpha": 1e-17},
-    "analysis": {"L": 1024, "bell_pairs_per_setting": 1000, "digest_bits": 32, "analysis_only": True,
-                 "eps_rob_target": 1e-6, "eps_forge_target": 1e-4, "eps_rep_target": 1e-3,
+    "analysis": {"L": 1024, "bell_pairs_per_setting": 1000, "digest_bits": 32, "analysis_only": True, "f_pe": 0.25,
+                 "eps_rob_target": 1e-6, "eps_forge_target": 1e-3, "eps_rep_target": 1e-3,
                  "delta_pe": 1e-8, "sprt_alpha": 1e-10},
 }
 

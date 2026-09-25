@@ -121,7 +121,7 @@ def _bell_probs(spec: LinkSpec, plan: LinkPlan) -> np.ndarray:
 
 
 def _teleport_copy(spec: LinkSpec, plan: LinkPlan, sent: np.ndarray, bases: np.ndarray,
-                   rs: RandomSource, artifacts: dict) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
+                   rs: RandomSource, artifacts: dict, eve_memory: dict | None = None) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
     """Teleport one recipient's copy. Returns (k sent, c received, outcome)."""
     n = sent.size
     rng = rs.physics
@@ -156,6 +156,15 @@ def _teleport_copy(spec: LinkSpec, plan: LinkPlan, sent: np.ndarray, bases: np.n
             ea = get_model(baseline)
             kA, _, oE = sample_teleportations(ea, sent[idx], eve_basis, rng)
             eve_label = (2 * eve_basis + oE).astype(np.uint8)
+            if eve_memory is not None:
+                # An Eve attacking both copies re-sends the state she already measured on
+                # the other copy, so both recipients hold records of the same eigenstate.
+                known = eve_memory.setdefault("label", np.full(sent.size, 255, dtype=np.uint8))
+                have = known[idx] != 255
+                eve_label[have] = known[idx][have]
+                eve_basis[have] = eve_label[have] // 2
+                oE[have] = eve_label[have] % 2
+                known[idx[~have]] = eve_label[~have]
             # Eve -> verifier through her own pair; the verifier receives Eve's bits.
             kE, cE, oB = sample_teleportations(get_model(baseline), eve_label, bases[idx], rng)
             k[idx], c[idx], o[idx] = kA, kE, oB
@@ -203,6 +212,7 @@ def distribute(
     timings["keygen_ms"] = (time.perf_counter() - t0) * 1000
 
     evidence: dict = {}
+    eve_memory: dict = {}
     kept_records: dict = {}
     artifacts: dict = {}
     ucbs = []
@@ -216,7 +226,7 @@ def distribute(
             sent[flip] ^= 1  # orthogonal eigenstate in the same basis
         bases = rs.bases(N)
         art: dict = {}
-        k, c, o = _teleport_copy(spec, plan, sent, bases, rs, art)
+        k, c, o = _teleport_copy(spec, plan, sent, bases, rs, art, eve_memory)
         if art:
             artifacts[v] = art
 

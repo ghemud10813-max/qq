@@ -119,10 +119,13 @@ class Cusum:
         self.k, self.h = float(k), float(h)
         self.value, self.n, self.alarms = float(value), int(n), int(alarms)
 
-    def update(self, x: float) -> tuple[float, bool]:
-        self.value = max(0.0, self.value + float(x) - self.k)
+    def update(self, x: float, k: float | None = None, h: float | None = None) -> tuple[float, bool]:
+        """Add one observation. ``k``/``h`` override the reference value and limit for this step."""
+        k = self.k if k is None else k
+        h = self.h if h is None else h
+        self.value = max(0.0, self.value + float(x) - k)
         self.n += 1
-        alarm = self.value > self.h
+        alarm = self.value > h
         if alarm:
             self.alarms += 1
         return self.value, alarm

@@ -29,7 +29,7 @@ from sentinel.protocol.encoding import Envelope
 
 __all__ = ["GuardStore", "MemoryGuardStore", "check_guard", "USABLE_STATUSES"]
 
-USABLE_STATUSES = ("ACTIVE", "SIGNED", "CONSUMED")
+USABLE_STATUSES = ("ACTIVE", "SIGNED", "CONSUMED", "BURNED")
 CLOCK_SKEW_S = 5.0
 
 

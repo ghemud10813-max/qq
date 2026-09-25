@@ -139,6 +139,8 @@ def verify(view: VerifierView, signature: Signature, threshold: float, n_min: in
         inconclusive = ~(e1 & e2)
 
     # SPRT early abort over the tested positions, key by key.
+    if mode != "symmetrized":
+        sprt = None  # counterfactual verifiers model a naive single test with no per-set SPRT
     sprt_info: dict = {"enabled": sprt is not None}
     if sprt is not None:
         used = 0

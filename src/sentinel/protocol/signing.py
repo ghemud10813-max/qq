@@ -26,6 +26,7 @@ class Signature:
     envelope: Envelope
     bits: np.ndarray       # uint8 (B,)
     revealed: np.ndarray   # uint8 (B, L) labels of key (i, bits[i])
+    oracle: bool = False   # analysis only: bits supplied by a hypothetical near-collision oracle
 
     @property
     def size_bytes(self) -> int:
@@ -38,7 +39,7 @@ class Signature:
         return h.hexdigest()
 
     def copy(self) -> "Signature":
-        return Signature(self.envelope, self.bits.copy(), self.revealed.copy())
+        return Signature(self.envelope, self.bits.copy(), self.revealed.copy(), self.oracle)
 
 
 def sign(bundle: KeyBundle, envelope: Envelope) -> Signature:
