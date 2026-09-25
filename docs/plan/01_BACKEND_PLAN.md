@@ -132,7 +132,7 @@ A6 Message compression uses SHA-256 in `sha256` mode (computational collision re
 | Field | Type | Default (`standard`) | Range | Meaning |
 |---|---|---|---|---|
 | `digest_bits` | int | 256 | {32, 64, 128, 256} | Bits signed. Values below 256 are **analysis-only** (flag `analysis_only=True`). |
-| `L` | int | 2048 | 64 … 16384 | Positions per key kept for signing |
+| `L` | int | 4096 | 64 … 16384 | Positions per key kept for signing |
 | `f_pe` | float | 0.10 | 0.02 … 0.5 | Fraction of distributed positions sacrificed for PE |
 | `bell_pairs_per_setting` | int | 2000 | 200 … 20000 | Test pairs per Bell setting per verifier link (7 settings) |
 | `eps_rob_target` | float | 1e-9 | 1e-15 … 1e-2 | Target message-level robustness failure |
@@ -141,7 +141,7 @@ A6 Message compression uses SHA-256 in `sha256` mode (computational collision re
 | `delta_pe` | float | 1e-6 | — | Confidence parameter of the QBER upper bound used for design |
 | `delta_bell` | float | 1e-5 | — | Confidence parameter of the CHSH / witness lower bounds |
 | `p_forge_insider` | float | 1/3 | fixed | §7.2 |
-| `n_min_fraction` | float | 0.85 | 0.5 … 1 | A set needs n ≥ ⌊0.85·L/6⌋ tested positions, else INCONCLUSIVE |
+| (derived) `n_min` | int | from design | — | A set needs n ≥ n_min tested positions, else INCONCLUSIVE. n_min is the exact Bin(⌊L/2⌋, ⅓) quantile at a small share of ε_rob (§7.4), **not** a fixed fraction: with L = 2048 a fixed 85% floor would make ~15% of honest signatures fail somewhere among 512 sets. |
 | `freshness_window_s` | float | 120 | 5 … 3600 | Maximum signature age |
 | `encoding` | enum | `sha256` | `sha256` \| `raw` | §3.7 |
 
@@ -149,12 +149,12 @@ Presets (`config/sentinel.yaml → presets`):
 
 | Preset | L | bell_pairs_per_setting | Qubits per bundle (256-bit) | Intended use |
 |---|---|---|---|---|
-| `demo` | 512 | 800 | 256·2·569·2 ≈ 0.58 M | Tests, phones, quick lab runs |
-| `standard` | 2048 | 2000 | 256·2·2276·2 ≈ 2.33 M | Live traffic, Studio |
-| `high` | 8192 | 4000 | 256·2·9103·2 ≈ 9.32 M | Showing negligible bounds |
-| `analysis` | 1024, digest_bits=32 | 800 | 32·2·1138·2 ≈ 0.15 M | Analytics jobs (thousands of runs) |
+| `demo` | 1024 | 1000 | 256·2·1138·2 ≈ 1.17 M | Tests, quick lab runs (relaxed targets: ε_rob 1e-6, ε_forge 1e-4) |
+| `standard` | 4096 | 2000 | 256·2·4552·2 ≈ 4.66 M | Live traffic, Studio (meets ε_rob 1e-9, ε_forge 1e-6, ε_rep 1e-6) |
+| `high` | 8192 | 4000 | 256·2·9103·2 ≈ 9.32 M | Negligible bounds (all targets 1e-12) |
+| `analysis` | 1024, digest_bits=32 | 1000 | 32·2·1138·2 ≈ 0.15 M | Analytics jobs (thousands of runs; relaxed targets) |
 
-If `standard` distribution benchmarks above 400 ms on the reference container, `standard.L` drops to 1536. The decision and the measurement are recorded in `docs/sentinel/PERFORMANCE.md`.
+Measured on the build container (4 vCPU): `demo` 150 ms, `standard` 460 ms, `high` 930 ms per bundle (≈ 10 M qubits/s). `standard` was first planned at L = 2048, but at that length the repudiation bound is only ≈ 0.9 at message level; L = 4096 meets all three targets, so it is the default. Each preset also sets δ_pe and α_SPRT small enough that they fit inside its robustness budget (demo 1e-8/1e-11, standard 1e-10/1e-13, high 1e-14/1e-17).
 
 ### 3.2 Key generation (one-time, CSPRNG)
 
@@ -811,16 +811,16 @@ and ε_rep(key) ≤ 2·P_rep, message level ≤ digest_bits·ε_rep(key). `analy
 
 `design(L, e_ucb, digest_bits, targets) -> ThresholdDesign`:
 
-1. n_nom = ⌊L/6⌋; n_min = ⌊n_min_fraction·n_nom⌋.
+1. n_nom = ⌊L/6⌋. n_min = the largest n with 4·digest_bits·P(Bin(⌊L/2⌋, ⅓) < n) ≤ 0.1·eps_rob_target (sets that fall short are INCONCLUSIVE, and this probability is charged to ε_rob).
 2. c_a = min c such that 2·digest_bits·binom_sf(c+1, n_min, e_ucb) ≤ eps_rob_target − 2·digest_bits·α_s − δ_pe; s_a = c_a / n_min.
 3. c_v = max c such that binom_cdf(c, n_min, p_f,insider) ≤ eps_forge_target; s_v = c_v / n_min.
 4. Feasible iff c_a < c_v. Compute ε_rep by §7.3 at (s_a, s_v).
 5. If infeasible, bisect L upward to the minimum feasible L_min (≤ 65 536) and report it.
 6. Return `{s_a, s_v, c_a, c_v, n_nom, n_min, eps_rob, eps_forge_key, eps_forge_chernoff, eps_rep_key, eps_rep_msg, feasible, L_min, e_ucb, sprt:{alpha, beta, A}}`.
 
-Thresholds are **rates** applied to each set's actual n (m ≤ ⌊s·n⌋). For n ≥ n_min the tails are no worse than the design values. That is monotone for these parameters, and a test asserts it across a grid.
+Thresholds are **rates** applied to each set's actual n (m ≤ ⌊s·n⌋). The reported ε's are the **maximum over every n from n_min to ⌊L/2⌋** of the exact tail, so the floor on the rounding cannot hide a bad n.
 
-Illustrative numbers (`standard`, e_ucb = 0.015, n_min = 290): c_a = 25 (s_a ≈ 0.086), c_v = 58 (s_v = 0.200). ε_forge(key) ≈ 1e-6. ε_rep(key) ≈ 3e-5, which is **weak at message level (≈ 1e-2)**. The UI states this, and the `high` preset (L = 8192) drives all three below 1e-12.
+Measured designs (e_ucb ≈ 0.013): L = 2048 gives s_a = 0.094, s_v = 0.188, ε_rob = 4e-10, ε_forge = 6e-7 but ε_rep(msg) ≈ 0.9, so it is **not** used as the default. L = 4096 (`standard`) gives n_min = 529, s_a ≈ 0.06, s_v ≈ 0.236, ε_rob ≈ 8e-10, ε_forge ≈ 7e-7, ε_rep(msg) ≈ 1.5e-14. L = 8192 (`high`) gives ε_rob ≈ 5e-13, ε_forge ≈ 9e-13, ε_rep ≈ 1e-37. `demo` and `analysis` (L = 1024) meet their relaxed robustness and forgery targets but **not** repudiation; the UI says so.
 
 ---
 
@@ -1331,10 +1331,10 @@ engine:
   chunk_size: 1048576
   model_cache: 256
 presets:
-  demo:      { L: 512,  bell_pairs_per_setting: 800 }
-  standard:  { L: 2048, bell_pairs_per_setting: 2000 }
-  high:      { L: 8192, bell_pairs_per_setting: 4000 }
-  analysis:  { L: 1024, bell_pairs_per_setting: 800, digest_bits: 32, analysis_only: true }
+  demo:      { L: 1024, bell_pairs_per_setting: 1000, eps_rob_target: 1.0e-6, eps_forge_target: 1.0e-4, eps_rep_target: 1.0e-3, delta_pe: 1.0e-8, sprt_alpha: 1.0e-11 }
+  standard:  { L: 4096, bell_pairs_per_setting: 2000, eps_rob_target: 1.0e-9, eps_forge_target: 1.0e-6, eps_rep_target: 1.0e-6, delta_pe: 1.0e-10, sprt_alpha: 1.0e-13 }
+  high:      { L: 8192, bell_pairs_per_setting: 4000, eps_rob_target: 1.0e-12, eps_forge_target: 1.0e-12, eps_rep_target: 1.0e-12, delta_pe: 1.0e-14, sprt_alpha: 1.0e-17 }
+  analysis:  { L: 1024, bell_pairs_per_setting: 1000, digest_bits: 32, analysis_only: true, eps_rob_target: 1.0e-6, eps_forge_target: 1.0e-4, eps_rep_target: 1.0e-3, delta_pe: 1.0e-8, sprt_alpha: 1.0e-10 }
 protocol:
   digest_bits: 256
   f_pe: 0.10
@@ -1343,7 +1343,6 @@ protocol:
   eps_rep_target: 1.0e-6
   delta_pe: 1.0e-6
   delta_bell: 1.0e-5
-  n_min_fraction: 0.85
   freshness_window_s: 120
   sprt: { alpha: 1.0e-9, beta: 1.0e-6 }
   bundle_ttl_s: 86400

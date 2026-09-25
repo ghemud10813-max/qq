@@ -229,20 +229,23 @@ def sample_teleportations(
     c_out = np.empty(n, dtype=np.uint8)
     o_out = np.empty(n, dtype=np.uint8)
     cp = np.cumsum(model.p_k, axis=1)
+    cp0, cp1, cp2 = cp[:, 0].copy(), cp[:, 1].copy(), cp[:, 2].copy()
+    pp_flat = model.p_plus.ravel()
     for s in range(0, n, _CHUNK):
         e = min(n, s + _CHUNK)
         lab = labels[s:e]
         u = rng.random(e - s)
-        cpl = cp[lab]
-        k = (u > cpl[:, 0]).astype(np.intp) + (u > cpl[:, 1]) + (u > cpl[:, 2])
+        k = (u > np.take(cp0, lab)).astype(np.intp)
+        k += u > np.take(cp1, lab)
+        k += u > np.take(cp2, lab)
         c = k.copy()
         if flip_c0 is not None:
             c ^= np.asarray(flip_c0[s:e], dtype=np.intp) << 1
         if flip_c1 is not None:
             c ^= np.asarray(flip_c1[s:e], dtype=np.intp)
-        pp = model.p_plus[lab, k, c, bases[s:e]]
-        o = (rng.random(e - s) >= pp)
+        flat = ((lab * 4 + k) * 4 + c) * 3 + bases[s:e]
+        pp = np.take(pp_flat, flat)
+        o_out[s:e] = rng.random(e - s) >= pp
         k_out[s:e] = k
         c_out[s:e] = c
-        o_out[s:e] = o
     return k_out, c_out, o_out
