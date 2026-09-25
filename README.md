@@ -98,6 +98,10 @@ dashboard/        the original v1 Streamlit dashboard (kept unchanged; `make leg
 docs/legacy_v1_README.md   the v1 README
 ```
 
+## Audit
+
+[`docs/AUDIT.md`](docs/AUDIT.md) lists judge-style cross-questions put to the running system, with verified answers and the defects they exposed and fixed. Examples: does quarantine really stop signing, does the drift monitor go quiet after an attack, and what happens when you replay, delay or forge a signature.
+
 ## Honest limits
 
 - The quantum hardware is simulated **exactly** (channels, Bell sources, detectors). There is no physical device.

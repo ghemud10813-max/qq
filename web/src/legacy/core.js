@@ -14,7 +14,12 @@
    ========================================================================== */
 
 const QV = window.QV_DATA || {};
-const REDUCED = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const REDUCED = window.matchMedia('(prefers-reduced-motion: reduce)').matches || QV.reducedMotion === true;
+// QVeris 2: the host app can ask for the dark "Noir" world.
+const DARK = QV.theme === 'noir';
+const WORLD = DARK
+  ? { top: 0x0B0F24, mid: 0x0A0E20, bottom: 0x060816, tint: 0x3A1024, fog: 0x0A0E20, fogAlert: 0x2A0C1A, hemiSky: 0x4A4F8C, hemiGround: 0x0A0C1C, key: 0xC8CCFF, rim: 0x7C66F5, floor: 0x0E1330, exposure: 1.15 }
+  : { top: 0xE4DEF7, mid: 0xE6EAF6, bottom: 0xD6DDEF, tint: 0xF6D9DE, fog: 0xE6EAF6, fogAlert: 0xF2DDE2, hemiSky: 0xF6F3FF, hemiGround: 0xC9D0EA, key: 0xFFFBF6, rim: 0xCFC8FF, floor: 0xDDE2F2, exposure: 1.0 };
 
 // ---------------------------------------------------------------- palette --
 // Light pastel world: nothing is pure white. Each hue carries a meaning.
@@ -113,7 +118,7 @@ function createStage(container, opt = {}) {
   renderer.shadowMap.type = THREE.PCFSoftShadowMap;
   // Neutral tone mapping keeps pastel base colours faithful.
   renderer.toneMapping = THREE.NeutralToneMapping;
-  renderer.toneMappingExposure = 1.0;
+  renderer.toneMappingExposure = WORLD.exposure;
   renderer.outputColorSpace = THREE.SRGBColorSpace;
   renderer.domElement.style.display = 'block';
   container.appendChild(renderer.domElement);
@@ -123,10 +128,10 @@ function createStage(container, opt = {}) {
 
   // Sky dome: soft vertical pastel gradient that can blush coral when Eve arrives.
   const skyU = {
-    top: { value: new THREE.Color(0xE4DEF7) },
-    mid: { value: new THREE.Color(0xE6EAF6) },
-    bottom: { value: new THREE.Color(0xD6DDEF) },
-    tint: { value: new THREE.Color(0xF6D9DE) },
+    top: { value: new THREE.Color(WORLD.top) },
+    mid: { value: new THREE.Color(WORLD.mid) },
+    bottom: { value: new THREE.Color(WORLD.bottom) },
+    tint: { value: new THREE.Color(WORLD.tint) },
     tintAmt: { value: 0 },
   };
   const sky = new THREE.Mesh(
@@ -147,7 +152,7 @@ function createStage(container, opt = {}) {
   );
   sky.renderOrder = -10;
   scene.add(sky);
-  const fogColor = new THREE.Color(0xE6EAF6);
+  const fogColor = new THREE.Color(WORLD.fog);
   scene.fog = new THREE.Fog(fogColor.clone(), opt.fogNear || 34, opt.fogFar || 120);
 
   // Image-based lighting for believable reflections on glass and ceramic.
@@ -155,9 +160,9 @@ function createStage(container, opt = {}) {
   scene.environment = pmrem.fromScene(new RoomEnvironment(), 0.04).texture;
   scene.environmentIntensity = 0.42;
 
-  const hemi = new THREE.HemisphereLight(0xF6F3FF, 0xC9D0EA, 0.7);
+  const hemi = new THREE.HemisphereLight(WORLD.hemiSky, WORLD.hemiGround, DARK ? 0.9 : 0.7);
   scene.add(hemi);
-  const key = new THREE.DirectionalLight(0xFFFBF6, 1.9);
+  const key = new THREE.DirectionalLight(WORLD.key, DARK ? 1.5 : 1.9);
   key.position.set(10, 18, 12);
   key.castShadow = true;
   key.shadow.mapSize.set(2048, 2048);
@@ -166,14 +171,14 @@ function createStage(container, opt = {}) {
   key.shadow.normalBias = 0.02;
   key.shadow.radius = 4;
   scene.add(key);
-  const rim = new THREE.DirectionalLight(0xCFC8FF, 0.6);
+  const rim = new THREE.DirectionalLight(WORLD.rim, DARK ? 1.2 : 0.6);
   rim.position.set(-14, 7, -12);
   scene.add(rim);
 
   // Floor: soft matte ground that catches shadows, plus a fading dot grid.
   const floor = new THREE.Mesh(
     new THREE.CircleGeometry(160, 96),
-    new THREE.MeshStandardMaterial({ color: 0xDDE2F2, roughness: 0.92, metalness: 0 }),
+    new THREE.MeshStandardMaterial({ color: WORLD.floor, roughness: DARK ? 0.6 : 0.92, metalness: DARK ? 0.2 : 0 }),
   );
   floor.rotation.x = -Math.PI / 2;
   floor.receiveShadow = true;
@@ -230,7 +235,7 @@ function createStage(container, opt = {}) {
     setAlert(a) {
       skyU.tintAmt.value = a * 0.8;
       gridU.uTintAmt.value = a;
-      scene.fog.color.copy(fogColor).lerp(new THREE.Color(0xF2DDE2), a * 0.7);
+      scene.fog.color.copy(fogColor).lerp(new THREE.Color(WORLD.fogAlert), a * 0.7);
     },
     render(time) {
       gridU.uTime.value = time;
@@ -1128,7 +1133,7 @@ function makeBurst(stage, n, color, seed = 5, speed = 4) {
 
 // Shared ket label textures (|0⟩ ... |−i⟩).
 const _ketTex = {};
-function ketTexture(label, color = CSS.ink) {
+function ketTexture(label, color = DARK ? '#DCE0FF' : CSS.ink) {
   const key = label + color;
   if (_ketTex[key]) return _ketTex[key];
   _ketTex[key] = canvasTexture(160, 96, (ctx, w, h) => {

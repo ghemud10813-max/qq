@@ -21,7 +21,7 @@
 .legend span { display: inline-flex; align-items: center; gap: 6px; }
 .legend i { width: 14px; height: 3px; border-radius: 2px; display: inline-block; }
 .scene-offline { position: absolute; inset: auto 0 50% 0; text-align: center; font: 600 13px var(--font-mono); color: var(--warn); z-index: 3; }
-.scene-detail { position: absolute; z-index: 4; right: 14px; bottom: 14px; width: min(360px, calc(100% - 28px)); padding: 14px 16px; border-radius: 18px; background: var(--glass-2);
+.scene-detail { position: absolute; z-index: 4; right: 14px; bottom: 14px; width: min(360px, calc(100% - 28px)); padding: 14px 16px; border-radius: 18px; background: var(--bg-2);
   border: 1px solid var(--glass-edge); box-shadow: var(--shadow-pop); backdrop-filter: blur(16px); display: flex; flex-direction: column; gap: 10px; }
 .cmd-side { min-width: 0; }
 .link-row { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 12px; }

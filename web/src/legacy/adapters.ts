@@ -167,7 +167,7 @@ export function storyMetrics(m: MetricsSummary | undefined | null) {
   const chips: [string, string][] = [
     ['attacks detected', d.attack_runs ? `${d.detected}/${d.attack_runs}` : 'none run yet'],
     ['classification', d.classification_accuracy != null ? pct(d.classification_accuracy, 1) : 'n/a'],
-    ['false rejections', d.legit_runs ? `${d.false_rejections}/${d.legit_runs}` : 'n/a'],
+    ['false alarms', d.legit_runs ? `${d.false_rejections}/${d.legit_runs}` : 'n/a'],
     ['mean CHSH S', m.mean_chsh_recent != null ? fix(m.mean_chsh_recent, 3) : 'n/a'],
   ];
   return { chips, source: `measured · live engine · ${m.sessions.signature_total} signatures, ${m.distributions.total} distributions` };

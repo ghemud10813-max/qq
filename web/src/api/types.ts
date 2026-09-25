@@ -116,7 +116,7 @@ export interface MetricsSummary {
 export interface MetricsTick { sessions_per_min: number; accepted_last_min: number; rejected_last_min: number; threat_level: Severity; open_incidents: number; ledger_height: number; reservoir_total: number; [k: string]: unknown }
 export interface TimeseriesPoint { t: number; signatures: number; accepted: number; rejected: number; distributions: number; compromised: number; attacks: number; latency_ms?: number | null; [k: string]: unknown }
 
-export interface TrafficState { running: boolean; paused_idle: boolean; rate_per_min: number; generated: number; started_at: number | null; last_session_at: number | null; groups: string[] | null; errors: number; autostart: boolean }
+export interface TrafficState { running: boolean; paused_idle: boolean; rate_per_min: number; generated: number; started_at: number | null; last_session_at: number | null; groups: string[] | null; errors: number; autostart: boolean; blocked?: Record<string, string> }
 export interface Campaign { id: string; name: string; preset: string | null; mix: { attack: { attack_id: string; intensity?: number }; weight: number }[]; rate_per_min: number; duration_s: number; started_at: number; ends_at?: number; runs: number; detected: number; state: string; [k: string]: unknown }
 
 export interface LedgerSummary { height: number; head_hash: string; tx_total: number; pending: number; last_verification: { at: number; valid: boolean; first_invalid_height: number | null } | null; tamper_demo_enabled: boolean; tampered: string[] }

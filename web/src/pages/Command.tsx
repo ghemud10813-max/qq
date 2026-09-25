@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { motion, AnimatePresence } from 'motion/react';
-import { Box, Map as MapIcon, Swords, X, Square } from 'lucide-react';
+import { Box, Map as MapIcon, Swords, X, Square, Pause, UserX, UserCheck, ShieldOff, ShieldCheck, Lock, Unlock } from 'lucide-react';
 import { ep, qk } from '@/api/endpoints';
 import { friendly } from '@/api/client';
 import { useConn, useLive } from '@/state/live';
@@ -65,6 +65,11 @@ export default function Command() {
       </header>
 
       <AnimatePresence>
+        {live.traffic?.blocked && Object.keys(live.traffic.blocked).length > 0 && (
+          <motion.div key="blocked" className="banner warn" initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} exit={{ opacity: 0, height: 0 }}>
+            <Pause /><span className="grow">Live traffic skips {Object.entries(live.traffic.blocked).map(([g, why]) => `${g} (${why})`).join(' · ')}. Release the link or reinstate the signer to resume.</span>
+          </motion.div>
+        )}
         {campaign && (
           <motion.div className="banner threat" initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} exit={{ opacity: 0, height: 0 }}>
             <Swords /><span className="grow"><b>{campaign.name}</b> · {campaign.runs ?? 0} attacks launched · {campaign.detected ?? 0} detected{campaign.ends_at ? ` · ends ${ago(campaign.ends_at)}` : ''}</span>
@@ -95,7 +100,9 @@ export default function Command() {
                   {selLink && <KeyValue rows={[['kind', selLink.kind], ['status', selLink.status], ['length', `${selLink.length_km} km`], ['transmittance', selLink.transmittance != null ? pct(selLink.transmittance, 1) : '—'],
                     ['baseline channel', (selLink.baseline_channel || []).map((c) => `${c.type}${Object.entries(c).filter(([k]) => k !== 'type').map(([k, v]) => ` ${k}=${v}`).join('')}`).join(' ∘ ') || '—'],
                     ['last QBER / S', selLink.last ? `${pct(selLink.last.qber, 2)} / ${fix(selLink.last.chsh, 3)}` : 'not measured'], ['MAC on classical bits', selLink.authenticated_classical ? 'yes' : 'no']]} />}
-                  {selNode && <KeyValue rows={[['role', selNode.role], ['label', selNode.label], ['suspended', selNode.suspended ? 'yes' : 'no']]} />}
+                  {selNode && <KeyValue rows={[['role', selNode.role], ['label', selNode.label], ['status', selNode.suspended ? 'suspended' : 'active']]} />}
+                  {selNode?.role === 'signer' && <NodeActions id={selNode.id} suspended={selNode.suspended} />}
+                  {selLink?.kind === 'quantum' && <LinkActions id={selLink.id} status={selLink.status} mac={selLink.authenticated_classical} />}
                   {selLink?.kind === 'quantum' && <Button size="sm" onClick={() => setDetails(selLink.id)}>Link monitor</Button>}
                 </motion.div>
               )}
@@ -119,8 +126,8 @@ export default function Command() {
               spark={<Sparkline values={pts.map((p) => (p.signatures ? p.accepted / p.signatures : null))} color="var(--mint)" label="acceptance" />} />
             <Stat label="Attacks detected" explainTopic="threat_score" value={all?.detection.attack_runs ? `${all.detection.detected}/${all.detection.attack_runs}` : '—'}
               sub={all?.detection.detection_rate != null ? pctCI(all.detection.detection_rate, all.detection.far_ci ? [1 - all.detection.far_ci[1], 1 - all.detection.far_ci[0]] : null, 1) : 'run an attack to measure'} tone="var(--threat)" />
-            <Stat label="False rejections" explainTopic="eps_rob" value={all?.detection.legit_runs ? `${all.detection.false_rejections}/${int(all.detection.legit_runs)}` : '—'}
-              sub={all?.detection.frr != null ? `FRR ${pctCI(all.detection.frr, all.detection.frr_ci, 2)}` : ''} tone="var(--ok)" />
+            <Stat label="False alarms" explainTopic="eps_rob" value={all?.detection.legit_runs ? `${all.detection.false_rejections}/${int(all.detection.legit_runs)}` : '—'}
+              sub={all?.detection.frr != null ? `honest runs flagged · ${pctCI(all.detection.frr, all.detection.frr_ci, 2)}` : ''} tone="var(--ok)" />
           </div>
           <Panel title="Key reservoir" kicker="Certified one-time bundles" explainTopic="lamport">
             <ReservoirPanel reservoir={live.reservoir} />
@@ -139,7 +146,7 @@ export default function Command() {
                 { id: 'att', label: 'attacks', color: 'var(--coral)', points: pts.map((p) => ({ x: p.t, y: p.attacks })) }]} />
           </Panel>
         </div>
-        <Panel title="Live feed" kicker="Every row is a real engine run" actions={<Chip mono>{live.feed.length}</Chip>}>
+        <Panel title="Live feed" kicker="Real engine runs · traffic payloads are synthetic payments" actions={<Chip mono>{live.feed.length}</Chip>}>
           <LiveFeed feed={live.feed} />
         </Panel>
       </div>
@@ -199,5 +206,30 @@ function CampaignSheet({ open, onClose, onStarted }: { open: boolean; onClose: (
         <Button variant="danger" size="lg" loading={busy} onClick={start} icon={<Swords />}>Launch campaign</Button>
       </div>
     </Drawer>
+  );
+}
+
+function NodeActions({ id, suspended }: { id: string; suspended: boolean }) {
+  const qc = useQueryClient();
+  const [busy, setBusy] = useState(false);
+  const run = async () => {
+    setBusy(true);
+    try { await (suspended ? ep.reinstateNode(id) : ep.suspendNode(id)); toast({ tone: suspended ? 'ok' : 'warn', title: `${id} ${suspended ? 'reinstated' : 'suspended'}`, body: suspended ? 'The signer may sign again.' : 'Its signatures are refused until reinstated; the action is in the ledger.' }); qc.invalidateQueries({ queryKey: qk.network }); qc.invalidateQueries({ queryKey: qk.reservoir }); }
+    catch (e) { toast({ tone: 'warn', title: friendly(e) }); } finally { setBusy(false); }
+  };
+  return <Button size="sm" variant={suspended ? 'ok' : 'danger'} loading={busy} icon={suspended ? <UserCheck /> : <UserX />} onClick={run}>{suspended ? 'Reinstate signer' : 'Suspend signer'}</Button>;
+}
+
+function LinkActions({ id, status, mac }: { id: string; status: string; mac: boolean }) {
+  const qc = useQueryClient();
+  const [busy, setBusy] = useState<string | null>(null);
+  const act = async (k: string, fn: () => Promise<unknown>, ok: string) => { setBusy(k); try { await fn(); toast({ tone: 'ok', title: ok }); qc.invalidateQueries({ queryKey: qk.network }); qc.invalidateQueries({ queryKey: qk.reservoir }); } catch (e) { toast({ tone: 'warn', title: friendly(e) }); } finally { setBusy(null); } };
+  return (
+    <div className="row wrap" style={{ gap: 6 }}>
+      {status === 'QUARANTINED'
+        ? <Button size="sm" icon={<ShieldCheck />} loading={busy === 'r'} onClick={() => act('r', () => ep.release(id), `${id} released`)}>Release</Button>
+        : <Button size="sm" icon={<ShieldOff />} loading={busy === 'q'} onClick={() => act('q', () => ep.quarantine(id, 'operator'), `${id} quarantined — its bundles can no longer sign`)}>Quarantine</Button>}
+      <Button size="sm" variant="ghost" icon={mac ? <Unlock /> : <Lock />} loading={busy === 'm'} onClick={() => act('m', () => ep.patchLink(id, { authenticated_classical: !mac }), mac ? 'MAC on frame bits disabled' : 'Frame bits now authenticated (Wegman–Carter MAC)')}>{mac ? 'Disable MAC' : 'Enable MAC'}</Button>
+    </div>
   );
 }

@@ -16,7 +16,7 @@ import { ago, catLabel, clock, fix, pct } from '@/lib/format';
 import { sevColor } from '@/lib/color';
 
 const ACTION_LABEL: Record<string, string> = { quarantine_link: 'Quarantine link', release_link: 'Release link', recertify_link: 'Re-certify link', revoke_link_bundles: 'Revoke link bundles', enable_mac: 'Enable MAC on classical bits',
-  suspend_signer: 'Suspend signer', flag_principal: 'Flag principal', notify_recipients: 'Notify recipients', escalate_dispute: 'Escalate dispute', review_capture_source: 'Review capture source', deny_principal: 'Deny principal', use_larger_L: 'Use a larger L' };
+  suspend_signer: 'Suspend signer', reinstate_signer: 'Reinstate signer', flag_principal: 'Flag principal', notify_recipients: 'Notify recipients', escalate_dispute: 'Escalate dispute', review_capture_source: 'Review capture source', deny_principal: 'Deny principal', use_larger_L: 'Use a larger L' };
 
 export default function Incidents() {
   const { id } = useParams();

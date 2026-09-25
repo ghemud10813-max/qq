@@ -57,6 +57,10 @@ export function route(ev: WsEvent) {
       inval(qk.linkMonitor(l.id), 800);
       return;
     }
+    case 'node.updated':
+      queryClient.setQueryData<Network>(qk.network, (n) => n ? { ...n, nodes: n.nodes.map((x) => (x.id === ev.data.id ? { ...x, suspended: ev.data.suspended } : x)) } : n);
+      inval(qk.reservoir, 200);
+      return;
     case 'reservoir.updated':
       live.set({ reservoir: ev.data });
       queryClient.setQueryData(qk.reservoir, ev.data);

@@ -319,3 +319,35 @@ def test_serves_built_frontend_with_spa_fallback(tmp_path):
         assert c.get("/favicon.svg").text == "<svg/>"
         assert c.get("/api/v1/nope").status_code == 404        # API 404s stay JSON
         assert c.get("/api/v1/analytics/latest/roc").json() is None
+
+
+def test_quarantine_blocks_signing_with_existing_bundles(client):
+    ok(client.post(f"{API}/keys/distribute", json={"group_id": "g-alice"}))
+    ok(client.post(f"{API}/network/links/alice-bob/quarantine", json={"reason": "test"}))
+    try:
+        r = client.post(f"{API}/signatures/sign-and-verify", json={"message": "must not sign"})
+        assert r.status_code == 409 and r.json()["error"]["code"] == "LINK_QUARANTINED"
+        res = {x["group_id"]: x for x in ok(client.get(f"{API}/keys/reservoir"))}
+        assert "quarantined" in res["g-alice"]["blocked_reason"]
+    finally:
+        ok(client.post(f"{API}/network/links/alice-bob/release"))
+    assert ok(client.post(f"{API}/signatures/sign-and-verify", json={"message": "after release"}))["verdict"] == "ACCEPTED"
+
+
+def test_suspend_and_reinstate_signer(client):
+    ok(client.post(f"{API}/network/nodes/diana/suspend"))
+    r = client.post(f"{API}/signatures/sign-and-verify", json={"group_id": "g-diana", "message": "x"})
+    assert r.status_code == 409 and r.json()["error"]["code"] == "SIGNER_SUSPENDED"
+    ok(client.post(f"{API}/network/nodes/diana/reinstate"))
+    assert ok(client.post(f"{API}/signatures/sign-and-verify", json={"group_id": "g-diana", "message": "y"}))["verdict"] == "ACCEPTED"
+    assert client.post(f"{API}/network/nodes/eve/suspend").status_code == 404
+
+
+def test_threat_level_follows_open_incidents(client):
+    run = ok(client.post(f"{API}/attacks/run", json={"attack": {"attack_id": "forgery.blind"}, "counterfactual": False}))
+    level = lambda: ok(client.get(f"{API}/metrics/summary"))["threat_level"]
+    assert level() in ("HIGH", "CRITICAL")
+    for inc in ok(client.get(f"{API}/incidents", params={"status": "OPEN", "limit": 500})):
+        ok(client.post(f"{API}/incidents/{inc['id']}/resolve", json={"note": "test"}))
+    assert level() == "NONE"
+    assert run["incident_id"]

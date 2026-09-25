@@ -322,3 +322,7 @@ button.chip.legend-chip[aria-pressed="true"] { background: var(--bg-2); color: v
 .panel-head { flex-wrap: wrap; }
 .panel-head > .row { max-width: 100%; min-width: 0; }
 .panel-head > .row > .seg { max-width: 100%; }
+[data-theme="noir"] .legacy-scene { background: #060816; }
+.break-row { display: flex; align-items: flex-start; gap: 10px; padding: 10px 12px; border-radius: 14px; border: 1px solid var(--line); background: var(--bg-2); }
+.break-row > svg { width: 20px; height: 20px; flex: none; margin-top: 2px; }
+.break-row.held > svg { color: var(--ok); } .break-row.breach { border-color: var(--coral); } .break-row.breach > svg { color: var(--threat); }

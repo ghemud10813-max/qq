@@ -461,7 +461,11 @@ class EngineService:
         return st
 
     def suspend_signer(self, signer_id: str, suspended: bool = True) -> dict:
+        if not self.db.one("SELECT id FROM nodes WHERE id=? AND role != 'adversary'", (signer_id,)):
+            raise ApiNotFound(f"node {signer_id}")
         self.db.execute("UPDATE nodes SET suspended=? WHERE id=?", (int(suspended), signer_id))
+        self.ledger.append("SIGNER_SUSPENDED" if suspended else "SIGNER_REINSTATED", {"signer_id": signer_id}, ref_id=signer_id)
+        self.hub.publish("links", "node.updated", {"id": signer_id, "suspended": suspended})
         self.hub.publish("reservoir", "reservoir.updated", self.reservoir())
         return {"signer_id": signer_id, "suspended": suspended}
 
@@ -491,11 +495,11 @@ class EngineService:
             if not link:
                 raise ApiConflict("NO_LINK", "this incident is not tied to a link")
             result = {"link": self.patch_link(link, authenticated_classical=True)}
-        elif action == "suspend_signer":
+        elif action in ("suspend_signer", "reinstate_signer"):
             signer = self.world.groups[group].signer_id if group in self.world.groups else None
             if not signer:
                 raise ApiConflict("NO_SIGNER", "no signer for this incident")
-            result = self.suspend_signer(signer, True)
+            result = self.suspend_signer(signer, action == "suspend_signer")
         elif action in ("flag_principal", "notify_recipients", "escalate_dispute", "review_capture_source",
                         "deny_principal", "use_larger_L"):
             result = {"recorded": True, "note": "Informational action recorded on the incident and in the ledger."}

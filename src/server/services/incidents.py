@@ -116,8 +116,9 @@ class IncidentService:
         rows = self.db.query("SELECT severity, COUNT(*) AS n FROM incidents WHERE status='OPEN' GROUP BY severity")
         return {r["severity"]: r["n"] for r in rows}
 
-    def threat_level(self, window_s: float = 1800.0) -> str:
-        rows = self.db.query("SELECT severity FROM incidents WHERE status='OPEN' AND updated_at > ?", (time.time() - window_s,))
+    def threat_level(self) -> str:
+        """Worst severity among OPEN incidents (acknowledged ones are being handled)."""
+        rows = self.db.query("SELECT severity FROM incidents WHERE status='OPEN'")
         best = "NONE"
         for r in rows:
             if SEVERITY_RANK[r["severity"]] > SEVERITY_RANK[best]:

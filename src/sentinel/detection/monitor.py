@@ -9,6 +9,8 @@ Page's CUSUM accumulates:
 
     C_t = max(0, C_{t-1} + (qber_t - qber_0) - k)      alarm when C_t > h
     D_t = max(0, D_{t-1} + (S_0 - S_t) - k_S)          alarm when D_t > h_S
+
+After an alarm the statistic restarts at 0 (renewal CUSUM).
 """
 
 from __future__ import annotations
@@ -56,6 +58,13 @@ class LinkMonitor:
         cs, as_ = self.chsh.update(base.bell.S - ev.bell.S, ks, hs)
         ew = self.ewma.update(ev.qber["rate"])
         alarm = aq or as_
+        # Page's restart rule: once a CUSUM signals, the alarm is handed to the incident and the
+        # accumulator starts again from zero. A drift that persists re-alarms after its run length;
+        # one that stopped does not keep flagging every honest bundle while the excess drains.
+        if aq:
+            self.qber.reset()
+        if as_:
+            self.chsh.reset()
         point = {"qber": ev.qber["rate"], "chsh": ev.bell.S, "fidelity": ev.bell.F, "cusum_qber": cq,
                  "cusum_chsh": cs, "ewma_qber": ew, "alarm": alarm, "h_qber": hq, "h_chsh": hs,
                  "k_qber": kq, "k_chsh": ks}

@@ -129,3 +129,16 @@ def test_low_and_slow_drift_still_accumulates():
             fired = True
             break
     assert fired
+
+
+def test_drift_alarm_restarts_instead_of_flagging_honest_traffic():
+    # A moderate attack that single-run detectors rate below HIGH on the attacked link feeds the
+    # CUSUM and makes it signal. After the signal the accumulator restarts (Page's renewal rule),
+    # so the honest bundles that follow are not flagged while the excess drains.
+    world = build_world(preset="analysis", seed=93)
+    world.distribute("g-alice")
+    hit = world.run_attack(AttackSpec("channel.depolarize", 0.12), counterfactual=False)
+    assert any(f.id == "D10.cusum" and f.fired for f in hit.distribution.findings)
+    for _ in range(6):
+        d = world.distribute("g-alice")
+        assert not [f for f in d.findings if f.id == "D10.cusum" and f.fired], [f.evidence for f in d.findings if f.fired]

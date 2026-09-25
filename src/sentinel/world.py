@@ -464,6 +464,11 @@ class World:
     def sign(self, group_id: str, message: str, encoding: str = "sha256", bundle: Optional[KeyBundle] = None,
              now: Optional[float] = None, allow_compromised: bool = False) -> tuple:
         group = self.group(group_id)
+        if not allow_compromised:
+            # A quarantined link is no longer trusted: bundles certified over it earlier must not sign either.
+            bad = [s.link_id for s in self.group_links(group).values() if s.link_id in self.quarantined]
+            if bad:
+                raise LinkQuarantined(f"link {', '.join(bad)} is quarantined")
         if bundle is None:
             bundle = self.pick_bundle(group_id)
         if bundle.status not in ("ACTIVE",) and not allow_compromised:

@@ -124,6 +124,16 @@ def link_release(link_id: str, request: Request):
     return ctx(request).engine.set_link_status(link_id, "ACTIVE", "released by operator")
 
 
+@router.post("/network/nodes/{node_id}/suspend", tags=["network"])
+def node_suspend(node_id: str, request: Request):
+    return ctx(request).engine.suspend_signer(node_id, True)
+
+
+@router.post("/network/nodes/{node_id}/reinstate", tags=["network"])
+def node_reinstate(node_id: str, request: Request):
+    return ctx(request).engine.suspend_signer(node_id, False)
+
+
 @router.get("/network/links/{link_id}/monitor", tags=["network"])
 def link_monitor(link_id: str, request: Request, limit: int = Query(200, ge=1, le=5000)):
     rows = ctx(request).db.query("SELECT * FROM link_monitor WHERE link_id=? ORDER BY t DESC LIMIT ?", (link_id, limit))

@@ -14,6 +14,7 @@ import { usePlayback, Stepper, PlaybackBar, VerdictStamp, PacketFlight } from '@
 import { FindingCard, SignatureReportView, DesignTable } from '@/components/reports';
 import { BitGrid, QubitGrid, SprtChart } from '@/charts/charts';
 import { LegacyScene } from '@/legacy/LegacyScene';
+import { BreakIt } from '@/components/breakit';
 import { verifyPayload } from '@/legacy/adapters';
 import { bytes, fix, int, pct, sci, utf8len, compact } from '@/lib/format';
 
@@ -147,6 +148,7 @@ export default function Studio() {
             <div className="scene-overlay tr"><Segmented label="Verifier" value={verifierTab} onChange={setVerifierTab} options={report.verifications.map((v, i) => ({ value: i, label: v.verifier_id }))} /></div>
             <LegacyScene scene="verify" channel="studio-verify" title="SIGNATURE CONSTELLATION" payload={constellation} label="Signature constellation: sampled qubits of the verification" style={{ height: 480 }} />
           </Panel>
+          <BreakIt report={report} />
           <div className="section-title"><span className="kicker">Full report</span><h2>What the engine recorded</h2><Link to={`/sessions/${report.session_id}`} className="small">permalink →</Link></div>
           <SignatureReportView r={report} />
         </>

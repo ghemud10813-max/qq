@@ -14,6 +14,8 @@ export const ep = {
   certify: (id: string) => api.post<Record<string, any>>(`/network/links/${id}/certify`),
   quarantine: (id: string, reason = '') => api.post<T.LinkInfo>(`/network/links/${id}/quarantine`, { reason }),
   release: (id: string) => api.post<T.LinkInfo>(`/network/links/${id}/release`),
+  suspendNode: (id: string) => api.post<{ signer_id: string; suspended: boolean }>(`/network/nodes/${id}/suspend`),
+  reinstateNode: (id: string) => api.post<{ signer_id: string; suspended: boolean }>(`/network/nodes/${id}/reinstate`),
   patchLink: (id: string, body: Record<string, unknown>) => api.patch<T.LinkInfo>(`/network/links/${id}`, body),
 
   reservoir: () => api.get<T.ReservoirEntry[]>('/keys/reservoir'),
@@ -27,7 +29,7 @@ export const ep = {
   captured: () => api.get<{ session_id: string; group_id: string; at: number; message: string }[]>('/signatures/captured'),
   reverify: (sid: string, body: { verifier_id?: string; delay_s?: number } = {}) => api.post<T.SignatureReport>(`/signatures/${sid}/reverify`, body),
 
-  sessions: (q: { kind?: string; origin?: string; verdict?: string; group_id?: string; limit?: number; before?: number } = {}) => api.get<T.SessionSummary[]>('/sessions', q),
+  sessions: (q: { kind?: string; origin?: string; verdict?: string; group_id?: string; attack?: boolean; limit?: number; before?: number } = {}) => api.get<T.SessionSummary[]>('/sessions', q),
   session: (id: string) => api.get<T.Report>(`/sessions/${id}`),
 
   catalog: () => api.get<T.CatalogEntry[]>('/attacks/catalog'),

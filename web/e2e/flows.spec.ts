@@ -9,6 +9,15 @@ test('studio: sign and verify is accepted by both recipients', async ({ page }) 
   await jsClick(page, 'button', 'Skip to verdict');
   await expect(page.locator('.class-card').first()).toContainText('ACCEPTED');
   await expect(page.getByText('What the engine recorded')).toBeVisible();
+  // Try to break it: a real replay and a real late delivery of the same signature are refused.
+  await jsClick(page, 'button', 'Replay it');
+  const replay = page.locator('.break-row', { hasText: 'Replay the exact signature' });
+  await expect(replay).toContainText('REJECTED', { timeout: 30_000 });
+  await expect(replay).toContainText('Replay');
+  await jsClick(page, 'button', 'Deliver it late');
+  const late = page.locator('.break-row', { hasText: 'Deliver it 5 minutes late' });
+  await expect(late).toContainText('REJECTED', { timeout: 30_000 });
+  await expect(late).toContainText('old; window is');
   expect(errors).toEqual([]);
 });
 

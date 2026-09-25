@@ -22,7 +22,7 @@ import { CAT_COLOR } from '@/lib/color';
 const CATS = ['ALL', 'FORGERY', 'IMPERSONATION', 'REPLAY', 'UNAUTHORIZED_VERIFICATION', 'CHANNEL_MANIPULATION', 'REPUDIATION'] as const;
 const CAT_SHORT: Record<string, string> = { ALL: 'All', FORGERY: 'Forgery', IMPERSONATION: 'Impersonation', REPLAY: 'Replay', UNAUTHORIZED_VERIFICATION: 'Unauthorized', CHANNEL_MANIPULATION: 'Channel', REPUDIATION: 'Repudiation' };
 const ACTION_LABEL: Record<string, string> = { quarantine_link: 'Quarantine link', release_link: 'Release link', recertify_link: 'Re-certify link', revoke_link_bundles: 'Revoke link bundles', enable_mac: 'Enable MAC on classical bits',
-  suspend_signer: 'Suspend signer', flag_principal: 'Flag principal', notify_recipients: 'Notify recipients', escalate_dispute: 'Escalate dispute', review_capture_source: 'Review capture source', deny_principal: 'Deny principal', use_larger_L: 'Use a larger L' };
+  suspend_signer: 'Suspend signer', reinstate_signer: 'Reinstate signer', flag_principal: 'Flag principal', notify_recipients: 'Notify recipients', escalate_dispute: 'Escalate dispute', review_capture_source: 'Review capture source', deny_principal: 'Deny principal', use_larger_L: 'Use a larger L' };
 
 /** The attack as a channel (for the exact-algebra preview), when it is one. */
 function attackChannel(a: CatalogEntry, I: number, params: Record<string, any>): ChannelSpec | null {

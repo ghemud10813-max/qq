@@ -4,6 +4,7 @@ import { Copy } from 'lucide-react';
 import { ep, qk } from '@/api/endpoints';
 import { Button, Chip, ErrorState, Skeleton } from '@/components/ui';
 import { ReportView } from '@/components/reports';
+import { BreakIt } from '@/components/breakit';
 import { toast } from '@/state/ui';
 import { clock } from '@/lib/format';
 
@@ -20,6 +21,7 @@ export default function Session() {
         {r.injected_attack && <div className="row" style={{ marginTop: 8 }}><Chip tone="threat">ground truth: injected {r.injected_attack.attack_id}</Chip><Link to={`/attack-lab?attack=${r.injected_attack.attack_id}`}>replay in the Attack Lab →</Link></div>}</div>
         <Button icon={<Copy />} onClick={() => { navigator.clipboard?.writeText(location.href); toast({ tone: 'info', title: 'Link copied' }); }}>Copy link</Button>
       </header>
+      {r.kind === 'signature' && r.verdict === 'ACCEPTED' && !r.injected_attack && <BreakIt report={r as any} />}
       <ReportView report={r} />
     </div>
   );

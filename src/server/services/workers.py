@@ -64,12 +64,14 @@ class TrafficController:
         self.groups: Optional[list] = None
         self.errors = 0
         self._rr = 0
+        self.blocked: dict = {}
         self._wake = asyncio.Event()
 
     def state(self) -> dict:
         return {"running": self.running, "paused_idle": self.paused_idle, "rate_per_min": self.rate_per_min,
                 "generated": self.generated, "started_at": self.started_at, "last_session_at": self.last_session_at,
-                "groups": self.groups, "errors": self.errors, "autostart": self.settings.autostart_traffic}
+                "groups": self.groups, "errors": self.errors, "autostart": self.settings.autostart_traffic,
+                "blocked": self.blocked}
 
     def _publish(self) -> None:
         self.hub.publish("traffic", "traffic.state", self.state())
@@ -122,7 +124,14 @@ class TrafficController:
                 except asyncio.TimeoutError:
                     pass
                 continue
-            gs = self._groups()
+            blocked = {r["group_id"]: r["blocked_reason"] for r in self.engine.reservoir() if r["blocked_reason"]}
+            if blocked != self.blocked:
+                for gid, why in blocked.items():
+                    if self.blocked.get(gid) != why:
+                        self.hub.publish("system", "system.notice", {"level": "info", "message": f"traffic pauses {gid}: {why}"})
+                self.blocked = blocked
+                self._publish()
+            gs = [g for g in self._groups() if g.group_id not in blocked]
             if gs:
                 g = gs[self._rr % len(gs)]
                 self._rr += 1

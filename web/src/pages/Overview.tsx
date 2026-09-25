@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { Link, useOutletContext, useNavigate } from 'react-router-dom';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, keepPreviousData } from '@tanstack/react-query';
 import { motion } from 'motion/react';
 import { ArrowRight, Play, Radar, PenTool, Zap, ShieldCheck, Atom, Repeat, UserX, KeyRound, Waves, Scale, LineChart as LineIcon } from 'lucide-react';
 import type { DistributionReport, SignatureReport } from '@/api/types';
@@ -42,10 +42,10 @@ export default function Overview() {
   const introSeen = usePrefs((s) => s.introSeen);
   const metrics = useQuery({ queryKey: qk.metrics('all'), queryFn: () => ep.metrics('all'), refetchInterval: 20_000 });
   const ts = useQuery({ queryKey: qk.timeseries('sessions', { bucket_s: 60 }), queryFn: () => ep.timeseries('sessions', { bucket_s: 60 }) });
-  const lastDistS = useQuery({ queryKey: qk.sessions({ kind: 'distribution', limit: 1, attack: false }), queryFn: () => ep.sessions({ kind: 'distribution', limit: 1 }) });
-  const lastSigS = useQuery({ queryKey: qk.sessions({ kind: 'signature', limit: 1 }), queryFn: () => ep.sessions({ kind: 'signature', limit: 1 }) });
-  const dist = useQuery({ queryKey: qk.session(lastDistS.data?.[0]?.id || ''), queryFn: () => ep.session(lastDistS.data![0].id), enabled: !!lastDistS.data?.[0], staleTime: Infinity });
-  const sig = useQuery({ queryKey: qk.session(lastSigS.data?.[0]?.id || ''), queryFn: () => ep.session(lastSigS.data![0].id), enabled: !!lastSigS.data?.[0], staleTime: Infinity });
+  const lastDistS = useQuery({ queryKey: qk.sessions({ kind: 'distribution', limit: 1, attack: false }), queryFn: () => ep.sessions({ kind: 'distribution', limit: 1, attack: false }) });
+  const lastSigS = useQuery({ queryKey: qk.sessions({ kind: 'signature', limit: 1, attack: false }), queryFn: () => ep.sessions({ kind: 'signature', limit: 1, attack: false }) });
+  const dist = useQuery({ queryKey: qk.session(lastDistS.data?.[0]?.id || ''), queryFn: () => ep.session(lastDistS.data![0].id), enabled: !!lastDistS.data?.[0], staleTime: Infinity, placeholderData: keepPreviousData });
+  const sig = useQuery({ queryKey: qk.session(lastSigS.data?.[0]?.id || ''), queryFn: () => ep.session(lastSigS.data![0].id), enabled: !!lastSigS.data?.[0], staleTime: Infinity, placeholderData: keepPreviousData });
   const ledger = useQuery({ queryKey: qk.ledgerSummary, queryFn: ep.ledgerSummary });
   const matrix = useQuery({ queryKey: qk.latest('detection_matrix'), queryFn: () => ep.latest('detection_matrix'), retry: false });
   const forgeryJob = useQuery({ queryKey: qk.latest('forgery_analysis'), queryFn: () => ep.latest('forgery_analysis'), retry: false });
@@ -72,7 +72,7 @@ export default function Overview() {
     ['04 · Symmetrize', 'Records swapped', d ? `${int(d.symmetrization?.forwarded_per_key as number)} records swapped per key` : null],
     ['05 · Sign', 'One-time keys revealed', s ? `digest ${shortHash(s.digest.hex)} · 256 keys revealed` : null],
     ['06 · Verify', 'Both recipients test', v1 ? `mismatch ${pct(v1.totals.rate, 2)} ≤ s_a ${pct(v1.threshold, 2)}` : null],
-    ['07 · Detect', 'QSentinel', m?.detection.attack_runs ? `detected ${m.detection.detected}/${m.detection.attack_runs} · FRR ${m.detection.false_rejections}/${m.detection.legit_runs}` : null],
+    ['07 · Detect', 'QSentinel', m?.detection.attack_runs ? `detected ${m.detection.detected}/${m.detection.attack_runs} · false alarms ${m.detection.false_rejections}/${m.detection.legit_runs}` : null],
     ['08 · Anchor', 'Audit ledger', ledger.data ? `block #${ledger.data.height} · ${shortHash(ledger.data.head_hash)}` : null],
   ];
 
