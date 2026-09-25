@@ -34,7 +34,7 @@ import numpy as np
 from sentinel.detection.baseline import LinkBaseline, calibrate_link
 from sentinel.detection.config import DetectionConfig
 from sentinel.detection.distribution_detectors import apply_holm, copy_consistency, link_detectors, margin_finding
-from sentinel.detection.findings import Assessment, Finding
+from sentinel.detection.findings import SEVERITY_RANK, Assessment, Finding
 from sentinel.detection.fusion import fuse_distribution, fuse_signature
 from sentinel.detection.monitor import LinkMonitor
 from sentinel.detection.signature_detectors import forensics, key_tests, sprt_finding, transfer_consistency
@@ -390,7 +390,18 @@ class World:
                 ev = outcome.evidence[v]
                 mon = LinkMonitor(ev.link_id, self.detection, self.monitor_states.get(ev.link_id))
                 f, point = mon.update(ev, self.baselines[ev.link_id])
-                self.monitor_states[ev.link_id] = mon.state()
+                # CUSUM exists for shifts too small for any single run. A run that single-run
+                # detectors already flagged (HIGH or worse on this link) is handled by them; feeding
+                # it into the accumulator would make the next honest bundles alarm for a long time.
+                caught = [g.id for g in findings if g.fired and g.link_id == ev.link_id
+                          and SEVERITY_RANK.get(g.severity, 0) >= SEVERITY_RANK["HIGH"]]
+                if caught:
+                    point["excluded"] = True
+                    f.fired, f.severity = False, "NONE"
+                    f.evidence = (f"Run excluded from the drift accumulator: already flagged by {', '.join(sorted(set(caught)))}. "
+                                  f"The monitor keeps its previous state.")
+                else:
+                    self.monitor_states[ev.link_id] = mon.state()
                 findings.append(f)
                 points[ev.link_id] = point
         assessment = fuse_distribution(findings)

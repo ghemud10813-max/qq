@@ -105,3 +105,27 @@ def test_adversary_code_never_touches_results():
         text = path.read_text()
         assert not pattern.search(text), f"{path.name} assigns to a result field"
         assert "private_labels" not in text or path.name == "runner.py"
+
+
+def test_flagged_runs_do_not_poison_the_drift_monitor():
+    world = build_world(preset="analysis", seed=91)
+    world.distribute("g-alice")
+    hit = world.run_attack(AttackSpec("channel.dephase", 0.8), counterfactual=False)
+    assert hit.detected
+    # The strong attack was caught by single-run detectors; the CUSUM kept its state,
+    # so the following honest bundles raise no persistent-drift alarm.
+    for _ in range(5):
+        d = world.distribute("g-alice")
+        assert d.assessment.verdict == "CERTIFIED"
+        assert not [f for f in d.findings if f.id == "D10.cusum" and f.fired], [f.evidence for f in d.findings if f.fired]
+
+
+def test_low_and_slow_drift_still_accumulates():
+    world = build_world(preset="analysis", seed=92)
+    fired = False
+    for _ in range(40):
+        run = world.run_attack(AttackSpec("channel.depolarize", 0.04), counterfactual=False)
+        if any(f.id == "D10.cusum" and f.fired for f in run.distribution.findings):
+            fired = True
+            break
+    assert fired
