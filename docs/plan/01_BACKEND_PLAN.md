@@ -387,11 +387,15 @@ All operations are O(N) and memory-bound. N = 2.3 M uses roughly 60 MB peak for 
 
 **Why it is needed.** The verifier's corrected state for sent frame k is P_k 𝒩(P_k ρ) (conjugations), with P(k) = ¼. Averaging over k gives the *Pauli twirl* of 𝒩. The twirl erases the translation c (non-unital, for example amplitude damping) and the off-diagonal part of M (coherent rotations). A detector that looks only at averaged statistics is blind to both.
 
-**De-twirling identity.** For PE position (ℓ, k, c, β, o), the verifier's corrected Bloch vector is r_fin = P_c P_k 𝒩(P_k r_ℓ) (a correct frame has c = k, so P_c P_k = I). Hence
+**De-twirling identity.** The Bell outcome k leaves the verifier's qubit, before correction, in 𝒩(σ_k ρ_ℓ σ_k): the noise acts on the verifier's half, and it commutes with the signer's measurement. After the correction C_c the Bloch vector is therefore
 
-  𝒩(r_{π_k(ℓ)}) = P_k P_c r_fin,  where π_k(ℓ) is the label whose Bloch vector is P_k r_ℓ.
+  r_fin = P_c 𝒩(P_k r_ℓ)   (for an untampered frame c = k; noiseless 𝒩 gives P_k P_k r_ℓ = r_ℓ).
 
-Every PE observation is therefore an unbiased single-shot sample of 𝒩's output component β for the input π_k(ℓ), with sign s = (P_k P_c)_{ββ} applied to the ±1 outcome.
+Because P_c is its own inverse,
+
+  𝒩(r_{π_k(ℓ)}) = P_c r_fin,  where π_k(ℓ) is the label whose Bloch vector is P_k r_ℓ.
+
+Every PE observation is therefore an unbiased single-shot sample of 𝒩's output component β for the input π_k(ℓ), with sign s = (P_c)_{ββ} applied to the ±1 outcome. Using the *true* k for the input and the *received* c for the sign recovers the quantum channel 𝒩 even under classical frame tampering. The tampering then shows up separately in the frame matrix.
 
 **Estimator.**
 
