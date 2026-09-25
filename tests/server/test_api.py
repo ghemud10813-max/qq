@@ -191,13 +191,15 @@ def test_playground(client):
 
 # ------------------------------------------------------------------ ledger
 def test_ledger_tamper_detect_revert(client):
+    ok(client.post(f"{API}/signatures/sign-and-verify", json={"message": "ledger entry"}))
     ok(client.post(f"{API}/ledger/seal"))
     summary = ok(client.get(f"{API}/ledger/summary"))
     assert summary["height"] >= 1
     assert ok(client.post(f"{API}/ledger/verify"))["valid"] is True
     blk = ok(client.get(f"{API}/ledger/blocks/1"))
     assert blk["block"]["height"] == 1
-    ok(client.post(f"{API}/ledger/tamper", json={}))
+    info = ok(client.post(f"{API}/ledger/tamper", json={}))
+    assert ok(client.get(f"{API}/ledger/tx/{info['tx_id']}"))["valid"] is False
     bad = ok(client.post(f"{API}/ledger/verify"))
     assert bad["valid"] is False and bad["first_invalid_height"] is not None
     ok(client.post(f"{API}/ledger/tamper/revert"))

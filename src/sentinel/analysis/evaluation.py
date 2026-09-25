@@ -373,7 +373,7 @@ def performance(params: dict, progress=None, cancel=None) -> dict:
     done = 0
     for L in Ls:
         pr = w.params.with_(L=L)
-        d_ms, s_ms, v_ms, det_ms, q = [], [], [], [], 0
+        d_ms, s_ms, v_ms, det_ms, q, refused = [], [], [], [], 0, 0
         for _ in range(reps):
             if cancel is not None and cancel.is_set():
                 break
@@ -381,7 +381,9 @@ def performance(params: dict, progress=None, cancel=None) -> dict:
             d_ms.append(d.outcome.timings["total_ms"])
             det_ms.append(d.detect_ms)
             q = d.outcome.qubits
-            if d.status == "ACTIVE":
+            if d.status != "ACTIVE":
+                refused += 1
+            else:
                 s = w.sign_and_verify("g-alice", "performance probe", bundle_id=d.bundle_id, origin="ANALYTICS")
                 s_ms.append(s.latency_ms["sign"])
                 v_ms.append(s.latency_ms["verify_first"] + s.latency_ms["verify_transfer"])
@@ -390,7 +392,10 @@ def performance(params: dict, progress=None, cancel=None) -> dict:
         dm = float(np.mean(d_ms)) if d_ms else None
         rows.append({"L": L, "qubits": q, "distribution_ms": dm, "detect_ms": float(np.mean(det_ms)) if det_ms else None,
                      "sign_ms": float(np.mean(s_ms)) if s_ms else None, "verify_ms": float(np.mean(v_ms)) if v_ms else None,
-                     "qubits_per_s": q / (dm / 1000) if dm else None})
+                     "qubits_per_s": q / (dm / 1000) if dm else None,
+                     "signing_refused": refused,
+                     "note": (f"no feasible threshold design at L={L} under the standard targets: the engine refuses to sign"
+                              if refused and not s_ms else None)})
     aer = _aer_speed()
     done += 1
     _tick(progress, done, total, "Aer comparison")

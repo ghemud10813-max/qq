@@ -37,7 +37,17 @@ async function buildDoc(scene: SceneName, data: Record<string, unknown>): Promis
   const importMap = `<script type="importmap">${JSON.stringify({ imports: { three: `${vendor}/build/three.module.js`, 'three/addons/': `${vendor}/examples/jsm/` } })}</script>`;
   const script = `<script>window.QV_DATA = ${jsonForScript({ ...data, three_version: '0.165.0', vendor })};</script>\n` +
     `<script type="module">${MODULE_IMPORTS}\n${core}\n${entry}\n</script>`;
-  return template.replace('<!--QV_HEAD-->', importMap).replace('<!--QV_SCRIPT-->', script);
+  // Self-hosted fonts: copy the app's @font-face rules (absolute URLs) instead of Google Fonts.
+  const faces: string[] = [];
+  for (const sheet of Array.from(document.styleSheets)) {
+    let rules: CSSRuleList | null = null;
+    try { rules = sheet.cssRules; } catch { continue; }
+    for (const r of Array.from(rules || [])) {
+      if (r instanceof CSSFontFaceRule) faces.push(r.cssText.replace(/url\((['"]?)(\/[^)'"]+)\1\)/g, (_m, _q, u) => `url("${location.origin}${u}")`));
+    }
+  }
+  const fontCss = `<style>${faces.join('\n')}</style>`;
+  return template.replace(/<link rel="preconnect"[^>]*>\s*<link href="https:\/\/fonts\.googleapis\.com[^>]*>/, fontCss).replace('<!--QV_HEAD-->', importMap).replace('<!--QV_SCRIPT-->', script);
 }
 
 let busSeq = 0;

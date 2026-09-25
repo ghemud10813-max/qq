@@ -115,3 +115,5 @@
 @keyframes blink { 50% { opacity: 0; } }
 .boot-skip { position: absolute; right: 18px; top: 18px; }
 .explain section p { margin: 6px 0 0; line-height: 1.6; }
+.show-sm { display: none; }
+@media (max-width: 767px) { .show-sm { display: block; } }

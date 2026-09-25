@@ -50,7 +50,9 @@ export function LineChart({ series, height = 260, xLog, yLog, xLabel, yLabel, re
   const ok = xs.length > 0 && W > 20 && Number.isFinite(xd[0]) && Number.isFinite(yd[0]);
   const x = (xLog ? scaleLog() : scaleLinear()).domain(xd[0] === xd[1] ? [xd[0] * 0.9 || -1, xd[1] * 1.1 || 1] : xd).range([0, W]);
   const y = (yLog ? scaleLog() : scaleLinear()).domain(yd[0] === yd[1] ? [yd[0] * 0.9 || -1, yd[1] * 1.1 || 1] : yd).range([H, 0]).clamp(true);
-  const xt = ok ? (x as any).ticks(width < 500 ? 4 : 7) : [], yt = ok ? (y as any).ticks(yLog ? 5 : 5) : [];
+  const niceLog = (ts: number[], max: number) => { const m = ts.filter((t) => { const e = Math.floor(Math.log10(t) + 1e-9); const k = Math.round(t / 10 ** e); return k === 1 || k === 2 || k === 5; }); const p = ts.filter((t) => Math.abs(Math.log10(t) - Math.round(Math.log10(t))) < 1e-9); return m.length <= max ? m : p.length <= max ? p : p.filter((_, i) => i % Math.ceil(p.length / max) === 0); };
+  const xt = ok ? (xLog ? niceLog((x as any).ticks(), width < 500 ? 4 : 8) : (x as any).ticks(width < 500 ? 4 : 7)) : [];
+  const yt = ok ? (yLog ? niceLog((y as any).ticks(), 6) : (y as any).ticks(5)) : [];
   const allX = [...new Set(all.map((p) => p.x))].sort((a, b) => a - b);
   const onMove = (e: React.PointerEvent<SVGRectElement>) => {
     const r = (e.currentTarget as SVGRectElement).getBoundingClientRect();
@@ -106,7 +108,7 @@ export function LineChart({ series, height = 260, xLog, yLog, xLabel, yLabel, re
       {series.length > 1 && (
         <div className="row wrap" style={{ gap: 6, marginTop: 6 }}>
           {series.map((s) => (
-            <button key={s.id} type="button" className="chip no-magnet" aria-pressed={!hidden.has(s.id)} style={{ opacity: hidden.has(s.id) ? 0.45 : 1 }}
+            <button key={s.id} type="button" className="chip legend-chip no-magnet" aria-pressed={!hidden.has(s.id)} style={{ opacity: hidden.has(s.id) ? 0.4 : 1, textDecoration: hidden.has(s.id) ? 'line-through' : undefined }}
               onClick={() => { const n = new Set(hidden); n.has(s.id) ? n.delete(s.id) : n.add(s.id); setHidden(n); }}>
               <span className="dot" style={{ background: s.color }} />{s.label}
             </button>
@@ -123,7 +125,8 @@ export function BarChart({ data, height = 220, label, fy = (v: number) => String
 }) {
   const [ref, { width }] = useMeasure<HTMLDivElement>();
   const reduce = useReducedMotion();
-  const m = { l: 48, r: 8, t: 14, b: 30 };
+  const rot = data.some((d) => d.label.length * 6.2 > (width - 56) / Math.max(1, data.length) * 0.78);
+  const m = { l: 48, r: 8, t: 14, b: rot ? 58 : 30 };
   const W = Math.max(0, width - m.l - m.r), H = height - m.t - m.b;
   const keys = [...new Set(data.flatMap((d) => d.values.map((v) => v.key)))];
   const maxV = Math.max(1e-12, ...data.map((d) => (stacked ? d.values.reduce((a, v) => a + v.value, 0) : Math.max(...d.values.map((v) => v.hi ?? v.value)))), ...refs.map((r) => r.y ?? 0));
@@ -135,11 +138,11 @@ export function BarChart({ data, height = 220, label, fy = (v: number) => String
     <div ref={ref} style={{ height }} role="img" aria-label={label}>
       {W > 20 && <svg width={width} height={height}>
         <g transform={`translate(${m.l},${m.t})`}>
-          {(y as any).ticks(4).map((t: number) => <g key={t}><line x1={0} x2={W} y1={y(t)} y2={y(t)} stroke="var(--line)" /><text x={-8} y={y(t)} dy="0.32em" textAnchor="end" fontSize={11} fill="var(--text-3)" className="num">{yLog ? sci(t, 1) : fy(t)}</text></g>)}
-          {data.map((d) => {
+          {(yLog ? (y as any).ticks().filter((t: number) => Math.abs(Math.log10(t) - Math.round(Math.log10(t))) < 1e-9) : (y as any).ticks(4)).map((t: number) => <g key={t}><line x1={0} x2={W} y1={y(t)} y2={y(t)} stroke="var(--line)" /><text x={-8} y={y(t)} dy="0.32em" textAnchor="end" fontSize={11} fill="var(--text-3)" className="num">{yLog ? sci(t, 1) : fy(t)}</text></g>)}
+          {data.map((d, di) => {
             let acc = 0;
             return (
-              <g key={d.label} transform={`translate(${x0(d.label)},0)`}>
+              <g key={`${d.label}-${di}`} transform={`translate(${x0(d.label)},0)`}>
                 {d.values.map((v, i) => {
                   const bx = stacked ? 0 : x1(v.key) || 0, bw = stacked ? x0.bandwidth() : x1.bandwidth();
                   const top = stacked ? y(acc + v.value) : y(Math.max(v.value, minV)), bottom = stacked ? y(acc) : H;
@@ -154,7 +157,9 @@ export function BarChart({ data, height = 220, label, fy = (v: number) => String
                     </g>
                   );
                 })}
-                <text x={x0.bandwidth() / 2} y={H + 18} textAnchor="middle" fontSize={11} fill="var(--text-2)">{d.label}</text>
+                {x0.bandwidth() < d.label.length * 6.2
+                  ? <text transform={`translate(${x0.bandwidth() / 2},${H + 12}) rotate(-24)`} textAnchor="end" fontSize={10} fill="var(--text-2)">{d.label}</text>
+                  : <text x={x0.bandwidth() / 2} y={H + 18} textAnchor="middle" fontSize={11} fill="var(--text-2)">{d.label}</text>}
               </g>
             );
           })}
@@ -321,11 +326,11 @@ export function Heatmap({ rows, cols, values, fmt = (v: number) => (v * 100).toF
   return (
     <div role="img" aria-label={label} style={{ overflowX: 'auto' }}>
       <table className="matrix heat"><tbody>
-        <tr><th />{cols.map((c) => <th key={c}>{c}</th>)}</tr>
+        <tr><th />{cols.map((c, j) => <th key={`${c}-${j}`}>{c}</th>)}</tr>
         {rows.map((r, i) => (
-          <tr key={r}><th style={{ textAlign: 'left', whiteSpace: 'nowrap' }}>{r}</th>
+          <tr key={`${r}-${i}`}><th style={{ textAlign: 'left', whiteSpace: 'nowrap' }}>{r}</th>
             {cols.map((c, j) => { const v = values[i]?.[j]; return (
-              <motion.td key={c} className="num" title={titleOf?.(i, j)} initial={reduce ? false : { opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: (i + j) * 0.02 }}
+              <motion.td key={`${c}-${j}`} className="num" title={titleOf?.(i, j)} initial={reduce ? false : { opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: (i + j) * 0.02 }}
                 style={{ background: v == null ? 'transparent' : `color-mix(in srgb, ${color} ${Math.round(v * 70)}%, ${low})`, color: v != null && v > 0.6 ? '#fff' : undefined }}>
                 {v == null ? '·' : fmt(v)}
               </motion.td>); })}

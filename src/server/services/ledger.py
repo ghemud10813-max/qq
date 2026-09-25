@@ -106,6 +106,9 @@ class LedgerService:
         if not t:
             return None
         t["payload"] = loads(t["payload"])
+        # Recompute the leaf from the payload as stored now: a rewritten row no longer matches.
+        t["computed_hash"] = sha256_hex(canonical_json(t["payload"]))
+        t["valid"] = t["computed_hash"] == t["payload_hash"]
         if t["block_height"] is not None:
             leaves = [r["payload_hash"] for r in self.db.query(
                 "SELECT payload_hash FROM ledger_txs WHERE block_height=? ORDER BY idx", (t["block_height"],))]

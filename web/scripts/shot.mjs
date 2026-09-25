@@ -8,6 +8,6 @@ page.on('pageerror', (e) => logs.push(`pageerror: ${e.message}`));
 await page.addInitScript(() => { try { sessionStorage.setItem('qveris.booted', '1'); } catch {} });
 await page.goto(url, { waitUntil: 'domcontentloaded' });
 await page.waitForTimeout(+wait);
-await page.screenshot({ path: out, fullPage: false });
+await page.screenshot({ path: out, fullPage: process.env.FULL === '1' });
 console.log(logs.slice(0, 30).join('\n') || 'no console errors');
 await browser.close();

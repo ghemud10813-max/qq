@@ -35,7 +35,7 @@ export interface Design {
   eps_rep_key: number; eps_rep_msg: number; targets: { eps_rob: number; eps_forge: number; eps_rep: number };
   meets_targets: { robustness: boolean; forgery: boolean; repudiation: boolean }; L_min: number | null;
   sprt: { p0: number; p1: number; alpha: number; beta: number; A: number; B: number };
-  pmf_honest?: { k: number; p: number }[] | number[][]; pmf_forger?: { k: number; p: number }[] | number[][];
+  pmf_honest?: { n: number; p: number; k0: number; pmf: number[] }; pmf_forger?: { n: number; p: number; k0: number; pmf: number[] };
 }
 export interface Rate { errors: number; n: number; rate: number }
 export interface BellResult { n_per_setting: number[]; E: Dict<number>; S: number; S_lcb: number; S_se: number; F: number; F_lcb: number; F_se: number; predicted_error: Dict<Rate>; counts: number[][] }
