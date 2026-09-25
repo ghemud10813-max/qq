@@ -90,7 +90,7 @@ html.qv-cursor input, html.qv-cursor textarea { cursor: text !important; }
 @keyframes qv-ripple { to { transform: scale(1); opacity: 0; } }
 
 /* Legacy story hero: story.js sets --qv-hero-h on <html>. */
-.qv-hero-wrap { position: relative; height: var(--qv-hero-h, 700vh); width: 100%; }
+.qv-hero-wrap { position: relative; height: var(--qv-hero-h, 700vh); }
 
 @media (prefers-reduced-motion: reduce) {
   body::before { animation: none; }

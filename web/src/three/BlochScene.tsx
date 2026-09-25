@@ -47,6 +47,8 @@ function Arrow({ spec }: { spec: ArrowSpec }) {
   const trail = useRef<THREE.Vector3[]>([]);
   const line = useRef<THREE.Line>(null);
   const lineGeo = useMemo(() => new THREE.BufferGeometry().setFromPoints(Array.from({ length: 64 }, () => new THREE.Vector3())), []);
+  const lineObj = useMemo(() => new THREE.Line(lineGeo, new THREE.LineBasicMaterial({ color: spec.color, transparent: true, opacity: 0.45 })), [lineGeo]); // eslint-disable-line react-hooks/exhaustive-deps
+  useEffect(() => () => { lineGeo.dispose(); (lineObj.material as THREE.Material).dispose(); }, [lineGeo, lineObj]);
   useFrame((_, dt) => {
     const tgt = toScene(spec.v);
     cur.current.lerp(tgt, 1 - Math.exp(-dt * 7));
@@ -71,7 +73,7 @@ function Arrow({ spec }: { spec: ArrowSpec }) {
         <mesh position={[0, 0.43, 0]}><cylinderGeometry args={[w, w, 0.86, 12]} /><meshStandardMaterial color={spec.color} emissive={spec.color} emissiveIntensity={0.8} /></mesh>
         <mesh position={[0, 0.93, 0]}><coneGeometry args={[w * 3, 0.16, 20]} /><meshStandardMaterial color={spec.color} emissive={spec.color} emissiveIntensity={1.1} /></mesh>
       </group>
-      {spec.trail && <primitive object={new THREE.Line(lineGeo, new THREE.LineBasicMaterial({ color: spec.color, transparent: true, opacity: 0.45 }))} ref={line} />}
+      {spec.trail && <primitive object={lineObj} ref={line} />}
     </>
   );
 }

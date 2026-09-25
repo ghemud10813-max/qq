@@ -721,7 +721,9 @@ function splitHeadline() {
   const tFromP = (p) => T_DOCK0 + p * (T_SCROLL - T_DOCK0);
   let mode = 'dock', layoutMode = 'sticky';
   let wrap = null;
-  const vh = () => (embedded ? P.innerHeight : window.innerHeight);
+  // The host may have a sticky top bar: the docked hero sits below it.
+  const TOP = +(QV.stickyTop || 0);
+  const vh = () => (embedded ? P.innerHeight - TOP : window.innerHeight);
   function scroller() {
     let el = frame ? frame.parentElement : null;
     while (el && el !== pdoc.body) {
@@ -753,7 +755,7 @@ function splitHeadline() {
     const h = vh();
     hostGeometry();
     if (layoutMode === 'sticky') {
-      frame.style.cssText = `position:sticky;top:0;left:0;width:100%;height:${h}px;border:0;display:block;z-index:2;border-radius:0;`;
+      frame.style.cssText = `position:sticky;top:${TOP}px;left:0;width:100%;height:${h}px;border:0;display:block;z-index:2;border-radius:0;`;
       view.style.cssText = '';
     } else {
       frame.style.cssText = `position:relative;width:100%;height:${h * HERO_SCREENS}px;border:0;display:block;`;
@@ -800,12 +802,12 @@ function splitHeadline() {
     if (!embedded) return;
     const sc = scroller(), r = wrap.getBoundingClientRect();
     const range = r.height - vh();
-    sc.scrollTo({ top: sc.scrollTop + r.top + clamp((T - T_DOCK0) / (T_SCROLL - T_DOCK0)) * range, behavior: 'smooth' });
+    sc.scrollTo({ top: sc.scrollTop + r.top - TOP + clamp((T - T_DOCK0) / (T_SCROLL - T_DOCK0)) * range, behavior: 'smooth' });
   }
   function progress() {
     if (!embedded) return 0;
     const r = wrap.getBoundingClientRect(), range = r.height - vh();
-    return range > 0 ? clamp(-r.top / range) : 0;
+    return range > 0 ? clamp((TOP - r.top) / range) : 0;
   }
 
   if (embedded) {
@@ -830,7 +832,7 @@ function splitHeadline() {
     Padd('scroll', () => {
       if (mode !== 'dock' || layoutMode !== 'sticky') return;
       const r = wrap.getBoundingClientRect(), f = frame.getBoundingClientRect();
-      if (r.top < -40 && r.bottom > vh() + 40 && Math.abs(f.top) > 3) { layoutMode = 'translate'; layoutDock(); }
+      if (r.top < TOP - 40 && r.bottom > vh() + TOP + 40 && Math.abs(f.top - TOP) > 3) { layoutMode = 'translate'; layoutDock(); }
     }, true);
     // Forward wheel to the page so the hero scrolls like normal content.
     // Wheel over the hero scrolls the page with easing (native feel, no jumps).
@@ -918,7 +920,7 @@ function splitHeadline() {
     const h = Math.min(window.innerHeight, vh());
     if (layoutMode === 'translate' && mode === 'dock' && embedded) {
       const r = wrap.getBoundingClientRect();
-      const off = clamp(-r.top, 0, r.height - h);
+      const off = clamp(TOP - r.top, 0, r.height - h);
       view.style.cssText = `position:absolute;left:0;top:0;width:100%;height:${h}px;transform:translate3d(0,${off}px,0);`;
     }
     stage.resize(view.clientWidth || window.innerWidth, h);

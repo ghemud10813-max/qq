@@ -79,7 +79,7 @@ export function ThreatPill() {
   const color = sevColor(threat);
   const hot = threat === 'HIGH' || threat === 'CRITICAL';
   return (
-    <button className={`threat-pill ${hot ? 'hot' : ''}`} style={{ color, ['--c' as string]: color }} onClick={() => nav('/incidents')} title={`${open} open incidents`}>
+    <button className={`threat-pill ${hot ? 'hot' : ''}`} style={{ color, ['--c' as string]: color }} onClick={() => nav("/incidents")} title={`active threat level (open incidents updated in the last 30 min) · ${open} open incidents in total`} aria-label={`Threat level ${threat}, ${open} open incidents`}>
       {hot ? <AlertTriangle /> : <span className="dot" />}<span className="tp-label">threat</span><b>{threat === 'NONE' ? 'CLEAR' : threat}</b>
     </button>
   );

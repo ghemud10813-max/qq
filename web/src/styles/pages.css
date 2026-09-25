@@ -137,3 +137,42 @@
 .proof li { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
 @media (max-width: 1000px) { .ledger-grid { grid-template-columns: minmax(0, 1fr); } }
 @media (max-width: 767px) { .chain-panel > div:first-child { display: none; } .chain-cards-mobile { display: block; } }
+
+/* -------------------------------------------------------- playground */
+.pg-grid { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(320px, 1fr); gap: 16px; align-items: start; }
+.pg-scene { position: sticky; top: calc(var(--top-h) + 12px); height: min(640px, calc(100vh - 120px)); }
+.gate-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; }
+.gate { display: flex; flex-direction: column; align-items: center; gap: 2px; padding: 10px 4px; border-radius: 12px; border: 1px solid var(--line); background: var(--bg-2); cursor: pointer; }
+.gate b { font: 700 16px var(--font-mono); color: var(--lav); } .gate span { font-size: 9.5px; color: var(--text-3); text-align: center; line-height: 1.2; }
+.gate:hover { border-color: var(--lav); }
+.ch-block { display: flex; flex-direction: column; gap: 8px; padding: 12px; border-radius: 14px; background: var(--bg-2); border: 1px solid var(--line); }
+.outcome { display: flex; flex-direction: column; gap: 4px; padding: 10px; border-radius: 12px; background: var(--bg-2); border: 1px solid var(--line); }
+.outcome.on { border-color: var(--gold); box-shadow: 0 0 0 3px var(--gold-l); }
+@media (max-width: 1000px) { .pg-grid { grid-template-columns: minmax(0, 1fr); } .pg-scene { position: relative; top: 0; height: 50vh; } .gate-grid { grid-template-columns: repeat(4, 1fr); } }
+
+/* --------------------------------------------------------- incidents */
+.inc-grid { display: grid; grid-template-columns: minmax(300px, 420px) minmax(0, 1fr); gap: 16px; align-items: start; }
+.inc-list { position: sticky; top: calc(var(--top-h) + 12px); }
+.inc-items { display: flex; flex-direction: column; gap: 6px; max-height: calc(100vh - 330px); overflow-y: auto; }
+.inc-card { position: relative; display: flex; align-items: center; gap: 12px; padding: 10px 12px 10px 16px; border-radius: 14px; border: 1px solid var(--line); background: var(--bg-2); cursor: pointer; text-align: left; overflow: hidden; }
+.inc-card b { display: block; font-size: 13.5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.inc-card.on { border-color: var(--c); box-shadow: 0 0 0 3px color-mix(in srgb, var(--c) 20%, transparent); }
+.inc-stripe { position: absolute; left: 0; top: 0; bottom: 0; width: 4px; background: var(--c); }
+.timeline { margin-top: 14px; display: flex; flex-direction: column; gap: 10px; border-left: 2px solid var(--line); padding-left: 12px; }
+.tl-item { display: flex; gap: 8px; position: relative; } .tl-dot { position: absolute; left: -18px; top: 4px; width: 10px; height: 10px; border-radius: 50%; background: var(--lav); }
+.show-md { display: none; }
+@media (max-width: 1000px) { .inc-grid { grid-template-columns: minmax(0, 1fr); } .inc-list { position: static; } .inc-grid.has-detail .inc-list { display: none; } .inc-grid:not(.has-detail) .inc-detail { display: none; } .show-md { display: inline-flex; } .inc-items { max-height: none; } }
+.nf { min-height: 70vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; gap: 12px; }
+
+/* ------------------------------------------------------------ method */
+.method { display: grid; grid-template-columns: 220px minmax(0, 1fr); gap: 32px; align-items: start; }
+.method-toc { position: sticky; top: calc(var(--top-h) + 20px); display: flex; flex-direction: column; gap: 2px; border-left: 2px solid var(--line); }
+.method-toc a { padding: 6px 12px; font-size: 13px; color: var(--text-2); text-decoration: none; border-left: 2px solid transparent; margin-left: -2px; transition: all .25s; }
+.method-toc a.on { color: var(--lav); border-left-color: var(--lav); font-weight: 600; }
+.method-body { max-width: 860px; display: flex; flex-direction: column; gap: 10px; }
+.method-body section { scroll-margin-top: calc(var(--top-h) + 20px); padding-top: 18px; }
+.method-body h2 { margin-bottom: 10px; }
+.method-body p, .method-body li { line-height: 1.7; }
+.method-body .lead { font-size: 17px; color: var(--text-1); }
+.arch { max-width: 760px; }
+@media (max-width: 900px) { .method { grid-template-columns: minmax(0, 1fr); } .method-toc { position: static; flex-direction: row; overflow-x: auto; border-left: 0; } .method-toc a { white-space: nowrap; border-left: 0; border-bottom: 2px solid transparent; } .method-toc a.on { border-bottom-color: var(--lav); } }

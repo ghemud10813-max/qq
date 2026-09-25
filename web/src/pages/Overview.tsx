@@ -18,6 +18,13 @@ import { compact, fix, int, pct, sci, shortHash, catLabel } from '@/lib/format';
 import { CAT_COLOR } from '@/lib/color';
 
 const STORY_MESSAGE = 'transfer 100 to bob';
+// Decided once per page load (StrictMode runs initializers twice): the film plays once per browser session.
+let _film: boolean | null = null;
+function filmDecision(introSeen: boolean) {
+  if (_film != null) return _film;
+  try { const seen = sessionStorage.getItem('qveris.film') === '1'; sessionStorage.setItem('qveris.film', '1'); _film = !seen && !introSeen && !reducedMotion(); } catch { _film = false; }
+  return _film;
+}
 async function sha256hex(s: string) { const b = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(s)); return [...new Uint8Array(b)].map((x) => x.toString(16).padStart(2, '0')).join(''); }
 
 const THREATS = [
@@ -46,8 +53,8 @@ export default function Overview() {
   const [digest, setDigest] = useState<string | null>(null);
   useEffect(() => { sha256hex(STORY_MESSAGE).then(setDigest).catch(() => setDigest('')); }, []);
   // The film plays once per browser session (as in the original dashboard), unless disabled in settings.
-  const [playFilm] = useState(() => { try { const seen = sessionStorage.getItem('qveris.film') === '1'; sessionStorage.setItem('qveris.film', '1'); return !seen && !introSeen && !reducedMotion(); } catch { return false; } });
-  const storyData = useMemo(() => (digest == null || !metrics.isFetched ? null : { message: STORY_MESSAGE, digest, metrics: storyMetrics(metrics.data), intro: playFilm }), [digest, metrics.isFetched]); // eslint-disable-line react-hooks/exhaustive-deps
+  const [playFilm] = useState(() => filmDecision(introSeen));
+  const storyData = useMemo(() => (digest == null || !metrics.isFetched ? null : { message: STORY_MESSAGE, digest, metrics: storyMetrics(metrics.data), intro: playFilm, stickyTop: document.querySelector('.topbar')?.getBoundingClientRect().height ?? 0 }), [digest, metrics.isFetched]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const m = metrics.data;
   const pts = ts.data?.points || [];

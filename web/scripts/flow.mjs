@@ -15,6 +15,8 @@ for (const s of steps) {
   const i = s.indexOf(':'); const cmd = i < 0 ? s : s.slice(0, i), arg = i < 0 ? '' : s.slice(i + 1);
   try {
     if (cmd === 'click') await page.getByText(arg, { exact: false }).first().click({ timeout: 8000 });
+    else if (cmd === 'tab') await page.getByRole('tab', { name: arg, exact: true }).first().click({ timeout: 8000 });
+    else if (cmd === 'btn') await page.getByRole('button', { name: arg }).first().click({ timeout: 8000 });
     else if (cmd === 'clickSel') await page.locator(arg).first().click({ timeout: 8000 });
     else if (cmd === 'wait') await page.waitForTimeout(+arg);
     else if (cmd === 'shot') await page.screenshot({ path: arg });
