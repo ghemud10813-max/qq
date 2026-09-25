@@ -103,3 +103,6 @@ test_*.txt
 *_utf8.txt
 tmp_runner*.py
 nul
+
+# QVeris runtime data (SQLite + keystore)
+data/
